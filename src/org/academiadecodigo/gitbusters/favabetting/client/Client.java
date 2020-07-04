@@ -1,6 +1,7 @@
 package org.academiadecodigo.gitbusters.favabetting.client;
 
-import org.academiadecodigo.gitbusters.favabetting.server.messages.MessageHandler;
+import org.academiadecodigo.gitbusters.favabetting.client.menu.Menu;
+import org.academiadecodigo.gitbusters.favabetting.client.messages.MessageHandler;
 
 import java.io.*;
 import java.net.Socket;
@@ -13,6 +14,7 @@ public class Client {
     private BufferedReader inputStream;
     private BufferedWriter outPut;
     private ExecutorService executor= Executors.newCachedThreadPool();
+    private Menu menu;
 
     Client(){
         try {
@@ -20,6 +22,7 @@ public class Client {
             inputStream=new BufferedReader(new InputStreamReader(socket.getInputStream()));
             outPut=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             executor.submit(new listening());
+            menu=new Menu(this);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -38,6 +41,7 @@ public class Client {
     private void receiveMsg() throws IOException {
         String line;
         while((line = inputStream.readLine()) != null) {
+            MessageHandler.getActionFromString(line).getAction().run(this,line);
             System.out.println("Client "+line);
         }
     }
@@ -58,7 +62,9 @@ public class Client {
 
     public static void main(String[] args) {
         Client c=new Client();
-        c.sendMessage("bet 1 10");
+    }
 
+    public Menu getMenu() {
+        return menu;
     }
 }

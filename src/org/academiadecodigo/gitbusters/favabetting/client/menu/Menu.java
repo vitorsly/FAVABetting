@@ -5,6 +5,7 @@ import org.academiadecodigo.bootcamp.scanners.integer.IntegerInputScanner;
 import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
 import org.academiadecodigo.bootcamp.scanners.string.StringInputScanner;
 import org.academiadecodigo.gitbusters.favabetting.client.Client;
+import org.academiadecodigo.gitbusters.favabetting.client.messages.MessageHandler;
 
 public class Menu {
 
@@ -15,6 +16,7 @@ public class Menu {
 
         this.client = client;
         this.prompt = new Prompt(System.in,System.out);
+        mainMenu();
 
     }
 
@@ -28,9 +30,10 @@ public class Menu {
     }
 
 
-    public void makeBetMenu(){
+    public void makeBetMenu(String[]horseList){
 
-        int horse = getIntInput("Choose your horse: ","Invalid horse number");
+
+        int horse = buildMenu(horseList);
         int amount = getIntInput("How much do you wanna bet: ","Invalid amount");
 
         client.sendMessage("bet " + horse + " " + amount);
@@ -49,7 +52,7 @@ public class Menu {
                 client.sendMessage("balance");
                 break;
             case 2:
-                makeBetMenu();
+                client.sendMessage("getHorses");
                 break;
             case 3:
                 influenceRace();
