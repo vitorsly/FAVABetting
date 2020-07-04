@@ -17,10 +17,15 @@ public class Broker {
         this.clientsBets = new HashMap<>();
     }
 
-    // TODO: When client connects to server we register client with the broker
     // Registers client with broker
     public void registerClient(Client client) {
         this.clientsBets.put(client, new HashMap<>());
+    }
+
+    // Add new bet to client
+    public void registerBet(Client client, Horse horse, Integer amount) {
+        this.clientsBets.get(client).put(horse, amount);
+        this.horsesBets.get(horse).put(client, amount);
     }
 
     // Returns all clients bets
@@ -33,11 +38,6 @@ public class Broker {
         return this.clientsBets.get(client);
     }
 
-    // Add new bet to client
-    public void setClientBet(Client client, Horse horse, Integer amount) {
-        this.clientsBets.get(client).put(horse, amount);
-    }
-
     // Returns all horses bets
     public Map<Horse, Map<Client, Integer>> getAllHorsesBets() {
         return this.horsesBets;
@@ -46,10 +46,5 @@ public class Broker {
     // Returns horse bets
     public Map<Client, Integer> getHorseBets(Horse horse) {
         return this.horsesBets.get(horse);
-    }
-
-    // Add new bet to hose
-    public void setHorseBet(Horse horse, Client client, Integer amount) {
-        this.horsesBets.get(horse).put(client, amount);
     }
 }

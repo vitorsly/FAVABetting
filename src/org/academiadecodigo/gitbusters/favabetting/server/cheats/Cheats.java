@@ -8,7 +8,9 @@ public interface Cheats {
 
     void activate(Horse target);
 
-    int getPrice();
+    double getPrice();
+
+    double getFine();
 
     int getPoliceChance();
 
