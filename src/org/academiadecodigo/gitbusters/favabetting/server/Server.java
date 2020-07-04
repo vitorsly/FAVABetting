@@ -15,8 +15,11 @@ public class Server {
     private List<Client> sockets=new ArrayList<>();
     int clientIterator;
     ExecutorService ex= Executors.newCachedThreadPool();
+    Race race;
     Server(int port){
         initialyzeServer(port);
+        race=new Race(this);
+        ex.submit(race);
     }
 
     private void initialyzeServer(int port){
@@ -27,6 +30,7 @@ public class Server {
                     Client c=new Client(server.accept(),"client "+clientIterator,this);
                     sockets.add(c);
                     ex.submit(c);
+                    race.getBroker().registerClient(c);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -39,6 +43,7 @@ public class Server {
             System.out.println(e);
         }
     }
+
     public void broadcastMsg(String msg){
         for (Client c :sockets){
             c.sendMessage("server:"+msg);
@@ -51,5 +56,9 @@ public class Server {
 
     public List<Client> getSockets() {
         return sockets;
+    }
+
+    public Race getRace() {
+        return race;
     }
 }

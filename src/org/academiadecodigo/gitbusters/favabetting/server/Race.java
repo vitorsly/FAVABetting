@@ -124,4 +124,8 @@ public class Race implements Runnable {
     public List<Horse> getEnrolledHorses() {
         return enrolledHorses;
     }
+
+    public Broker getBroker() {
+        return broker;
+    }
 }
