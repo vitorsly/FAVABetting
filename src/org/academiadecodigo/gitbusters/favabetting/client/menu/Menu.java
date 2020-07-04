@@ -32,6 +32,47 @@ public class Menu {
 
     }
 
+    public void presentStartImage(){
+
+        System.out.println("                                -.\n" +
+                "                               |  \\\n" +
+                "                               |   \\\n" +
+                "                               F    L\n" +
+                "                 |\"-._         F    L\n" +
+                "                 |  `.`--.     L    |\n" +
+                "                 J    `.  `.   |    |   __\n" +
+                "                  \\     `.  `. J    |.-'_.-\n" +
+                "                   \\      `.  \\ \\.-     `-. \n" +
+                "      J\".           `.      \\  >'          `.\n" +
+                "      |  \\            `-.    L/       `---.._\\\n" +
+                "      J   L              `\"-/               |\n" +
+                "       \\  |                J        / .-.   4\n" +
+                "        J F                |       | / d8   |\n" +
+                "         L\\                F         | 8P   J\n" +
+                "         J L               |         `-'     `-.\n" +
+                "         | |                L  .          .-    )\n" +
+                "         | J                |   \\        . dP  / \n" +
+                "         J  \\               |    `.       `-.-\"\n" +
+                "          \\  >-\"\"\"\"-.      .F      >\"--.---._) \n" +
+                "           >\"        \"\"--\"\"        |\n" +
+                "          J                        F\n" +
+                "          |                        L\n" +
+                "          J                        |\n" +
+                "           \\        L         `.   J\n" +
+                "            )       | % |      | eJ\" u+L\n" +
+                "           d\"      d\"  '|     :Fd\"     4\n" +
+                "          P      u$\"b.  $r    $*L u@\".  F\n" +
+                "          $  ?F\"\" 4L ^F\"\"$   F      zP $\n" +
+                "          4F  N    *. %. ^  4     $#  zF\n" +
+                "           #r \".    $  $ $  $   $$F :\"\n" +
+                "           -F  $    ^k Jr@F $   $$$\"\n" +
+                "            #. F     9$$$9  4\n" +
+                "            '$$$          $  *\n" +
+                "              ^\"          3ed$.\n" +
+                "                           $$$#\n");
+
+    }
+
     public void makeBetMenu(String[] horseList){
 
         String[] horses = new String[6];
@@ -46,7 +87,7 @@ public class Menu {
 
         int horse = buildMenu(horses,"Choose your horse:","Invalid option");
 
-        int amount = getIntInput("How much do you wanna bet: ","Invalid amount");
+        int amount = getIntInput("Place your bet: ","Invalid amount");
 
         client.sendMessage("bet " + horse + " " + amount);
 
@@ -54,6 +95,7 @@ public class Menu {
 
     public void mainMenu(){
 
+        presentStartImage();
 
         String[] options = {"View balance", "Make a bet","Influence Race","Transactions","Change name","Check online players","Quit"};
 
