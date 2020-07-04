@@ -3,6 +3,7 @@ package org.academiadecodigo.gitbusters.favabetting.server;
 import org.academiadecodigo.gitbusters.favabetting.server.messages.MessageHandler;
 
 import java.io.*;
+import java.lang.invoke.LambdaMetafactory;
 import java.net.Socket;
 
 public class Client implements Runnable {
@@ -12,6 +13,7 @@ public class Client implements Runnable {
     private BufferedReader inputStream;
     private BufferedWriter outPut;
     private Server server;
+    private Wallet wallet=new Wallet();
 
     Client(Socket socket,String name,Server server){
         this.socket=socket;
@@ -63,5 +65,27 @@ public class Client implements Runnable {
 
     public String getName() {
         return name;
+    }
+
+    public Wallet getWallet() {
+        return wallet;
+    }
+
+    public class Wallet{
+        double amount=100.0;
+        double getBalance(){return amount;}
+
+        public void deposit(double amount){
+            this.amount+=amount;
+        }
+
+        public boolean Withdraw(double amount){
+            if(this.amount<amount){
+                return false;
+            }else{
+                this.amount-=amount;
+                return true;
+            }
+        }
     }
 }
