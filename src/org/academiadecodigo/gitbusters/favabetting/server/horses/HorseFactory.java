@@ -11,6 +11,7 @@ public class HorseFactory {
         String[] winsRaces = winrate.split("/");
         int wins = Integer.getInteger(winsRaces[0]);
         int races = Integer.getInteger(winsRaces[1]);
+
         Horse horse = new Horse(currentID, name, Description, speed, maxspeed, odds, wins, races);
         currentID++;
         return horse;

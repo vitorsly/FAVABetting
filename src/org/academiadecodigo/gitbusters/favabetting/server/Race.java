@@ -59,8 +59,8 @@ public class Race implements Runnable {
     // Enroll horses to our race
     // TODO: Maybe move it to factory class?
     public void EnrollHorse(String name, int speed, int maxSpeed) {
-        Horse horse = new Horse(name, speed, maxSpeed);
-        enrolledHorses.add(horse);
+        //Horse horse = new Horse(name, speed, maxSpeed);
+        //enrolledHorses.add(horse);
     }
 
     public void run() {
