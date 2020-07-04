@@ -94,7 +94,7 @@ public class Menu {
             return;
         }
 
-        int amount = getIntInput("Place your bet: ","Invalid amount");
+        int amount = getIntInput("How much do you wanna bet? ","Invalid amount");
 
         client.sendMessage("bet " + horse + " " + amount);
 
