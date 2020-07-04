@@ -3,6 +3,7 @@ package org.academiadecodigo.gitbusters.favabetting.server.messages;
 public enum MessageHandler {
     BET("bet",new BetMessage()),
     NAME("name",new NameChangeMsg()),
+    ENROLLEDHORSES("getHorses",new GetHorsesMessage()),
     INVALID("",new InvalidMessage());
 
     private String actionMessage;
