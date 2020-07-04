@@ -4,15 +4,16 @@ public class Horse {
     private int id;
     private String name;
     private String description;
-    private int speed;
+    private double speed;
+    private int maxSpeed;
+    private double distance;
     private double odds;
     private int wins;
     private int races;
     private boolean alive;
-    private int maxSpeed;
-    private double distance;
 
-    Horse(int id, String name, String description, int speed, int maxSpeed, double odds, int wins, int races){
+
+    Horse(int id, String name, String description, double speed, int maxSpeed, double odds, int wins, int races){
         this.id = id;
         this.description = description;
         this.name = name;
@@ -37,7 +38,7 @@ public class Horse {
         return odds;
     }
 
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 
@@ -53,10 +54,6 @@ public class Horse {
         alive = false;
     }
 
-    public void shiftSpeed(int speedModifier){
-        this.speed += speedModifier;
-    }
-
     public void race() {
         this.distance += speed;
     }
@@ -65,9 +62,13 @@ public class Horse {
         return distance;
     }
 
-    public void setSpeed(int value) {
+    public void setSpeed(double value) {
         if(value <= maxSpeed) {
             this.speed = value;
         }
+    }
+
+    public void shiftSpeed(double speedModifier){
+        this.speed += speedModifier;
     }
 }
