@@ -5,7 +5,6 @@ import org.academiadecodigo.bootcamp.scanners.integer.IntegerInputScanner;
 import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
 import org.academiadecodigo.bootcamp.scanners.string.StringInputScanner;
 import org.academiadecodigo.gitbusters.favabetting.client.Client;
-import org.academiadecodigo.gitbusters.favabetting.client.messages.MessageHandler;
 
 public class Menu {
 
@@ -30,9 +29,20 @@ public class Menu {
     }
 
 
-    public void makeBetMenu(String[]horseList){
+    public void makeBetMenu(String[] horseList){
 
-        int horse = buildMenu(horseList);
+        String[] horses = new String[6];
+
+        for ( int i = 0; i < horseList.length; i++){
+
+            String[] splittedHorse = horseList[i].split("#");
+            horses[i] = "Name: " + splittedHorse[0] + " | Description: " + splittedHorse[1] + " | Odd: " + splittedHorse[2]
+                    + " | Wins: " + splittedHorse[3] + " | Races: " + splittedHorse[4];
+
+        }
+
+        int horse = buildMenu(horses,"Choose your horse:","Invalid option");
+
         int amount = getIntInput("How much do you wanna bet: ","Invalid amount");
 
         client.sendMessage("bet " + horse + " " + amount);
@@ -43,9 +53,9 @@ public class Menu {
     public void mainMenu(){
 
 
-        String[] options = {"View balance", "Make a bet","Influence Race","Transactions","Change name","Check online players"};
+        String[] options = {"View balance", "Make a bet","Influence Race","Transactions","Change name","Check online players","Quit"};
 
-        switch (buildMenu(options)){
+        switch (buildMenu(options,"Main Menu","Invalid option")){
 
             case 1:
                 client.sendMessage("balance");
@@ -65,6 +75,11 @@ public class Menu {
             case 6:
                 getPlayers();
                 break;
+            case 7:
+                client.sendMessage("quit");
+                break;
+            default:
+                System.out.println("Something went terribly wrong...");
         }
 
     }
@@ -90,11 +105,12 @@ public class Menu {
 
     }
 
-    private int buildMenu(String[] options) {
+
+    private int buildMenu(String[] options, String message, String error) {
 
         MenuInputScanner mainMenu = new MenuInputScanner(options);
-        mainMenu.setError("Invalid option");
-        mainMenu.setMessage("Select an option:");
+        mainMenu.setError(error);
+        mainMenu.setMessage(message);
 
         return prompt.getUserInput(mainMenu);
 
