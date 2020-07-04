@@ -1,6 +1,7 @@
 package org.academiadecodigo.gitbusters.favabetting.server.horses;
 
 public class Horse {
+
     private int id;
     private String name;
     private String description;
@@ -12,7 +13,6 @@ public class Horse {
     private int wins;
     private int races;
     private boolean alive;
-
 
     Horse(int id, String name, String description, double speed, int maxSpeed, double odds, int wins, int races){
         this.id = id;
@@ -63,6 +63,10 @@ public class Horse {
 
     public double getDistance() {
         return distance;
+    }
+
+    public double getTotalDistanceMultiplier() {
+        return this.distance * 0.9 / this.distance;
     }
 
     public void resetDistance() {
