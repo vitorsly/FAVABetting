@@ -3,14 +3,20 @@ package org.academiadecodigo.gitbusters.favabetting.server.cheats;
 import org.academiadecodigo.gitbusters.favabetting.server.horses.Horse;
 
 public abstract class AbstractCheat implements Cheats{
-    protected int price;
+    protected double price;
+    protected double fine;
     protected int policeChance;
     protected String name;
     protected String description;
 
     @Override
-    public int getPrice() {
+    public double getPrice() {
         return price;
+    }
+
+    @Override
+    public double getFine() {
+        return fine;
     }
 
     @Override

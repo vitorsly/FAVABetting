@@ -6,6 +6,7 @@ public class MegaBoost extends AbstractCheat{
 
     public void init(){
         price = 100;
+        fine = 200;
         policeChance = 10;
         name = "SuperSteroids";
         description = "These are some powerful drugs. Gonna make sure add some muscle mass to your target for years.";
