@@ -45,7 +45,7 @@ public class Server {
 
     public void broadcastMsg(String msg){
         for (Client c :sockets){
-            c.sendMessage("server:"+msg);
+            c.sendMessage(msg);
         }
     }
 

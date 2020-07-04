@@ -38,7 +38,7 @@ public class HorseFactory {
         stable.add(createHorse("Boink", "the clumsy boy who tried",             4, 20, 50,0,48));
         stable.add(createHorse("Tracy", "the clumsy girl who could",            5, 20, 30,1,24));
         stable.add(createHorse("Norris", "the undisputed champion",             80, 120, 2,10,20));
-        stable.add(createHorse("The Spork", "the three pronged beatle",         13, 33, 13,0,3));
+        stable.add(createHorse("The-Spork", "the three pronged beatle",         13, 33, 13,0,3));
         stable.add(createHorse("Shadow", "the best kept secret",                23, 45, 6.5,0,0));
         stable.add(createHorse("Storm", "the force of nature",                  25, 50, 6.2,5,32));
         stable.add(createHorse("Frost", "the coolest beast",                    24, 45, 6.4,5,33));
