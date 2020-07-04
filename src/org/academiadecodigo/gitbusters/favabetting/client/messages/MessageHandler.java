@@ -3,6 +3,9 @@ package org.academiadecodigo.gitbusters.favabetting.client.messages;
 public enum MessageHandler {
     NOFUNDS("noFunds",new NoFunds()),
     GETHORSES("HorseList",new HorsesMsg()),
+    BALANCE("balance",new BalanceMsg()),
+    INRACE("inRace",new InvalidMsg()),
+    BETOK("betOK",new BetOkMsg()),
     INVALID("",new InvalidMsg());
 
 
