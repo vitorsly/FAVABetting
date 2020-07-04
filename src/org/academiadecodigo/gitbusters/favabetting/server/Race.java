@@ -125,6 +125,10 @@ public class Race implements Runnable {
         }
     }
 
+    public void PlaceBet(Client client,int horse,int amount){
+        //broker.getClientBets()
+    }
+
     public List<Horse> getEnrolledHorses() {
         return enrolledHorses;
     }
