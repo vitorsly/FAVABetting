@@ -24,6 +24,7 @@ public class BetMessage implements Message {
             int betAmount= Integer.parseInt(msgSplit[2]);
             if(client.getWallet().Withdraw(betAmount)){
                 server.getRace().placeBet(client,horseNumber,betAmount);
+                client.sendMessage("betOK");
             }
             else{
                 client.sendMessage("noFunds");

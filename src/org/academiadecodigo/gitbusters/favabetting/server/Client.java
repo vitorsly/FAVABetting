@@ -72,8 +72,8 @@ public class Client implements Runnable {
     }
 
     public class Wallet{
-        double amount=100.0;
-        double getBalance(){return amount;}
+        private double amount=100.0;
+        public double getBalance(){return amount;}
 
         public void deposit(double amount){
             this.amount+=amount;

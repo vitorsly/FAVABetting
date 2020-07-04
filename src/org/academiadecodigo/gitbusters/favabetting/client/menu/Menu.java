@@ -32,7 +32,6 @@ public class Menu {
 
     public void makeBetMenu(String[]horseList){
 
-
         int horse = buildMenu(horseList);
         int amount = getIntInput("How much do you wanna bet: ","Invalid amount");
 
@@ -90,7 +89,6 @@ public class Menu {
 
 
     }
-
 
     private int buildMenu(String[] options) {
 
