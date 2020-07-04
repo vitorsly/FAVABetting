@@ -60,9 +60,23 @@ public class Race implements Runnable {
 
         try {
 
+
             // TODO: Timer
 
             // TODO: Allow clients to place bets
+
+            server.broadcastMsg("betTime");
+            System.out.print("");
+            Interval interval=server.interval(30);
+            boolean sopLoop=true;
+            while (sopLoop){
+               sopLoop=interval.getInInterval();
+                System.out.print("");
+            }
+            server.broadcastMsg("betStop");
+
+            inRace=true;
+
 
             // Message for race start
             System.out.println("Starting the race!");
@@ -107,6 +121,9 @@ public class Race implements Runnable {
                         for(Horse horseFinish : enrolledHorses) {
                             horseFinish.resetDistance();
                         }
+
+                        //todo: give Rewards to players
+
 
                         break;
                     }
