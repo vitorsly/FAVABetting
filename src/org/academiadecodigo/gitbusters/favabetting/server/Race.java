@@ -10,6 +10,8 @@ import java.util.List;
 
 public class Race implements Runnable {
 
+    private Server server;
+
     // All horses available
     private List<Horse> stable;
 
@@ -31,7 +33,9 @@ public class Race implements Runnable {
     private boolean won = false;
     private boolean raceStart = false;
 
-    public Race() {
+    public Race(Server server) {
+
+        this.server = server;
 
         // Initiate horses for race line
         this.enrolledHorses = new ArrayList<>();
@@ -52,20 +56,9 @@ public class Race implements Runnable {
         enrolledHorses.addAll(HorseFactory.getHorses(6));
     }
 
-    public static void main(String[] args) {
-
-        Race race = new Race();
-
-        // Start the race
-        race.run();
-    }
-
     public void run() {
 
         try {
-
-            // TODO: Countdown for race start
-            // TODO Accept user bets
 
             // Message for race start
             System.out.println("Starting the race!");

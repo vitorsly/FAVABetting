@@ -52,15 +52,14 @@ public class HorseFactory {
         ArrayList<Horse> onRace = new ArrayList<>();
 
         while ( number > 0){
-            System.out.println(number);
+
             int random = Utils.getRandom(stable.size());
             Horse horse = stable.get(random);
 
             if(!onRace.contains(horse)) {
                 onRace.add(horse);
+                number--;
             }
-
-            number--;
         }
 
         return onRace;
