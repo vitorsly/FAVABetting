@@ -1,12 +1,14 @@
 package org.academiadecodigo.gitbusters.favabetting.client.messages;
 
 import org.academiadecodigo.gitbusters.favabetting.client.Client;
+import org.academiadecodigo.gitbusters.favabetting.client.Print;
 
 public class BalanceMsg implements Messages {
 
     @Override
     public void run(Client client, String msg) {
         String balance = msg.split(" ")[1];
-        System.out.println("Wallet balance: " + balance + "$");
+        new Print("Wallet balance: " + balance + "$");
+        //System.out.println("Wallet balance: " + balance + "$");
     }
 }
