@@ -125,7 +125,8 @@ public class Race implements Runnable {
         }
     }
 
-    public void PlaceBet(Client client,int horse,int amount){
+
+    public void placeBet(Client client, int horse, int amount){
         broker.registerBet(client,enrolledHorses.get(horse),amount);
     }
 

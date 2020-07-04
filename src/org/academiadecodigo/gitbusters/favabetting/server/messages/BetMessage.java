@@ -3,8 +3,6 @@ package org.academiadecodigo.gitbusters.favabetting.server.messages;
 import org.academiadecodigo.gitbusters.favabetting.server.Client;
 import org.academiadecodigo.gitbusters.favabetting.server.Server;
 
-import javax.xml.catalog.Catalog;
-
 public class BetMessage implements Message {
 
     @Override
@@ -24,7 +22,12 @@ public class BetMessage implements Message {
         try {
             int horseNumber = Integer.parseInt(msgSplit[1]);
             int betAmount= Integer.parseInt(msgSplit[2]);
-            //server.getRace().getBroker().setClientBet(client, ,betAmount);
+            if(client.getWallet().Withdraw(betAmount)){
+                server.getRace().placeBet(client,horseNumber,betAmount);
+            }
+            else{
+                client.sendMessage("noFunds");
+            }
         } catch (Exception e){
             client.sendMessage("bet Not Register");
             System.out.println("Variable is not INT "+e.getMessage());
