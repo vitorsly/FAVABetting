@@ -9,6 +9,8 @@ public enum MessageHandler {
     BETSTART("betTime",new BetStart()),
     BETSTOP("betStop",new BetStop()),
     SHOWMENU("mainmenu",new ShowMainMenu()),
+    QUIT("quit", new QuitMsg()),
+    RACERUNNING("racerunning", new RaceRunningMsg()),
     INVALID("",new InvalidMsg());
 
 

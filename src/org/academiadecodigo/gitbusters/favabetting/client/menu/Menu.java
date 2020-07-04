@@ -75,7 +75,7 @@ public class Menu {
 
     public void makeBetMenu(String[] horseList){
 
-        String[] horses = new String[6];
+        String[] horses = new String[7];
 
         for ( int i = 0; i < horseList.length; i++){
 
@@ -85,7 +85,14 @@ public class Menu {
 
         }
 
+        horses[6] = "Back";
+
         int horse = buildMenu(horses,"Choose your horse:","Invalid option");
+
+        if (horse == 7){
+            mainMenu();
+            return;
+        }
 
         int amount = getIntInput("Place your bet: ","Invalid amount");
 
@@ -99,7 +106,7 @@ public class Menu {
 
 
 
-        String[] options = {"View balance", "Make a bet","Influence Race","Transactions","Change name","Check online players","Quit"};
+        String[] options = {"View balance", "Make a bet","Influence Race","Transactions","Change name","Quit"};
 
         switch (buildMenu(options,"Main Menu","Invalid option")){
 
@@ -117,9 +124,6 @@ public class Menu {
                 break;
             case 5:
                 changeName();
-                break;
-            case 6:
-                printPlayers();
                 break;
             case 7:
                 client.sendMessage("quit");

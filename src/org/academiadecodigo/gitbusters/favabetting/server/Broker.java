@@ -22,6 +22,10 @@ public class Broker {
         this.clientsBets.put(client, new HashMap<>());
     }
 
+    public void unregisterClient(Client client) {
+        clientsBets.remove(client);
+    }
+
     // Add new bet to client
     public void registerBet(Client client, Horse horse, Integer amount) {
         this.clientsBets.get(client).put(horse, amount);
