@@ -10,14 +10,22 @@ import java.util.List;
 
 public class Race implements Runnable {
 
-    // List of horses ready to race
-    private static List<Horse> enrolledHorses;
+    // All horses available
+    private List<Horse> stable;
 
+    // List of horses ready to race
+    private List<Horse> enrolledHorses;
+
+    // Track type that will have our race
     private Track track;
+
+    // Horse strategy for race
     private Strategy strategy;
 
+    // Broker to accept and handle bets
     private Broker broker;
 
+    // Who wis the winner horse
     private Horse winnerHorse = null;
 
     private boolean won = false;
@@ -25,25 +33,28 @@ public class Race implements Runnable {
 
     public Race() {
 
-        enrolledHorses = new ArrayList<>();
+        // Initiate horses for race line
+        this.enrolledHorses = new ArrayList<>();
 
         // Get track type randomly
         this.track = Track.getTrack();
 
         // Get strategy type randomly
         this.strategy = Strategy.getStrategy();
+
+        // Initiate broker
+        this.broker = new Broker();
+
+        // Load our stable
+        this.stable = HorseFactory.createStable();
+
+        // Add X number of horses to our race line
+        enrolledHorses.addAll(HorseFactory.getHorses(6));
     }
 
     public static void main(String[] args) {
 
         Race race = new Race();
-
-        // Initiate broker
-        Broker broker = new Broker();
-
-        List<Horse> stable = HorseFactory.createStable();
-
-        enrolledHorses.addAll(HorseFactory.getHorses(6));
 
         // Start the race
         race.run();
@@ -66,11 +77,16 @@ public class Race implements Runnable {
 
                     // Apply speed change at race start only
                     if(!raceStart) {
+
                         // Applying track effect to horse's speed
                         horse.setSpeed(horse.getSpeed() * track.getType().getMultiplier());
 
                         // Applying strategy effect to horse's speed
                         horse.setSpeed(horse.getSpeed() * strategy.getType().getMultiplier());
+
+                        // Applying total distance effect to horse's speed ( tiredness )
+                        horse.setSpeed(horse.getSpeed() * horse.getTotalDistanceMultiplier());
+
                         raceStart = true;
                     }
 
@@ -110,5 +126,9 @@ public class Race implements Runnable {
         } catch ( Exception error) {
             error.printStackTrace();
         }
+    }
+
+    public List<Horse> getEnrolledHorses() {
+        return enrolledHorses;
     }
 }
