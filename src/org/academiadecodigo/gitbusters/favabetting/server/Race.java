@@ -60,6 +60,10 @@ public class Race implements Runnable {
 
         try {
 
+            // TODO: Timer
+
+            // TODO: Allow clients to place bets
+
             // Message for race start
             System.out.println("Starting the race!");
 
