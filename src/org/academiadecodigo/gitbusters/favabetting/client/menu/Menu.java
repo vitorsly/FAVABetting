@@ -6,10 +6,14 @@ import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
 import org.academiadecodigo.bootcamp.scanners.string.StringInputScanner;
 import org.academiadecodigo.gitbusters.favabetting.client.Client;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Menu {
 
     private Prompt prompt;
     private Client client;
+    private List<String> transactions = new ArrayList<String>();
 
     public Menu(Client client) {
 
@@ -19,7 +23,6 @@ public class Menu {
 
     }
 
-
     public void insertNameMenu(){
 
         String name = getStringInput("Insert your name: ", "Invalid name...");
@@ -27,7 +30,6 @@ public class Menu {
         client.sendMessage("name " + name);
 
     }
-
 
     public void makeBetMenu(String[] horseList){
 
@@ -49,7 +51,6 @@ public class Menu {
 
     }
 
-
     public void mainMenu(){
 
 
@@ -67,7 +68,7 @@ public class Menu {
                 influenceRace();
                 break;
             case 4:
-                transactionsMenu();
+                printTransactions();
                 break;
             case 5:
                 changeName();
@@ -100,8 +101,17 @@ public class Menu {
 
     }
 
-    private void transactionsMenu() {
+    public void saveTransaction(String transaction) {
 
+        transactions.add(transaction);
+
+    }
+
+    public void printTransactions(){
+
+        for (String transaction : transactions){
+            System.out.println(transaction);
+        }
 
     }
 
