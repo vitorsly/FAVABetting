@@ -13,7 +13,6 @@ public class QuitMessage implements Message{
 
     @Override
     public void receive(Client client, Server server, String msg) {
-
         server.removeClient(client);
     }
 }
