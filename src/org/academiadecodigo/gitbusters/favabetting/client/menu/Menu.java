@@ -15,7 +15,6 @@ public class Menu {
 
         this.client = client;
         this.prompt = new Prompt(System.in,System.out);
-        mainMenu();
 
     }
 
@@ -51,7 +50,6 @@ public class Menu {
 
 
     public void mainMenu(){
-
 
         String[] options = {"View balance", "Make a bet","Influence Race","Transactions","Change name","Check online players","Quit"};
 

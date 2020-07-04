@@ -6,6 +6,9 @@ public enum MessageHandler {
     BALANCE("balance",new BalanceMsg()),
     INRACE("inRace",new InvalidMsg()),
     BETOK("betOK",new BetOkMsg()),
+    BETSTART("betTime",new BetStart()),
+    BETSTOP("betStop",new BetStop()),
+    SHOWMENU("mainmenu",new ShowMainMenu()),
     INVALID("",new InvalidMsg());
 
 
