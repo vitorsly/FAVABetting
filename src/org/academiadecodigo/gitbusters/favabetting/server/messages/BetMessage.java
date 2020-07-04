@@ -7,8 +7,6 @@ public class BetMessage implements Message {
 
     @Override
     public void send(Client client, Server server) {
-        //Send Confirmation to client
-        client.sendMessage("ok");
     }
 
     @Override
@@ -22,6 +20,7 @@ public class BetMessage implements Message {
         try {
             int horseNumber = Integer.parseInt(msgSplit[1]);
             int betAmount= Integer.parseInt(msgSplit[2]);
+            System.out.println(horseNumber+" "+betAmount+" "+horseNumber+betAmount+" "+server.getRace());
             if(client.getWallet().Withdraw(betAmount)){
                 server.getRace().placeBet(client,horseNumber,betAmount);
                 client.sendMessage("betOK");
@@ -30,9 +29,10 @@ public class BetMessage implements Message {
                 client.sendMessage("noFunds");
             }
         } catch (Exception e){
-            client.sendMessage("bet Not Register");
-            System.out.println("Variable is not INT "+e.getMessage());
-            return;
+            e.getMessage();
+//            client.sendMessage("bet Not Register");
+//            System.out.println("Variable is not INT "+e.getMessage());
+//            return;
         }
 
         send(client,server);
