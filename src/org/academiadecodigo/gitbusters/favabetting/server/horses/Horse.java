@@ -106,4 +106,8 @@ public class Horse {
     public void shiftSpeed(double speedModifier){
         this.speed += speedModifier;
     }
+
+    public String getDescription() {
+        return description;
+    }
 }
