@@ -7,6 +7,7 @@ public class Horse {
     private double speed;
     private int maxSpeed;
     private double distance;
+    private double totalDistance;
     private double odds;
     private int wins;
     private int races;
@@ -19,7 +20,8 @@ public class Horse {
         this.name = name;
         this.speed = speed;
         this.maxSpeed = maxSpeed;
-        distance = 0;
+        this.distance = 0;
+        this.totalDistance = 0;
         this.odds = odds;
         this.wins = wins;
         this.races = races;
@@ -56,10 +58,15 @@ public class Horse {
 
     public void race() {
         this.distance += speed;
+        this.totalDistance += speed;
     }
 
     public double getDistance() {
         return distance;
+    }
+
+    public void resetDistance() {
+        this.distance = 0;
     }
 
     public void setSpeed(double value) {

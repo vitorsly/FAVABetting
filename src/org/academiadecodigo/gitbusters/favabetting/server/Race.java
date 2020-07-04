@@ -1,5 +1,6 @@
 package org.academiadecodigo.gitbusters.favabetting.server;
 
+import org.academiadecodigo.gitbusters.favabetting.server.horses.HorseFactory;
 import org.academiadecodigo.gitbusters.favabetting.server.strategy.Strategy;
 import org.academiadecodigo.gitbusters.favabetting.server.horses.Horse;
 import org.academiadecodigo.gitbusters.favabetting.server.tracks.Track;
@@ -10,7 +11,7 @@ import java.util.List;
 public class Race implements Runnable {
 
     // List of horses ready to race
-    private List<Horse> enrolledHorses;
+    private static List<Horse> enrolledHorses;
 
     private Track track;
     private Strategy strategy;
@@ -24,7 +25,7 @@ public class Race implements Runnable {
 
     public Race() {
 
-        this.enrolledHorses = new ArrayList<>();
+        enrolledHorses = new ArrayList<>();
 
         // Get track type randomly
         this.track = Track.getTrack();
@@ -40,27 +41,12 @@ public class Race implements Runnable {
         // Initiate broker
         Broker broker = new Broker();
 
-        // Create horses for the race
-        // TODO: Is in horse factory created by Vitor
-        // TODO: replace by race.EnrollHorse(HorseFactory.getNewHorse());
-        // TODO: getNewHorse() needs to get it randomly but can't choose the same horse
-        // TODO: THIS BELOW IS JUST DUMMY TEST DATA
-        race.EnrollHorse("Lino",3,6);
-        race.EnrollHorse("Monica",3,8);
-        race.EnrollHorse("Tiago",3,12);
-        race.EnrollHorse("Leila",3,8);
-        race.EnrollHorse("Ricky",3,10);
-        race.EnrollHorse("Peter",3,8);
+        List<Horse> stable = HorseFactory.createStable();
+
+        enrolledHorses.addAll(HorseFactory.getHorses(6));
 
         // Start the race
         race.run();
-    }
-
-    // Enroll horses to our race
-    // TODO: Maybe move it to factory class?
-    public void EnrollHorse(String name, int speed, int maxSpeed) {
-        //Horse horse = new Horse(name, speed, maxSpeed);
-        //enrolledHorses.add(horse);
     }
 
     public void run() {
@@ -103,6 +89,12 @@ public class Race implements Runnable {
                         // Sets winner with horse object
                         winnerHorse = horse;
                         won = true;
+
+                        // Reset horse race distance
+                        for(Horse horseFinish : enrolledHorses) {
+                            horseFinish.resetDistance();
+                        }
+
                         break;
                     }
                 }
