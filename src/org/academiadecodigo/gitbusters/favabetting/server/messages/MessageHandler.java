@@ -5,6 +5,7 @@ public enum MessageHandler {
     NAME("name",new NameChangeMsg()),
     ENROLLEDHORSES("getHorses",new GetHorsesMessage()),
     BALANCE("balance",new GetBalanceMessage()),
+    REQUESTMM("mainmenu",new ForceMainMenu()),
     INVALID("",new InvalidMessage());
 
     private String actionMessage;

@@ -11,6 +11,7 @@ import java.util.List;
 public class Race implements Runnable {
 
     private Server server;
+    private Boolean inRace=false;
 
     // All horses available
     private List<Horse> stable;
@@ -61,9 +62,20 @@ public class Race implements Runnable {
         try {
 
 
-            // TODO: Timer
+            server.broadcastMsg("betTime");
+            System.out.print("");
+            Interval interval=server.interval(30);
+            boolean sopLoop=true;
 
-            // TODO: Allow clients to place bets
+
+            while (sopLoop){
+               sopLoop=interval.getInInterval();
+                System.out.print("");
+            }
+
+            server.broadcastMsg("betTime");
+
+            inRace=true;
 
             server.broadcastMsg("betTime");
             System.out.print("");
@@ -141,7 +153,6 @@ public class Race implements Runnable {
             error.printStackTrace();
         }
     }
-
 
     public void placeBet(Client client, int horse, int amount){
         broker.registerBet(client,enrolledHorses.get(horse),amount);
