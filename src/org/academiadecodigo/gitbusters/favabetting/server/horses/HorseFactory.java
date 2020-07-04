@@ -13,6 +13,7 @@ public class HorseFactory {
     public static Horse createHorse(String name, String Description, double speed, int maxspeed, double odds, int wins, int race){
 
         Horse horse = new Horse(currentID, name, Description, speed, maxspeed, odds, wins, race);
+
         currentID++;
 
         return horse;
@@ -51,7 +52,7 @@ public class HorseFactory {
         ArrayList<Horse> onRace = new ArrayList<>();
 
         while ( number > 0){
-
+            System.out.println(number);
             int random = Utils.getRandom(stable.size());
             Horse horse = stable.get(random);
 
