@@ -42,7 +42,6 @@ public class Client {
         String line;
         while((line = inputStream.readLine()) != null) {
             MessageHandler.getActionFromString(line).getAction().run(this,line);
-            System.out.println("Client "+line);
         }
     }
 
