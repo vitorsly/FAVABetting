@@ -58,7 +58,6 @@ public class HorseFactory {
 
             if(!onRace.contains(horse)) {
                 onRace.add(horse);
-                System.out.println(horse.getName());
                 number--;
             }
         }

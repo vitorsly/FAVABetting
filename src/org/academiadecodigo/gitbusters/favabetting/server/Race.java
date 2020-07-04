@@ -65,8 +65,8 @@ public class Race implements Runnable {
             server.broadcastMsg("betTime");
             System.out.print("");
             Interval interval=server.interval(30);
-            boolean sopLoop=true;
 
+            boolean sopLoop=true;
 
             while (sopLoop){
                sopLoop=interval.getInInterval();
