@@ -3,15 +3,16 @@ package org.academiadecodigo.gitbusters.favabetting.server.messages;
 import org.academiadecodigo.gitbusters.favabetting.server.Client;
 import org.academiadecodigo.gitbusters.favabetting.server.Server;
 
-public class Bet implements Message {
-
+public class InvalidMessage implements Message{
     @Override
     public void send(Client client, Server server) {
-        //Send Confirmation to client
+        System.out.println("Invalid Message");
+        client.sendMessage("Invalid Command");
     }
 
     @Override
-    public void receive(Client client, Server server) {
-        //recieve bet
+    public void receive(Client client, Server server, String msg) {
+        System.out.println("Invalid Message");
+        send(client,server);
     }
 }

@@ -1,5 +1,7 @@
 package org.academiadecodigo.gitbusters.favabetting.server;
 
+import org.academiadecodigo.gitbusters.favabetting.server.messages.MessageHandler;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -41,7 +43,21 @@ public class Client implements Runnable {
 
         String line;
         while((line = input.readLine()) != null) {
-            System.out.println(line);
+            MessageHandler.getActionFromString(line).getMessage().receive(this,server,line);
         }
+    }
+
+    public void sendMessage(String msg){
+        try {
+            msg+="\n";
+            outPut.write(msg);
+            outPut.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getName() {
+        return name;
     }
 }

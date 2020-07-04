@@ -39,9 +39,9 @@ public class Server {
             System.out.println(e);
         }
     }
-    public void broadcastMsg(Client from, String msg){
+    public void broadcastMsg(String msg){
         for (Client c :sockets){
-            
+            c.sendMessage("server:"+msg);
         }
     }
 
