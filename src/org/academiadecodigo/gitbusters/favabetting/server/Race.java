@@ -73,18 +73,8 @@ public class Race implements Runnable {
                 System.out.print("");
             }
 
-            server.broadcastMsg("betTime");
-
             inRace=true;
-
-            server.broadcastMsg("betTime");
             System.out.print("");
-            Interval interval=server.interval(30);
-            boolean sopLoop=true;
-            while (sopLoop){
-               sopLoop=interval.getInInterval();
-                System.out.print("");
-            }
             server.broadcastMsg("betStop");
 
             inRace=true;
@@ -136,7 +126,6 @@ public class Race implements Runnable {
 
                         //todo: give Rewards to players
 
-
                         break;
                     }
                 }
@@ -148,10 +137,27 @@ public class Race implements Runnable {
             // Message to players about money
             System.out.println("Here have your money cheater!");
             System.out.println("You're a fucking looser!");
+            restartRace();
 
         } catch ( Exception error) {
             error.printStackTrace();
         }
+    }
+
+    public void restartRace(){
+        won=false;
+        // Initiate horses for race line
+        this.enrolledHorses = new ArrayList<>();
+
+        // Add X number of horses to our race line
+        enrolledHorses.addAll(HorseFactory.getHorses(6));
+
+        // Get track type randomly
+        this.track = Track.getTrack();
+
+        // Get strategy type randomly
+        this.strategy = Strategy.getStrategy();
+        run();
     }
 
     public void placeBet(Client client, int horse, int amount){

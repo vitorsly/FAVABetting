@@ -70,7 +70,7 @@ public class Menu {
                 "            '$$$          $  *\n" +
                 "              ^\"          3ed$.\n" +
                 "                           $$$#\n");
-
+        mainMenu();
     }
 
     public void makeBetMenu(String[] horseList){
