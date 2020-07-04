@@ -8,33 +8,48 @@ import java.util.Map;
 public class Broker {
 
     // Bets container which allows players to have multiple bets
-    // String - client name ( can be replaced by integer (client ID) or client object )
-    // Integer - Horse ID ( can be replaced by string (horse name) or horse object )
-    // Integer - clients bet amount
-    private Map<Client, Map<Horse, Integer>> bets;
+    private Map<Client, Map<Horse, Integer>> clientsBets;
+
+    // Bets container which allows players to have multiple bets
+    private Map<Horse, Map<Client, Integer>> horsesBets;
 
     public Broker() {
-        this.bets = new HashMap<>();
+        this.clientsBets = new HashMap<>();
     }
 
     // TODO: When client connects to server we register client with the broker
     // Registers client with broker
     public void registerClient(Client client) {
-        this.bets.put(client, new HashMap<>());
+        this.clientsBets.put(client, new HashMap<>());
     }
 
-    // Returns all bets
-    public Map<Client, Map<Horse, Integer>> getAllBets() {
-        return bets;
+    // Returns all clients bets
+    public Map<Client, Map<Horse, Integer>> getAllClientsBets() {
+        return this.clientsBets;
     }
 
     // Returns client bets
     public Map<Horse, Integer> getClientBets(Client client) {
-        return bets.get(client);
+        return this.clientsBets.get(client);
     }
 
     // Add new bet to client
     public void setClientBet(Client client, Horse horse, Integer amount) {
-        bets.get(client).put(horse, amount);
+        this.clientsBets.get(client).put(horse, amount);
+    }
+
+    // Returns all horses bets
+    public Map<Horse, Map<Client, Integer>> getAllHorsesBets() {
+        return this.horsesBets;
+    }
+
+    // Returns horse bets
+    public Map<Client, Integer> getHorseBets(Horse horse) {
+        return this.horsesBets.get(horse);
+    }
+
+    // Add new bet to hose
+    public void setHorseBet(Horse horse, Client client, Integer amount) {
+        this.horsesBets.get(horse).put(client, amount);
     }
 }

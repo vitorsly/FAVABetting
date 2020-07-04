@@ -37,8 +37,14 @@ public class Race implements Runnable {
 
         this.server = server;
 
+        // Load our stable
+        this.stable = HorseFactory.createStable();
+
         // Initiate horses for race line
         this.enrolledHorses = new ArrayList<>();
+
+        // Add X number of horses to our race line
+        enrolledHorses.addAll(HorseFactory.getHorses(6));
 
         // Get track type randomly
         this.track = Track.getTrack();
@@ -48,17 +54,15 @@ public class Race implements Runnable {
 
         // Initiate broker
         this.broker = new Broker();
-
-        // Load our stable
-        this.stable = HorseFactory.createStable();
-
-        // Add X number of horses to our race line
-        enrolledHorses.addAll(HorseFactory.getHorses(6));
     }
 
     public void run() {
 
         try {
+
+            // TODO: Timer
+
+            // TODO: Allow clients to place bets
 
             // Message for race start
             System.out.println("Starting the race!");

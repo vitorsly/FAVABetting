@@ -12,13 +12,13 @@ public class Server {
     ServerSocket server;
     //private CopyOnWriteArrayList<Client> sockets=new CopyOnWriteArrayList<>();
 
-    private List<Client> sockets=new ArrayList<>();
+    private List<Client> sockets = new ArrayList<>();
     int clientIterator;
-    ExecutorService ex= Executors.newCachedThreadPool();
+    ExecutorService ex = Executors.newCachedThreadPool();
     Race race;
-    Server(int port){
+    Server(int port) {
         initialyzeServer(port);
-        race=new Race(this);
+        race = new Race(this);
         ex.submit(race);
     }
 
@@ -27,7 +27,7 @@ public class Server {
             server = new ServerSocket(port);
             while (true) {
                 try {
-                    Client c=new Client(server.accept(),"client "+clientIterator,this);
+                    Client c = new Client(server.accept(),"client " + clientIterator,this);
                     sockets.add(c);
                     ex.submit(c);
                     race.getBroker().registerClient(c);
@@ -37,7 +37,6 @@ public class Server {
                 clientIterator++;
                 System.out.println("Client" + clientIterator + " has connected the server");
             }
-
 
         }catch (Exception e){
             System.out.println(e);
@@ -51,7 +50,7 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        Server s=new Server(8080);
+        Server s = new Server(8080);
     }
 
     public List<Client> getSockets() {

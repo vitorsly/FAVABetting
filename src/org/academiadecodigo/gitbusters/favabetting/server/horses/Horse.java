@@ -5,6 +5,7 @@ public class Horse {
     private int id;
     private String name;
     private String description;
+    private double baseSpeed;
     private double speed;
     private int maxSpeed;
     private double distance;
@@ -18,6 +19,7 @@ public class Horse {
         this.id = id;
         this.description = description;
         this.name = name;
+        this.baseSpeed = speed;
         this.speed = speed;
         this.maxSpeed = maxSpeed;
         this.distance = 0;
@@ -72,6 +74,28 @@ public class Horse {
     public void resetDistance() {
         this.distance = 0;
     }
+
+    public void resetSpeed() {
+        this.speed = baseSpeed;
+    }
+
+    public void addWin(){
+        this.wins++;
+    }
+
+    public void addRace(){
+        this.races++;
+    }
+
+    public void tempSpeedChange(double speedChange){
+        this.speed += speedChange;
+    }
+
+    public void permSpeedChange(double speedChange){
+        this.speed += speedChange;
+        this.baseSpeed += speedChange;
+    }
+
 
     public void setSpeed(double value) {
         if(value <= maxSpeed) {
