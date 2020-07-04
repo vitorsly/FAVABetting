@@ -14,6 +14,7 @@ public class Menu {
     private Prompt prompt;
     private Client client;
     private List<String> transactions = new ArrayList<String>();
+    private List<String> playerList = new ArrayList<String>();
 
     public Menu(Client client) {
 
