@@ -75,7 +75,7 @@ public class Menu {
                 changeName();
                 break;
             case 6:
-                getPlayers();
+                printPlayers();
                 break;
             case 7:
                 client.sendMessage("quit");
@@ -86,8 +86,11 @@ public class Menu {
 
     }
 
-    private void getPlayers() {
+    private void printPlayers() {
 
+        for (String player : playerList){
+            System.out.println(player);
+        }
 
     }
 
