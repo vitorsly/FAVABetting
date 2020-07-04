@@ -9,13 +9,16 @@ public class Horse {
     private int wins;
     private int races;
     private boolean alive;
-    private RaceStrategy strategy;
+    private int maxSpeed;
+    private double distance;
 
-    Horse(int id, String name, String description, int speed, double odds, int wins, int races){
+    Horse(int id, String name, String description, int speed, int maxSpeed, double odds, int wins, int races){
         this.id = id;
         this.description = description;
         this.name = name;
         this.speed = speed;
+        this.maxSpeed = maxSpeed;
+        distance = 0;
         this.odds = odds;
         this.wins = wins;
         this.races = races;
@@ -50,11 +53,21 @@ public class Horse {
         alive = false;
     }
 
-    public void setStrategy(RaceStrategy strategy) {
-        this.strategy = strategy;
-    }
-
     public void shiftSpeed(int speedModifier){
         this.speed += speedModifier;
+    }
+
+    public void race() {
+        this.distance += speed;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setSpeed(int value) {
+        if(value <= maxSpeed) {
+            this.speed = value;
+        }
     }
 }
