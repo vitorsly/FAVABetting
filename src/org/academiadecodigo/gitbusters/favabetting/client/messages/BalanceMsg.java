@@ -8,5 +8,6 @@ public class BalanceMsg implements Messages {
     public void run(Client client, String msg) {
         String balance = msg.split(" ")[1];
         System.out.println("Wallet balance: " + balance + "$");
+        client.getMenu().mainMenu();
     }
 }

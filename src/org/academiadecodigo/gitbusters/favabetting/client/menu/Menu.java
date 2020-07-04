@@ -140,16 +140,15 @@ public class Menu {
 
     private void changeName() {
 
-        StringInputScanner insertName = new StringInputScanner();
-        insertName.setMessage("Insert new name: ");
-
-        String newName = prompt.getUserInput(insertName);
+        String newName = getStringInput("Insert new name: ","Invalid name..");
 
         client.sendMessage("name " + newName);
 
     }
 
-    public void saveTransaction(String transaction) {
+    public void saveTransaction(String msg) {
+
+        String transaction = msg.substring(5);
 
         transactions.add(transaction);
 
