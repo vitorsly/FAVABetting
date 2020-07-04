@@ -54,6 +54,13 @@ public class Server {
         }
     }
 
+    public void removeClient(Client client){
+
+        race.getBroker().unregisterClient(client);
+        sockets.remove(client);
+        client.closeSocket();
+    }
+
     public static void main(String[] args) {
         Server s = new Server(8080);
     }

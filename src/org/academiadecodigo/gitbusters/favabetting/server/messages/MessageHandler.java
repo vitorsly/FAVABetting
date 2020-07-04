@@ -6,6 +6,7 @@ public enum MessageHandler {
     ENROLLEDHORSES("getHorses",new GetHorsesMessage()),
     BALANCE("balance",new GetBalanceMessage()),
     REQUESTMM("mainmenu",new ForceMainMenu()),
+    QUIT("quit", new QuitMessage()),
     INVALID("",new InvalidMessage());
 
     private String actionMessage;
