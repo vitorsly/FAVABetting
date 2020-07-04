@@ -13,7 +13,10 @@ public class BetMessage implements Message {
 
     @Override
     public void receive(Client client, Server server, String msg) {
-
+        if(server.getRace().getInRace()){
+            client.sendMessage("racerunning");
+            return;
+        }
         String[]msgSplit=msg.split(" ");
         if(msgSplit.length<3){
             System.out.println("nao contem todos os campos");

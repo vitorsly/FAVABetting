@@ -102,10 +102,6 @@ public class Menu {
 
     public void mainMenu(){
 
-
-
-
-
         String[] options = {"View balance", "Make a bet","Influence Race","Transactions","Change name","Quit"};
 
         switch (buildMenu(options,"Main Menu","Invalid option")){
@@ -125,7 +121,7 @@ public class Menu {
             case 5:
                 changeName();
                 break;
-            case 7:
+            case 6:
                 client.sendMessage("quit");
                 break;
             default:

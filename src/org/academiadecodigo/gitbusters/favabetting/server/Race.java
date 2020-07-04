@@ -132,11 +132,14 @@ public class Race implements Runnable {
             }
 
             // TODO: Check bets and apply wins to players base on winner horse object
+            server.broadcastMsg("raceOver "+winnerHorse.getName());
+            inRace=false;
             System.out.println("Winning horse: " + winnerHorse.getName());
 
             // Message to players about money
             System.out.println("Here have your money cheater!");
             System.out.println("You're a fucking looser!");
+
             restartRace();
 
         } catch ( Exception error) {
@@ -170,5 +173,9 @@ public class Race implements Runnable {
 
     public Broker getBroker() {
         return broker;
+    }
+
+    public Boolean getInRace() {
+        return inRace;
     }
 }

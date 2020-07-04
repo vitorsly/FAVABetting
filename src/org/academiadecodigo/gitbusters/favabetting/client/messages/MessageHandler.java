@@ -11,6 +11,7 @@ public enum MessageHandler {
     SHOWMENU("mainmenu",new ShowMainMenu()),
     QUIT("quit", new QuitMsg()),
     RACERUNNING("racerunning", new RaceRunningMsg()),
+    RACEOVER("raceOver",new RaceOverWinsMsg()),
     INVALID("",new InvalidMsg());
 
 
