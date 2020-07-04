@@ -29,7 +29,7 @@ public class Broker {
     }
 
     // Returns client bets
-    public Map<Horse, Integer> getClientBets(Client client) {
+    public Map<Horse, Integer> +(Client client) {
         return bets.get(client);
     }
 
