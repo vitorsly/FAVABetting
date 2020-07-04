@@ -17,14 +17,13 @@ public class Broker {
         this.clientsBets = new HashMap<>();
     }
 
-    // TODO: When client connects to server we register client with the broker
     // Registers client with broker
     public void registerClient(Client client) {
         this.clientsBets.put(client, new HashMap<>());
     }
 
     // Add new bet to client
-    public void setBet(Client client, Horse horse, Integer amount) {
+    public void registerBet(Client client, Horse horse, Integer amount) {
         this.clientsBets.get(client).put(horse, amount);
         this.horsesBets.get(horse).put(client, amount);
     }
