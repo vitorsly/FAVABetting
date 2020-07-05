@@ -8,11 +8,11 @@ public class CheatShop {
 
     public static Cheats[] cheats;
 
-    public CheatShop(){
+    public CheatShop() {
         init();
     }
 
-    public static void init(){
+    public static void init() {
         cheats = new Cheats[5];
         cheats[0] = new SteroidBoost();
         cheats[1] = new MegaBoost();
@@ -28,20 +28,21 @@ public class CheatShop {
     }
 
 
-    public static boolean buyCheat(int cheatID, Client buyer, Horse target){
+    public static boolean buyCheat(int cheatID, Client buyer, Horse target) {
 
-        if(cheats[cheatID].getPrice() > buyer.getWallet().getBalance()){
+        if (cheats[cheatID].getPrice() > buyer.getWallet().getBalance()) {
             return false;
         }
 
-        if(Utils.getRandom(1,100) <= cheats[cheatID].getPoliceChance()){
+        if (Utils.getRandom(1, 100) <= cheats[cheatID].getPoliceChance()) {
             System.out.println("Client " + buyer.getName() + " has been caught using cheats!");
-            if(buyer.getWallet().getBalance()<cheats[cheatID].getFine()){
+            if (buyer.getWallet().getBalance() < cheats[cheatID].getFine()) {
                 buyer.getWallet().Withdraw(buyer.getWallet().getBalance());
-            }else{
+            } else {
                 buyer.getWallet().Withdraw(cheats[cheatID].getFine());
             }
             return false;
+
         } else {
             buyer.getWallet().Withdraw(cheats[cheatID].getPrice());
             cheats[cheatID].activate(target);
@@ -50,27 +51,27 @@ public class CheatShop {
     }
 
 
-    public static void activate(int id, Horse target){
+    public static void activate(int id, Horse target) {
         cheats[id].activate(target);
     }
 
-    public static String getName(int id){
+    public static String getName(int id) {
         return cheats[id].getName();
     }
 
-    public static String getDescription(int id){
+    public static String getDescription(int id) {
         return cheats[id].getDescription();
     }
 
-    public static double getPrice(int id){
+    public static double getPrice(int id) {
         return cheats[id].getPrice();
     }
 
-    public static double getFine(int id){
+    public static double getFine(int id) {
         return cheats[id].getFine();
     }
 
-    public static int getPoliceChange(int id){
+    public static int getPoliceChange(int id) {
         return cheats[id].getPoliceChance();
     }
 

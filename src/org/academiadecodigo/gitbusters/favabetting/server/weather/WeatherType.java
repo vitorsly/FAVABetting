@@ -1,5 +1,7 @@
 package org.academiadecodigo.gitbusters.favabetting.server.weather;
 
+import org.academiadecodigo.gitbusters.Utils;
+import org.academiadecodigo.gitbusters.favabetting.server.tracks.Track;
 import org.academiadecodigo.gitbusters.favabetting.server.tracks.TrackType;
 
 public enum WeatherType {
@@ -56,5 +58,11 @@ public enum WeatherType {
 
     public int getPower() {
         return power;
+    }
+
+    public static WeatherType random(){
+        int random = Utils.getRandom(WeatherType.values().length);
+        WeatherType weatherType = WeatherType.values()[random];
+        return weatherType;
     }
 }

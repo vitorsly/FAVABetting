@@ -5,6 +5,7 @@ import org.academiadecodigo.gitbusters.favabetting.server.horses.HorseFactory;
 import org.academiadecodigo.gitbusters.favabetting.server.strategy.Strategy;
 import org.academiadecodigo.gitbusters.favabetting.server.horses.Horse;
 import org.academiadecodigo.gitbusters.favabetting.server.tracks.Track;
+import org.academiadecodigo.gitbusters.favabetting.server.weather.WeatherType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,6 +25,8 @@ public class Race implements Runnable {
 
     // Track type that will have our race
     private Track track;
+
+    private WeatherType weather;
 
     // Horse strategy for race
     private Strategy strategy;
@@ -52,6 +55,8 @@ public class Race implements Runnable {
 
         // Get track type randomly
         this.track = Track.getTrack();
+
+        this.weather = WeatherType.random();
 
         // Get strategy type randomly
         this.strategy = Strategy.getStrategy();
@@ -101,6 +106,10 @@ public class Race implements Runnable {
 
                         // Applying track effect to horse's speed
                         horse.setSpeed(horse.getSpeed() * track.getType().getMultiplier());
+
+                        horse.setSpeed(horse.getSpeed() * horse.getTrackModifier(track.getType()));
+
+                        horse.setSpeed(horse.getSpeed() * horse.getWeatherModifier(weather));
 
                         // Applying strategy effect to horse's speed
                         horse.setSpeed(horse.getSpeed() * strategy.getType().getMultiplier());
@@ -182,6 +191,8 @@ public class Race implements Runnable {
         // Get track type randomly
         this.track = Track.getTrack();
 
+        this.weather = WeatherType.random();
+
         // Get strategy type randomly
         this.strategy = Strategy.getStrategy();
         run();
@@ -211,4 +222,9 @@ public class Race implements Runnable {
         });
         return enrolledHorses.get(0);
     }
+
+    public Horse getHorseByIndex(int index) {
+        return enrolledHorses.get(index);
+    }
+
 }
