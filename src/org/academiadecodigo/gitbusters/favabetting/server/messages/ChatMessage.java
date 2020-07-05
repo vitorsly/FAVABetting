@@ -15,7 +15,7 @@ public class ChatMessage implements Message{
 
         String message = msg.split("#")[1];
 
-        server.broadcastExceptMe(client, message);
+        server.broadcastExceptMe(client,"chat "+client.getName()+": "+ message);
 
     }
 }

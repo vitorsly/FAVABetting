@@ -19,6 +19,7 @@ public class Menu {
     private List<String> transactions = new ArrayList<String>();
     private List<String> playerList = new ArrayList<String>();
     private ExecutorService executor = Executors.newCachedThreadPool();
+    private boolean inChat=false;
 
     public Menu(Client client) {
 
@@ -78,10 +79,12 @@ public class Menu {
     }
 
     public void makeBetMenu(String[] horseList,String weather,String track) {
+        inChat=false;
         executor.submit(new BetMenu(horseList,weather,track));
     }
 
     public void mainMenu() {
+        inChat=false;
         executor.submit(new MainMenu());
     }
 
@@ -158,6 +161,29 @@ public class Menu {
         client.sendMessage("CheatShop");
     }
 
+
+    private void chatMessage() {
+        inChat=true;
+        executor.submit(new Chat());
+    }
+
+    public class Chat implements Runnable{
+        Chat(){
+            inChat=true;
+        }
+        @Override
+        public void run() {
+            while (inChat) {
+                String message = getStringInput("Write your message or menu to return to the main menu: ", "Invalid message");
+                if (message.equals("menu")) {
+                    mainMenu();
+                } else {
+                    client.sendMessage("chat #" + message);
+                }
+            }
+        }
+    }
+
     public class MainMenu implements Runnable {
 
         @Override
@@ -191,14 +217,6 @@ public class Menu {
                     System.out.println("Something went terribly wrong...");
             }
         }
-    }
-
-    private void chatMessage() {
-
-        String message = getStringInput("Write your message: ","Invalid message");
-
-        client.sendMessage("chat #" + message);
-
     }
 
     public class BetMenu implements Runnable {
@@ -292,5 +310,9 @@ public class Menu {
 
 
         }
+    }
+
+    public Boolean getInChat(){
+        return inChat;
     }
 }

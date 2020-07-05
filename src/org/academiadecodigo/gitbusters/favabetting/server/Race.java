@@ -178,7 +178,6 @@ public class Race implements Runnable {
         }
     }
 
-
     private void PaybackWinnings(Horse winner) {
         Map<Client, Integer> winnerHorseBets = broker.getHorseBets(winnerHorse);
         if(winnerHorseBets==null){
@@ -212,7 +211,6 @@ public class Race implements Runnable {
     }
 
     public void placeBet(Client client, int horse, int amount) {
-        System.out.println("rrrrrrregister bet "+client.getName()+" "+enrolledHorses.get(horse).getName()+" "+amount);
         broker.registerBet(client, enrolledHorses.get(horse), amount);
     }
 
