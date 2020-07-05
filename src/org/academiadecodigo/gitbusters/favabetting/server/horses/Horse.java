@@ -22,16 +22,6 @@ public class Horse {
     private double dirtModifier;
     private double sandModifier;
 
-    /*
-        NONE,
-    WIND,
-    RAIN,
-    WARM,
-    SUNNY,
-    COLD,
-    MISTY,
-    NIGHT
-         */
     private double windModifier;
     private double rainModifier;
     private double warmModifier;
