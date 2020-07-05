@@ -1,5 +1,6 @@
 package org.academiadecodigo.gitbusters.favabetting.server.horses;
 
+import org.academiadecodigo.gitbusters.Utils;
 import org.academiadecodigo.gitbusters.favabetting.server.tracks.TrackType;
 import org.academiadecodigo.gitbusters.favabetting.server.weather.WeatherType;
 
@@ -139,8 +140,8 @@ public class Horse {
     }
 
     public void race() {
-        this.distance += speed;
-        this.totalDistance += speed;
+        this.distance += Utils.getRandom(1,2)*speed/2;
+        this.totalDistance += Utils.getRandom(1,2)*speed/2;
     }
 
     public double getDistance() {
