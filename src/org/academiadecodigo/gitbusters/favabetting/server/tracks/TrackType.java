@@ -1,5 +1,7 @@
 package org.academiadecodigo.gitbusters.favabetting.server.tracks;
 
+import org.academiadecodigo.gitbusters.Utils;
+
 public enum TrackType {
 
     DIRT("Dirt","Description for DIRT track.",300,1.2),
@@ -44,5 +46,11 @@ public enum TrackType {
 
     public void setDistance(int distance) {
         this.distance = distance;
+    }
+
+    public static TrackType random() {
+        int random = Utils.getRandom(TrackType.values().length);
+        TrackType trackType = TrackType.values()[random];
+        return trackType;
     }
 }

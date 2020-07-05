@@ -4,7 +4,7 @@ import org.academiadecodigo.gitbusters.favabetting.server.cheats.CheatShop;
 import org.academiadecodigo.gitbusters.favabetting.server.horses.HorseFactory;
 import org.academiadecodigo.gitbusters.favabetting.server.strategy.Strategy;
 import org.academiadecodigo.gitbusters.favabetting.server.horses.Horse;
-import org.academiadecodigo.gitbusters.favabetting.server.tracks.Track;
+import org.academiadecodigo.gitbusters.favabetting.server.tracks.TrackType;
 import org.academiadecodigo.gitbusters.favabetting.server.weather.WeatherType;
 
 import java.util.*;
@@ -21,7 +21,7 @@ public class Race implements Runnable {
     private List<Horse> enrolledHorses;
 
     // Track type that will have our race
-    private Track track;
+    private TrackType track;
 
     private WeatherType weather;
 
@@ -51,7 +51,7 @@ public class Race implements Runnable {
         enrolledHorses.addAll(HorseFactory.getHorses(6));
 
         // Get track type randomly
-        this.track = Track.getTrack();
+        this.track = TrackType.random();
 
         this.weather = WeatherType.random();
 
@@ -108,9 +108,9 @@ public class Race implements Runnable {
                     if (!raceStart) {
 
                         // Applying track effect to horse's speed
-                        horse.setSpeed(horse.getSpeed() * track.getType().getMultiplier());
+                        horse.setSpeed(horse.getSpeed() * track.getMultiplier());
 
-                        horse.setSpeed(horse.getSpeed() * horse.getTrackModifier(track.getType()));
+                        horse.setSpeed(horse.getSpeed() * horse.getTrackModifier(track));
 
                         horse.setSpeed(horse.getSpeed() * horse.getWeatherModifier(weather));
 
@@ -131,7 +131,7 @@ public class Race implements Runnable {
                     }
 
                     // Get track distance and compare with horse run distance
-                    if (horse.getDistance() >= track.getType().getDistance()) {
+                    if (horse.getDistance() >= track.getDistance()) {
 
                         // MESSAGE HORSE WON
                         System.out.println("We have a winner!");
@@ -195,7 +195,7 @@ public class Race implements Runnable {
         enrolledHorses.addAll(HorseFactory.getHorses(6));
 
         // Get track type randomly
-        this.track = Track.getTrack();
+        this.track = TrackType.random();
 
         this.weather = WeatherType.random();
 
