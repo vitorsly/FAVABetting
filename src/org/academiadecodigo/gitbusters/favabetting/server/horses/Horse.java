@@ -22,16 +22,6 @@ public class Horse {
     private double dirtModifier;
     private double sandModifier;
 
-    /*
-        NONE,
-    WIND,
-    RAIN,
-    WARM,
-    SUNNY,
-    COLD,
-    MISTY,
-    NIGHT
-         */
     private double windModifier;
     private double rainModifier;
     private double warmModifier;
@@ -105,7 +95,7 @@ public class Horse {
             case COLD -> Math.pow(coldModifier, type.getPower());
             case MISTY -> Math.pow(mistyModifier, type.getPower());
             case NIGHT -> Math.pow(nightModifier, type.getPower());
-        }
+        };
     }
 
     public int getId() {
