@@ -10,8 +10,6 @@ public class RaceOverWinsMsg implements Messages {
         String[] strSplit=msg.split(" ");
         if(strSplit.length>1){
             new Print("Race is over and the winner is....."+strSplit[1]);
-            //System.out.println("Race is over and the winner is....."+strSplit[1]);
         }
-        client.getMenu().mainMenu();
     }
 }

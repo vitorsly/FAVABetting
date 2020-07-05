@@ -143,7 +143,7 @@ public class Race implements Runnable {
                 }
                 System.out.println("leading horse is "+leadingHorse.getName());
 
-                Thread.sleep(1000);
+                Thread.sleep(5000);
                 server.broadcastMsg("Leading "+leadingHorse.getName());
             }
 

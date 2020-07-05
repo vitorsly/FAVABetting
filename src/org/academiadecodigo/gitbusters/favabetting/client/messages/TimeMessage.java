@@ -6,6 +6,11 @@ import org.academiadecodigo.gitbusters.favabetting.client.Print;
 public class TimeMessage implements Messages {
     @Override
     public void run(Client client, String msg) {
-        new Print(msg);
+        if(!msg.equals("time :0")){
+            new Print(msg);
+        }else {
+            new Print("Race Started !!!");
+        }
+
     }
 }
