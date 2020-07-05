@@ -10,20 +10,22 @@ public class GetHorsesMessage implements Message {
 
     @Override
     public void send(Client client, Server server) {
-       List<Horse> hl = server.getRace().getEnrolledHorses();
-       StringBuilder message= new StringBuilder("HorseList ");
-       for(Horse horse:hl){
-           message.append(horse.getName()).append("#")
-                   .append(horse.getDescription()).append("#")
-                   .append(horse.getOdds()).append("#")
-                   .append(horse.getWins()).append("#")
-                   .append(horse.getRaces()).append("%");
-       }
-       client.sendMessage(message.toString());
+        List<Horse> hl = server.getRace().getEnrolledHorses();
+        StringBuilder message = new StringBuilder("HorseList ");
+        for (Horse horse : hl) {
+            message.append(horse.getName()).append("#")
+                    .append(horse.getDescription()).append("#")
+                    .append(horse.getOdds()).append("#")
+                    .append(horse.getWins()).append("#")
+                    .append(horse.getRaces()).append("%");
+        }
+        message.append("$").append(server.getRace().getWeather().getName());
+        message.append("$").append(server.getRace().getTrack().getName());
+        client.sendMessage(message.toString());
     }
 
     @Override
     public void receive(Client client, Server server, String msg) {
-        send(client,server);
+        send(client, server);
     }
 }

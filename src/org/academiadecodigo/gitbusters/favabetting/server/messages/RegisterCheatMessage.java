@@ -23,7 +23,7 @@ public class RegisterCheatMessage implements Message {
         int cheatIndex = Integer.parseInt(cheatAndHorse[1]) - 1;
         int horseIndex = Integer.parseInt(cheatAndHorse[2]) - 1;
 
-        if (!CheatShop.buyCheat(cheatIndex, client, server.getRace().getHorseByIndex(horseIndex))) {
+        if (!CheatShop.buyCheat(cheatIndex, client, server.getRace().getEnrolledHorses().get(horseIndex))) {
 
             client.sendMessage("Unable to buy cheat...");
             return;
