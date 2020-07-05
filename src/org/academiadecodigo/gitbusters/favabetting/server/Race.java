@@ -7,10 +7,7 @@ import org.academiadecodigo.gitbusters.favabetting.server.horses.Horse;
 import org.academiadecodigo.gitbusters.favabetting.server.tracks.Track;
 import org.academiadecodigo.gitbusters.favabetting.server.weather.WeatherType;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class Race implements Runnable {
 
@@ -63,6 +60,7 @@ public class Race implements Runnable {
 
         // Initiate broker
         this.broker = new Broker();
+
         new CheatShop();
     }
 
@@ -70,36 +68,41 @@ public class Race implements Runnable {
 
         try {
 
-
             server.broadcastMsg("betTime");
             System.out.print("");
             Interval interval = server.interval(30);
 
             boolean sopLoop = true;
 
-            while (sopLoop) {
-                sopLoop = interval.getInInterval();
+
+            while (sopLoop){
+               	sopLoop = interval.getInInterval();
                 System.out.print("");
             }
 
             inRace = true;
+
             System.out.print("");
+
             server.broadcastMsg("betStop");
+
             int timmer = 5;
-            while (timmer > 0) {
+
+            while (timmer > 0){
                 Thread.sleep(1000);
                 timmer--;
-                server.broadcastMsg("time :" + timmer);
+                server.broadcastMsg("time:" + timmer);
             }
-
 
             // Message for race start
             System.out.println("Starting the race!");
 
             // While we don't have a winner race continues
-            while (!won) {
+            while(!won) {
+
                 Horse leadingHorse = enrolledHorses.get(0);
-                for (Horse horse : enrolledHorses) {
+
+                for(Horse horse : enrolledHorses) {
 
                     // Apply speed change at race start only
                     if (!raceStart) {
@@ -123,10 +126,7 @@ public class Race implements Runnable {
                     // Increments distance run by horse
                     horse.race();
 
-                    // DEBUG ONLY
-                    //System.out.println(horse.getName() + " is running.");
-
-                    if (horse.getDistance() > leadingHorse.getDistance()) {
+                    if(horse.getDistance() > leadingHorse.getDistance()){
                         leadingHorse = horse;
                     }
 
@@ -145,21 +145,26 @@ public class Race implements Runnable {
                             horseFinish.resetDistance();
                         }
 
-                        //todo: give Rewards to players
+                        // TODO: give Rewards to players
+                        // This variable contains all bets by client and value
+                        Map<Client, Integer> winnerHorseBets = broker.getHorseBets(winnerHorse);
 
                         break;
                     }
                 }
+
                 System.out.println("leading horse is " + leadingHorse.getName());
 
                 Thread.sleep(5000);
+
                 server.broadcastMsg("Leading " + leadingHorse.getName());
             }
 
+            server.broadcastMsg("raceOver " + winnerHorse.getName());
 
-            server.broadcastMsg("raceOver "+winnerHorse.getName());
             PaybackWinnings(winnerHorse);
-            inRace=false;
+
+            inRace = false;
 
             System.out.println("Winning horse: " + winnerHorse.getName());
 
@@ -180,7 +185,8 @@ public class Race implements Runnable {
     }
 
     public void restartRace(){
-        won=false;
+
+        won = false;
 
         // Initiate horses for race line
         this.enrolledHorses = new ArrayList<>();
@@ -195,6 +201,7 @@ public class Race implements Runnable {
 
         // Get strategy type randomly
         this.strategy = Strategy.getStrategy();
+
         run();
     }
 
@@ -212,18 +219,5 @@ public class Race implements Runnable {
 
     public Boolean getInRace() {
         return inRace;
-    }
-
-    public Horse getRaceLeader() {
-        Collections.sort(enrolledHorses, new Comparator<Horse>() {
-            public int compare(Horse h1, Horse h2) {
-                return Double.compare(h1.getDistance(), h2.getDistance());
-            }
-        });
-        return enrolledHorses.get(0);
-    }
-
-    public Horse getHorseByIndex(int index) {
-        return enrolledHorses.get(index);
     }
 }

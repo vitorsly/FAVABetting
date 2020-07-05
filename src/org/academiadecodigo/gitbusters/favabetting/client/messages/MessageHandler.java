@@ -14,8 +14,10 @@ public enum MessageHandler {
     RACEOVER("raceOver",new RaceOverWinsMsg()),
     TEXT("time",new TimeMessage()),
     LEADINGHORSE("Leading",new LeadingHorse()),
-    RECEVECHEATS("CheatShop",new RequestCheatShop()),
+    RECEIVECHEATS("CheatShop",new RequestCheatShop()),
     CHEATSUCCESS("successCheat",new CheatSuccessMsg()),
+    NAMECHANGED("namechange", new NameChangedMsg()),
+    MESSAGE("message", new MessageMsg()),
     INVALID("",new InvalidMsg());
 
 
