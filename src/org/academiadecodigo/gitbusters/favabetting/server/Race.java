@@ -220,4 +220,12 @@ public class Race implements Runnable {
     public Boolean getInRace() {
         return inRace;
     }
+
+    public Track getTrack() {
+        return track;
+    }
+
+    public WeatherType getWeather() {
+        return weather;
+    }
 }
