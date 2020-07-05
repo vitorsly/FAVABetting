@@ -9,7 +9,6 @@ public class BetStart implements Messages{
     @Override
     public void run(Client client, String msg) {
         new Print("betting Has Started");
-        client.sendMessage("mainmenu");
-        //client.getMenu().mainMenu();
+        client.getMenu().mainMenu();
     }
 }

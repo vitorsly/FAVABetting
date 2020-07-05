@@ -7,9 +7,9 @@ public class RequestCheatShop implements Messages {
     @Override
     public void run(Client client, String msg) {
 
-        String shopItems=msg.substring(9);
-        new Print(shopItems);
+        String shopItems=msg.substring(10);
+        String[] cheatsAndHorses = shopItems.split("\\$");
 
-        //ta dividico como os cavalos
+        client.getMenu().makeInfluenceRaceMenu(cheatsAndHorses);
     }
 }
