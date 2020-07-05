@@ -211,12 +211,4 @@ public class Race implements Runnable {
         });
         return enrolledHorses.get(0);
     }
-
-    public Horse getHorseByIndex(int index) {
-
-//        for (int i = 0; i < enrolledHorses.size(); i++) {
-//            if (enrolledHorses.inde == i)
-//        }
-
-    }
 }

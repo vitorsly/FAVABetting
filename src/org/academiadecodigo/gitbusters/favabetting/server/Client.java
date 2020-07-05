@@ -36,6 +36,7 @@ public class Client implements Runnable {
             try {
                 readInput(inputStream);
             } catch (Exception e) {
+                server.removeClient(this);
                 System.out.println(e);
             }
         }
@@ -52,10 +53,12 @@ public class Client implements Runnable {
     public void sendMessage(String msg) {
         try {
             msg += "\n";
+            if(outPut==null)return;
             outPut.write(msg);
             outPut.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e);
+            //e.printStackTrace();
         }
     }
 
