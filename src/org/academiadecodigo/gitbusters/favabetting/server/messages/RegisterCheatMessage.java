@@ -2,24 +2,33 @@ package org.academiadecodigo.gitbusters.favabetting.server.messages;
 
 import org.academiadecodigo.gitbusters.favabetting.server.Client;
 import org.academiadecodigo.gitbusters.favabetting.server.Server;
+import org.academiadecodigo.gitbusters.favabetting.server.cheats.CheatShop;
 
-public class RegisterCheatMessage implements Message{
+public class RegisterCheatMessage implements Message {
 
 
     @Override
     public void send(Client client, Server server) {
-        client.sendMessage("Your cheat was registered!");
-        client.sendMessage("mainmenu");
+        client.sendMessage("successCheat");
     }
 
     @Override
     public void receive(Client client, Server server, String msg) {
-        String[] cheat = msg.split(" ");
-        if(cheat.length<3){
-            client.sendMessage("Invalid name");
+        String[] cheatAndHorse = msg.split(" ");
+        if (cheatAndHorse.length < 3) {
+            client.sendMessage("Invalid cheat or horse..");
             return;
         }
-        client.setName(cheat[1]);
-        send(client,server);
+
+        int cheatIndex = Integer.parseInt(cheatAndHorse[1]) - 1;
+        int horseIndex = Integer.parseInt(cheatAndHorse[2]) - 1;
+
+        if (!CheatShop.buyCheat(cheatIndex, client, server.getRace().getHorseByIndex(horseIndex))) {
+
+            client.sendMessage("Unable to buy cheat...");
+            return;
+        }
+
+        send(client, server);
     }
 }

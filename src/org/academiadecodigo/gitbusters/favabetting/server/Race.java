@@ -222,4 +222,8 @@ public class Race implements Runnable {
         });
         return enrolledHorses.get(0);
     }
+
+    public Horse getHorseByIndex(int index) {
+        return enrolledHorses.get(index);
+    }
 }
