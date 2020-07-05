@@ -1,5 +1,6 @@
 package org.academiadecodigo.gitbusters.favabetting.server;
 
+import org.academiadecodigo.gitbusters.favabetting.server.cheats.CheatShop;
 import org.academiadecodigo.gitbusters.favabetting.server.horses.HorseFactory;
 import org.academiadecodigo.gitbusters.favabetting.server.strategy.Strategy;
 import org.academiadecodigo.gitbusters.favabetting.server.horses.Horse;
@@ -57,6 +58,7 @@ public class Race implements Runnable {
 
         // Initiate broker
         this.broker = new Broker();
+        new CheatShop();
     }
 
     public void run() {

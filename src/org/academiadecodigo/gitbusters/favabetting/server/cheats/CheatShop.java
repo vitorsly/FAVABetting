@@ -8,6 +8,10 @@ public class CheatShop {
 
     public static Cheats[] cheats;
 
+    public CheatShop(){
+        init();
+    }
+
     public static void init(){
         cheats = new Cheats[5];
         cheats[0] = new SteroidBoost();
@@ -70,4 +74,7 @@ public class CheatShop {
         return cheats[id].getPoliceChance();
     }
 
+    public static Cheats[] getCheats() {
+        return cheats;
+    }
 }

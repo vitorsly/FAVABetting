@@ -14,6 +14,7 @@ public enum MessageHandler {
     RACEOVER("raceOver",new RaceOverWinsMsg()),
     TEXT("time",new TimeMessage()),
     LEADINGHORSE("Leading",new LeadingHorse()),
+    RECEVECHEATS("CheatShop",new RequestCheatShop()),
     INVALID("",new InvalidMsg());
 
 

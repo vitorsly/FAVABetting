@@ -148,8 +148,7 @@ public class Menu {
     }
 
     public void influenceRace(){
-
-
+        client.sendMessage("CheatShop");
     }
 
     public class MainMenu implements Runnable{
