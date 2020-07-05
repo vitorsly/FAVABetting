@@ -48,11 +48,15 @@ public class Broker {
     }
 
     // Returns horse bets
+    // When we need all bets mad on a horse just get by horse object
+    // broker.getHorseBets(horse);
     public Map<Client, Integer> getHorseBets(Horse horse) {
         return this.horsesBets.get(horse);
     }
 
-    //todo : method that receives the wining horse and returns list of clients that bet on that horse in this race
-    //todo : reset all Lists after race is over so you don't have bets from previous races
-    //TODO: Check bets and apply wins to players base on winner horse object
+    // Reset all containers
+    public void clearAllBets() {
+        this.horsesBets.clear();
+        this.clientsBets.clear();
+    }
 }
