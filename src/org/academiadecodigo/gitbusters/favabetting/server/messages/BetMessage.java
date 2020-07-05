@@ -45,6 +45,7 @@ public class BetMessage implements Message {
             }
             else{
                 client.sendMessage("noFunds");
+                return;
             }
         } catch (Exception e){
             e.getMessage();

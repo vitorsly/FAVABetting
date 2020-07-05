@@ -83,7 +83,6 @@ public class Race implements Runnable {
                 server.broadcastMsg("time :"+timmer);
             }
 
-            inRace=true;
 
             // Message for race start
             System.out.println("Starting the race!");
@@ -115,7 +114,7 @@ public class Race implements Runnable {
                     System.out.println(horse.getName() + " is running.");
 
                     // Get track distance and compare with horse run distance
-                    if(horse.getDistance() == track.getType().getDistance()) {
+                    if(horse.getDistance() >= track.getType().getDistance()) {
 
                         // MESSAGE HORSE WON
                         System.out.println("We have a winner!");
