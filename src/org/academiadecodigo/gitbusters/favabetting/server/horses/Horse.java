@@ -1,8 +1,8 @@
 package org.academiadecodigo.gitbusters.favabetting.server.horses;
 
 import org.academiadecodigo.gitbusters.Utils;
-import org.academiadecodigo.gitbusters.favabetting.server.tracks.TrackType;
-import org.academiadecodigo.gitbusters.favabetting.server.weather.WeatherType;
+import org.academiadecodigo.gitbusters.favabetting.server.tracks.Track;
+import org.academiadecodigo.gitbusters.favabetting.server.weather.Weather;
 
 public class Horse {
 
@@ -72,7 +72,7 @@ public class Horse {
         this.sandModifier = sand;
     }
 
-    public double getTrackModifier(TrackType type){
+    public double getTrackModifier(Track type){
         return switch (type) {
             case DIRT -> dirtModifier;
             case GRASS -> grassModifier;
@@ -90,7 +90,7 @@ public class Horse {
         this.nightModifier = night;
     }
 
-    public double getWeatherModifier(WeatherType type){
+    public double getWeatherModifier(Weather type){
         return  switch (type.getWeatherClass()){
             case NONE -> 1;
             case WIND -> Math.pow(windModifier, type.getPower());
