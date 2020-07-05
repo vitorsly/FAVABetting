@@ -125,10 +125,13 @@ public class Race implements Runnable {
                         // Sets winner with horse object
                         winnerHorse = horse;
                         won = true;
+                        winnerHorse.addWin();
 
                         // Reset horse race distance
                         for (Horse horseFinish : enrolledHorses) {
                             horseFinish.resetDistance();
+                            horseFinish.resetSpeed();
+                            horseFinish.addRace();
                         }
 
                         break;
@@ -205,6 +208,8 @@ public class Race implements Runnable {
         this.track = TrackType.random();
 
         this.weather = WeatherType.random();
+
+
 
         // Get strategy type randomly
         this.strategy = Strategy.getStrategy();

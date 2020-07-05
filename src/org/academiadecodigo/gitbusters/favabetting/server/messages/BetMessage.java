@@ -28,7 +28,6 @@ public class BetMessage implements Message {
         }
         String[]msgSplit=msg.split(" ");
         if(msgSplit.length<3){
-            System.out.println("nao contem todos os campos");
             return;
         }
         try {

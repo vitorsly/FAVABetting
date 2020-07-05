@@ -17,6 +17,7 @@ public enum MessageHandler {
     RECEIVECHEATS("CheatShop",new RequestCheatShop()),
     CHEATSUCCESS("successCheat",new CheatSuccessMsg()),
     NAMECHANGED("namechange", new NameChangedMsg()),
+    CHAT("chat",new ChatMessage()),
     MESSAGE("message", new MessageMsg()),
     INVALID("",new InvalidMsg());
 
