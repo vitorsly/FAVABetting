@@ -8,5 +8,6 @@ public class NameChangedMsg implements Messages{
     @Override
     public void run(Client client, String msg) {
         new Print("Your name was changed successfully!");
+        client.getMenu().mainMenu();
     }
 }
