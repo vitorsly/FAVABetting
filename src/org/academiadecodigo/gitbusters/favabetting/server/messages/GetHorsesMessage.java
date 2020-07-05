@@ -20,7 +20,7 @@ public class GetHorsesMessage implements Message {
                     .append(horse.getRaces()).append("%");
         }
         message.append("$").append(server.getRace().getWeather().getName());
-        message.append("$").append(server.getRace().getTrack().getType().getName());
+        message.append("$").append(server.getRace().getTrack().getName());
         client.sendMessage(message.toString());
     }
 

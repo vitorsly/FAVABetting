@@ -91,7 +91,7 @@ public class Race implements Runnable {
             while (timmer > 0){
                 Thread.sleep(1000);
                 timmer--;
-                server.broadcastMsg("time:" + timmer);
+                server.broadcastMsg("time :" + timmer);
             }
 
             // Message for race start
@@ -147,7 +147,6 @@ public class Race implements Runnable {
 
                         // TODO: give Rewards to players
                         // This variable contains all bets by client and value
-                        Map<Client, Integer> winnerHorseBets = broker.getHorseBets(winnerHorse);
 
                         break;
                     }
@@ -181,7 +180,14 @@ public class Race implements Runnable {
 
 
     private void PaybackWinnings(Horse winner) {
-
+        Map<Client, Integer> winnerHorseBets = broker.getHorseBets(winnerHorse);
+        if(winnerHorseBets==null){
+            System.out.println("winnerHorse is null");
+            return;
+        }
+        for (Map.Entry<Client, Integer> entry : winnerHorseBets.entrySet()){
+            entry.getKey().getWallet().deposit(entry.getValue()*winner.getOdds());
+        }
     }
 
     public void restartRace(){
@@ -206,6 +212,7 @@ public class Race implements Runnable {
     }
 
     public void placeBet(Client client, int horse, int amount) {
+        System.out.println("rrrrrrregister bet "+client.getName()+" "+enrolledHorses.get(horse).getName()+" "+amount);
         broker.registerBet(client, enrolledHorses.get(horse), amount);
     }
 
@@ -221,7 +228,7 @@ public class Race implements Runnable {
         return inRace;
     }
 
-    public Track getTrack() {
+    public TrackType getTrack() {
         return track;
     }
 
