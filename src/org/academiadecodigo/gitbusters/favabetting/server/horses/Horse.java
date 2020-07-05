@@ -30,6 +30,8 @@ public class Horse {
     private double mistyModifier;
     private double nightModifier;
 
+    private String bigDescription;
+
 
 
     Horse(int id, String name, String description, double speed, int maxSpeed, double odds, int wins, int races){
@@ -57,6 +59,8 @@ public class Horse {
         this.coldModifier = 0.90;
         this.mistyModifier = 0.90;
         this.nightModifier = 0.90;
+
+        this.bigDescription = "";
 
 
     }
@@ -96,6 +100,10 @@ public class Horse {
             case MISTY -> Math.pow(mistyModifier, type.getPower());
             case NIGHT -> Math.pow(nightModifier, type.getPower());
         };
+    }
+
+    public void setBigDescription(String bigDescription){
+        this.bigDescription = bigDescription;
     }
 
     public int getId() {
@@ -181,5 +189,9 @@ public class Horse {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getBigDescription() {
+        return bigDescription;
     }
 }
