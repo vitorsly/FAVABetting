@@ -61,7 +61,7 @@ public class Race implements Runnable {
         // Initiate broker
         this.broker = new Broker();
 
-        new CheatShop();
+        CheatShop.init();
     }
 
     public void run() {
