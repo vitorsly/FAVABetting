@@ -54,6 +54,15 @@ public class Server {
         }
     }
 
+    public void broadcastExceptMe(Client client,String msg){
+        for (Client c :sockets){
+            if (c == client){
+                continue;
+            }
+            c.sendMessage(msg);
+        }
+    }
+
     public void removeClient(Client client){
 
         race.getBroker().unregisterClient(client);

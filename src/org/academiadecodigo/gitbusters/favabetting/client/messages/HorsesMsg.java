@@ -8,7 +8,7 @@ public class HorsesMsg implements Messages {
     public void run(Client client, String msg) {
 
         String str=msg.substring(10);
-        String[]horsesByLine=str.split("%");
+        String[]horsesByLine = str.split("%");
 
         client.getMenu().makeBetMenu(horsesByLine);
         //now you can make the menu
