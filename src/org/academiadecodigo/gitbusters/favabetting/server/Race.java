@@ -228,7 +228,7 @@ public class Race implements Runnable {
         return inRace;
     }
 
-    public Track getTrack() {
+    public TrackType getTrack() {
         return track;
     }
 
