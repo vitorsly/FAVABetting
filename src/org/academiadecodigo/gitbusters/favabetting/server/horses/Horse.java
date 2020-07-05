@@ -79,11 +79,11 @@ public class Horse {
         this.speed = baseSpeed;
     }
 
-    public void addWin(){
+    public void addWin() {
         this.wins++;
     }
 
-    public void addRace(){
+    public void addRace() {
         this.races++;
     }
 
@@ -105,5 +105,9 @@ public class Horse {
 
     public void shiftSpeed(double speedModifier){
         this.speed += speedModifier;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

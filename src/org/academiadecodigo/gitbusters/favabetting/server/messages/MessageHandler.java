@@ -4,6 +4,10 @@ public enum MessageHandler {
     BET("bet",new BetMessage()),
     NAME("name",new NameChangeMsg()),
     ENROLLEDHORSES("getHorses",new GetHorsesMessage()),
+    BALANCE("balance",new GetBalanceMessage()),
+    REQUESTMM("mainmenu",new ForceMainMenu()),
+    SENDCHEATLIST("CheatShop",new CheatsMessage()),
+    QUIT("quit", new QuitMessage()),
     INVALID("",new InvalidMessage());
 
     private String actionMessage;

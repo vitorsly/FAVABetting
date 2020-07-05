@@ -1,16 +1,20 @@
 package org.academiadecodigo.gitbusters.favabetting.server;
 
+import org.academiadecodigo.gitbusters.favabetting.server.cheats.CheatShop;
 import org.academiadecodigo.gitbusters.favabetting.server.horses.HorseFactory;
 import org.academiadecodigo.gitbusters.favabetting.server.strategy.Strategy;
 import org.academiadecodigo.gitbusters.favabetting.server.horses.Horse;
 import org.academiadecodigo.gitbusters.favabetting.server.tracks.Track;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Race implements Runnable {
 
     private Server server;
+    private Boolean inRace=false;
 
     // All horses available
     private List<Horse> stable;
@@ -37,8 +41,14 @@ public class Race implements Runnable {
 
         this.server = server;
 
+        // Load our stable
+        this.stable = HorseFactory.createStable();
+
         // Initiate horses for race line
         this.enrolledHorses = new ArrayList<>();
+
+        // Add X number of horses to our race line
+        enrolledHorses.addAll(HorseFactory.getHorses(6));
 
         // Get track type randomly
         this.track = Track.getTrack();
@@ -48,28 +58,42 @@ public class Race implements Runnable {
 
         // Initiate broker
         this.broker = new Broker();
-
-        // Load our stable
-        this.stable = HorseFactory.createStable();
-
-        // Add X number of horses to our race line
-        enrolledHorses.addAll(HorseFactory.getHorses(6));
+        new CheatShop();
     }
 
     public void run() {
 
         try {
 
-            // TODO: Timer
 
-            // TODO: Allow clients to place bets
+            server.broadcastMsg("betTime");
+            System.out.print("");
+            Interval interval=server.interval(30);
+
+            boolean sopLoop=true;
+
+            while (sopLoop){
+               sopLoop=interval.getInInterval();
+                System.out.print("");
+            }
+
+            inRace=true;
+            System.out.print("");
+            server.broadcastMsg("betStop");
+            int timmer=5;
+            while (timmer>0){
+                Thread.sleep(1000);
+                timmer--;
+                server.broadcastMsg("time :"+timmer);
+            }
+
 
             // Message for race start
             System.out.println("Starting the race!");
 
             // While we don't have a winner race continues
             while(!won) {
-
+                Horse leadingHorse=enrolledHorses.get(0);
                 for(Horse horse : enrolledHorses) {
 
                     // Apply speed change at race start only
@@ -91,10 +115,14 @@ public class Race implements Runnable {
                     horse.race();
 
                     // DEBUG ONLY
-                    System.out.println(horse.getName() + " is running.");
+                    //System.out.println(horse.getName() + " is running.");
+
+                    if(horse.getDistance()>leadingHorse.getDistance()){
+                        leadingHorse=horse;
+                    }
 
                     // Get track distance and compare with horse run distance
-                    if(horse.getDistance() == track.getType().getDistance()) {
+                    if(horse.getDistance() >= track.getType().getDistance()) {
 
                         // MESSAGE HORSE WON
                         System.out.println("We have a winner!");
@@ -108,21 +136,55 @@ public class Race implements Runnable {
                             horseFinish.resetDistance();
                         }
 
+                        //todo: give Rewards to players
+
                         break;
                     }
                 }
+                System.out.println("leading horse is "+leadingHorse.getName());
+
+                Thread.sleep(5000);
+                server.broadcastMsg("Leading "+leadingHorse.getName());
             }
 
-            // TODO: Check bets and apply wins to players base on winner horse object
+            server.broadcastMsg("raceOver "+winnerHorse.getName());
+            PaybackWinnings(winnerHorse);
+            inRace=false;
             System.out.println("Winning horse: " + winnerHorse.getName());
 
             // Message to players about money
             System.out.println("Here have your money cheater!");
             System.out.println("You're a fucking looser!");
 
+            restartRace();
+
         } catch ( Exception error) {
             error.printStackTrace();
         }
+    }
+
+    private void PaybackWinnings(Horse winner) {
+
+    }
+
+    public void restartRace(){
+        won=false;
+        // Initiate horses for race line
+        this.enrolledHorses = new ArrayList<>();
+
+        // Add X number of horses to our race line
+        enrolledHorses.addAll(HorseFactory.getHorses(6));
+
+        // Get track type randomly
+        this.track = Track.getTrack();
+
+        // Get strategy type randomly
+        this.strategy = Strategy.getStrategy();
+        run();
+    }
+
+    public void placeBet(Client client, int horse, int amount){
+        broker.registerBet(client,enrolledHorses.get(horse),amount);
     }
 
     public List<Horse> getEnrolledHorses() {
@@ -131,5 +193,18 @@ public class Race implements Runnable {
 
     public Broker getBroker() {
         return broker;
+    }
+
+    public Boolean getInRace() {
+        return inRace;
+    }
+
+    public Horse getRaceLeader() {
+        Collections.sort(enrolledHorses, new Comparator<Horse>() {
+            public int compare(Horse h1, Horse h2) {
+                return Double.compare(h1.getDistance(), h2.getDistance());
+            }
+        });
+        return enrolledHorses.get(0);
     }
 }
