@@ -140,8 +140,9 @@ public class Horse {
     }
 
     public void race() {
-        this.distance += Utils.getRandom(1,3)*speed/3;
-        this.totalDistance += Utils.getRandom(1,3)*speed/3;
+        double randomSpeed = Utils.getRandom(1,3)*speed/3;
+        this.distance += randomSpeed;
+        this.totalDistance += randomSpeed;
     }
 
     public double getDistance() {
