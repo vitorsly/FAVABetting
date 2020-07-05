@@ -14,7 +14,7 @@ import java.util.List;
 public class Race implements Runnable {
 
     private Server server;
-    private Boolean inRace=false;
+    private Boolean inRace = false;
 
     // All horses available
     private List<Horse> stable;
@@ -68,23 +68,23 @@ public class Race implements Runnable {
 
             server.broadcastMsg("betTime");
             System.out.print("");
-            Interval interval=server.interval(30);
+            Interval interval = server.interval(30);
 
-            boolean sopLoop=true;
+            boolean sopLoop = true;
 
-            while (sopLoop){
-               sopLoop=interval.getInInterval();
+            while (sopLoop) {
+                sopLoop = interval.getInInterval();
                 System.out.print("");
             }
 
-            inRace=true;
+            inRace = true;
             System.out.print("");
             server.broadcastMsg("betStop");
-            int timmer=5;
-            while (timmer>0){
+            int timmer = 5;
+            while (timmer > 0) {
                 Thread.sleep(1000);
                 timmer--;
-                server.broadcastMsg("time :"+timmer);
+                server.broadcastMsg("time :" + timmer);
             }
 
 
@@ -92,12 +92,12 @@ public class Race implements Runnable {
             System.out.println("Starting the race!");
 
             // While we don't have a winner race continues
-            while(!won) {
-                Horse leadingHorse=enrolledHorses.get(0);
-                for(Horse horse : enrolledHorses) {
+            while (!won) {
+                Horse leadingHorse = enrolledHorses.get(0);
+                for (Horse horse : enrolledHorses) {
 
                     // Apply speed change at race start only
-                    if(!raceStart) {
+                    if (!raceStart) {
 
                         // Applying track effect to horse's speed
                         horse.setSpeed(horse.getSpeed() * track.getType().getMultiplier());
@@ -117,12 +117,12 @@ public class Race implements Runnable {
                     // DEBUG ONLY
                     //System.out.println(horse.getName() + " is running.");
 
-                    if(horse.getDistance()>leadingHorse.getDistance()){
-                        leadingHorse=horse;
+                    if (horse.getDistance() > leadingHorse.getDistance()) {
+                        leadingHorse = horse;
                     }
 
                     // Get track distance and compare with horse run distance
-                    if(horse.getDistance() >= track.getType().getDistance()) {
+                    if (horse.getDistance() >= track.getType().getDistance()) {
 
                         // MESSAGE HORSE WON
                         System.out.println("We have a winner!");
@@ -132,7 +132,7 @@ public class Race implements Runnable {
                         won = true;
 
                         // Reset horse race distance
-                        for(Horse horseFinish : enrolledHorses) {
+                        for (Horse horseFinish : enrolledHorses) {
                             horseFinish.resetDistance();
                         }
 
@@ -141,15 +141,17 @@ public class Race implements Runnable {
                         break;
                     }
                 }
-                System.out.println("leading horse is "+leadingHorse.getName());
+                System.out.println("leading horse is " + leadingHorse.getName());
 
                 Thread.sleep(5000);
-                server.broadcastMsg("Leading "+leadingHorse.getName());
+                server.broadcastMsg("Leading " + leadingHorse.getName());
             }
+
 
             server.broadcastMsg("raceOver "+winnerHorse.getName());
             PaybackWinnings(winnerHorse);
             inRace=false;
+
             System.out.println("Winning horse: " + winnerHorse.getName());
 
             // Message to players about money
@@ -158,10 +160,11 @@ public class Race implements Runnable {
 
             restartRace();
 
-        } catch ( Exception error) {
+        } catch (Exception error) {
             error.printStackTrace();
         }
     }
+
 
     private void PaybackWinnings(Horse winner) {
 
@@ -169,6 +172,7 @@ public class Race implements Runnable {
 
     public void restartRace(){
         won=false;
+
         // Initiate horses for race line
         this.enrolledHorses = new ArrayList<>();
 
@@ -183,8 +187,8 @@ public class Race implements Runnable {
         run();
     }
 
-    public void placeBet(Client client, int horse, int amount){
-        broker.registerBet(client,enrolledHorses.get(horse),amount);
+    public void placeBet(Client client, int horse, int amount) {
+        broker.registerBet(client, enrolledHorses.get(horse), amount);
     }
 
     public List<Horse> getEnrolledHorses() {
@@ -206,5 +210,13 @@ public class Race implements Runnable {
             }
         });
         return enrolledHorses.get(0);
+    }
+
+    public Horse getHorseByIndex(int index) {
+
+//        for (int i = 0; i < enrolledHorses.size(); i++) {
+//            if (enrolledHorses.inde == i)
+//        }
+
     }
 }
