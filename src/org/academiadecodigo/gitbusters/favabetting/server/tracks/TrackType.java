@@ -37,4 +37,12 @@ public enum TrackType {
     public double getMultiplier() {
         return multiplier;
     }
+
+    public void setMultiplier(double multiplier) {
+        this.multiplier = multiplier;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
 }
