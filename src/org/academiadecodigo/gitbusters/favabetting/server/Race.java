@@ -4,8 +4,8 @@ import org.academiadecodigo.gitbusters.favabetting.server.cheats.CheatShop;
 import org.academiadecodigo.gitbusters.favabetting.server.horses.HorseFactory;
 import org.academiadecodigo.gitbusters.favabetting.server.strategy.Strategy;
 import org.academiadecodigo.gitbusters.favabetting.server.horses.Horse;
-import org.academiadecodigo.gitbusters.favabetting.server.tracks.TrackType;
-import org.academiadecodigo.gitbusters.favabetting.server.weather.WeatherType;
+import org.academiadecodigo.gitbusters.favabetting.server.tracks.Track;
+import org.academiadecodigo.gitbusters.favabetting.server.weather.Weather;
 
 import java.util.*;
 
@@ -21,10 +21,9 @@ public class Race implements Runnable {
     private List<Horse> enrolledHorses;
 
     // Track type that will have our race
-    private TrackType track;
+    private Track track;
 
-    // Weather type that influences race conditions
-    private WeatherType weather;
+    private Weather weather;
 
     // Horse strategy for race
     private Strategy strategy;
@@ -52,9 +51,9 @@ public class Race implements Runnable {
         enrolledHorses.addAll(HorseFactory.getHorses(6));
 
         // Get track type randomly
-        this.track = TrackType.random();
+        this.track = Track.random();
 
-        this.weather = WeatherType.random();
+        this.weather = Weather.random();
 
         // Get strategy type randomly
         this.strategy = Strategy.getStrategy();
@@ -138,8 +137,8 @@ public class Race implements Runnable {
                         System.out.println("We have a winner!");
 
                         // Sets winner with horse object
-                        won = true;
                         winnerHorse = horse;
+                        won = true;
                         winnerHorse.addWin();
 
                         // Reset horse race distance
@@ -204,9 +203,11 @@ public class Race implements Runnable {
         enrolledHorses.addAll(HorseFactory.getHorses(6));
 
         // Get track type randomly
-        this.track = TrackType.random();
+        this.track = Track.random();
 
-        this.weather = WeatherType.random();
+        this.weather = Weather.random();
+
+
 
         // Get strategy type randomly
         this.strategy = Strategy.getStrategy();
@@ -230,11 +231,11 @@ public class Race implements Runnable {
         return inRace;
     }
 
-    public TrackType getTrack() {
+    public Track getTrack() {
         return track;
     }
 
-    public WeatherType getWeather() {
+    public Weather getWeather() {
         return weather;
     }
 }

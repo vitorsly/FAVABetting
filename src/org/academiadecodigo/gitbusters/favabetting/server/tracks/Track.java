@@ -2,7 +2,7 @@ package org.academiadecodigo.gitbusters.favabetting.server.tracks;
 
 import org.academiadecodigo.gitbusters.Utils;
 
-public enum TrackType {
+public enum Track {
 
     DIRT("Dirt","Description for DIRT track.",400,1.2),
     GRASS("Grass","Description for GRASS track.",500,1),
@@ -14,15 +14,15 @@ public enum TrackType {
     private int distance;
     private double multiplier;
 
-    TrackType(String name, String description, int distance, double multiplier) {
+    Track(String name, String description, int distance, double multiplier) {
         this.name = name;
         this.description = description;
         this.distance = distance;
         this.multiplier = multiplier;
     }
 
-    public static TrackType getTrackType(int value) {
-        return TrackType.values()[value];
+    public static Track getTrackType(int value) {
+        return Track.values()[value];
     }
 
     public String getName() {
@@ -49,9 +49,9 @@ public enum TrackType {
         this.distance = distance;
     }
 
-    public static TrackType random() {
-        int random = Utils.getRandom(TrackType.values().length);
-        TrackType trackType = TrackType.values()[random];
-        return trackType;
+    public static Track random() {
+        int random = Utils.getRandom(Track.values().length);
+        Track track = Track.values()[random];
+        return track;
     }
 }
