@@ -8,6 +8,6 @@ public class InRaceMsg implements Messages{
     @Override
     public void run(Client client, String msg) {
         new Print("A race has already started. Wait for the next round");
-        //System.out.println("A race has already started. Wait for the next round");
+        client.getMenu().mainMenu();
     }
 }

@@ -12,6 +12,7 @@ public enum MessageHandler {
     QUIT("quit", new QuitMsg()),
     RACERUNNING("racerunning", new RaceRunningMsg()),
     RACEOVER("raceOver",new RaceOverWinsMsg()),
+    TEXT("time",new TimeMessage()),
     INVALID("",new InvalidMsg());
 
 

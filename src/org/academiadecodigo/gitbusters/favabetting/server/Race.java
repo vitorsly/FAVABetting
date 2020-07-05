@@ -76,9 +76,14 @@ public class Race implements Runnable {
             inRace=true;
             System.out.print("");
             server.broadcastMsg("betStop");
+            int timmer=5;
+            while (timmer>0){
+                Thread.currentThread().sleep(1000);
+                timmer--;
+                server.broadcastMsg("time :"+timmer);
+            }
 
             inRace=true;
-
 
             // Message for race start
             System.out.println("Starting the race!");
