@@ -4,7 +4,7 @@ import org.academiadecodigo.gitbusters.favabetting.server.cheats.CheatShop;
 import org.academiadecodigo.gitbusters.favabetting.server.horses.HorseFactory;
 import org.academiadecodigo.gitbusters.favabetting.server.strategy.Strategy;
 import org.academiadecodigo.gitbusters.favabetting.server.horses.Horse;
-import org.academiadecodigo.gitbusters.favabetting.server.tracks.Track;
+import org.academiadecodigo.gitbusters.favabetting.server.tracks.TrackType;
 import org.academiadecodigo.gitbusters.favabetting.server.weather.WeatherType;
 
 import java.util.*;
@@ -21,7 +21,7 @@ public class Race implements Runnable {
     private List<Horse> enrolledHorses;
 
     // Track type that will have our race
-    private Track track;
+    private TrackType track;
 
     private WeatherType weather;
 
@@ -51,7 +51,7 @@ public class Race implements Runnable {
         enrolledHorses.addAll(HorseFactory.getHorses(6));
 
         // Get track type randomly
-        this.track = Track.getTrack();
+        this.track = TrackType.random();
 
         this.weather = WeatherType.random();
 
@@ -61,7 +61,7 @@ public class Race implements Runnable {
         // Initiate broker
         this.broker = new Broker();
 
-        new CheatShop();
+        CheatShop.init();
     }
 
     public void run() {
@@ -91,7 +91,7 @@ public class Race implements Runnable {
             while (timmer > 0){
                 Thread.sleep(1000);
                 timmer--;
-                server.broadcastMsg("time:" + timmer);
+                server.broadcastMsg("time :" + timmer);
             }
 
             // Message for race start
@@ -108,9 +108,9 @@ public class Race implements Runnable {
                     if (!raceStart) {
 
                         // Applying track effect to horse's speed
-                        horse.setSpeed(horse.getSpeed() * track.getType().getMultiplier());
+                        horse.setSpeed(horse.getSpeed() * track.getMultiplier());
 
-                        horse.setSpeed(horse.getSpeed() * horse.getTrackModifier(track.getType()));
+                        horse.setSpeed(horse.getSpeed() * horse.getTrackModifier(track));
 
                         horse.setSpeed(horse.getSpeed() * horse.getWeatherModifier(weather));
 
@@ -131,7 +131,7 @@ public class Race implements Runnable {
                     }
 
                     // Get track distance and compare with horse run distance
-                    if (horse.getDistance() >= track.getType().getDistance()) {
+                    if (horse.getDistance() >= track.getDistance()) {
 
                         // MESSAGE HORSE WON
                         System.out.println("We have a winner!");
@@ -147,7 +147,6 @@ public class Race implements Runnable {
 
                         // TODO: give Rewards to players
                         // This variable contains all bets by client and value
-                        Map<Client, Integer> winnerHorseBets = broker.getHorseBets(winnerHorse);
 
                         break;
                     }
@@ -181,7 +180,14 @@ public class Race implements Runnable {
 
 
     private void PaybackWinnings(Horse winner) {
-
+        Map<Client, Integer> winnerHorseBets = broker.getHorseBets(winnerHorse);
+        if(winnerHorseBets==null){
+            System.out.println("winnerHorse is null");
+            return;
+        }
+        for (Map.Entry<Client, Integer> entry : winnerHorseBets.entrySet()){
+            entry.getKey().getWallet().deposit(entry.getValue()*winner.getOdds());
+        }
     }
 
     public void restartRace(){
@@ -195,7 +201,7 @@ public class Race implements Runnable {
         enrolledHorses.addAll(HorseFactory.getHorses(6));
 
         // Get track type randomly
-        this.track = Track.getTrack();
+        this.track = TrackType.random();
 
         this.weather = WeatherType.random();
 
@@ -206,6 +212,7 @@ public class Race implements Runnable {
     }
 
     public void placeBet(Client client, int horse, int amount) {
+        System.out.println("rrrrrrregister bet "+client.getName()+" "+enrolledHorses.get(horse).getName()+" "+amount);
         broker.registerBet(client, enrolledHorses.get(horse), amount);
     }
 
@@ -219,5 +226,13 @@ public class Race implements Runnable {
 
     public Boolean getInRace() {
         return inRace;
+    }
+
+    public TrackType getTrack() {
+        return track;
+    }
+
+    public WeatherType getWeather() {
+        return weather;
     }
 }

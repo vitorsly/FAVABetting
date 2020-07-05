@@ -15,6 +15,7 @@ public class Broker {
 
     public Broker() {
         this.clientsBets = new HashMap<>();
+        this.horsesBets = new HashMap<>();
     }
 
     // Registers client with broker
@@ -29,7 +30,10 @@ public class Broker {
     // Add new bet to client
     public void registerBet(Client client, Horse horse, Integer amount) {
         this.clientsBets.get(client).put(horse, amount);
-        this.horsesBets.get(horse).put(client, amount);
+        HashMap<Client,Integer> ca=new HashMap<>();
+        ca.put(client,amount);
+        this.horsesBets.put(horse,ca);
+
     }
 
     // Returns all clients bets
