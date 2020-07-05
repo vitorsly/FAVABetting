@@ -33,7 +33,6 @@ public class Broker {
         HashMap<Client,Integer> ca=new HashMap<>();
         ca.put(client,amount);
         this.horsesBets.put(horse,ca);
-
     }
 
     // Returns all clients bets

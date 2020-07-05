@@ -74,7 +74,6 @@ public class Race implements Runnable {
 
             boolean sopLoop = true;
 
-
             while (sopLoop){
                	sopLoop = interval.getInInterval();
                 System.out.print("");
@@ -106,20 +105,7 @@ public class Race implements Runnable {
 
                     // Apply speed change at race start only
                     if (!raceStart) {
-
-                        // Applying track effect to horse's speed
-                        horse.setSpeed(horse.getSpeed() * track.getMultiplier());
-
-                        horse.setSpeed(horse.getSpeed() * horse.getTrackModifier(track));
-
-                        horse.setSpeed(horse.getSpeed() * horse.getWeatherModifier(weather));
-
-                        // Applying strategy effect to horse's speed
-                        horse.setSpeed(horse.getSpeed() * strategy.getType().getMultiplier());
-
-                        // Applying total distance effect to horse's speed ( tiredness )
-                        horse.setSpeed(horse.getSpeed() * horse.getTotalDistanceMultiplier());
-
+                        runModifiers(horse);
                         raceStart = true;
                     }
 
@@ -144,9 +130,6 @@ public class Race implements Runnable {
                         for (Horse horseFinish : enrolledHorses) {
                             horseFinish.resetDistance();
                         }
-
-                        // TODO: give Rewards to players
-                        // This variable contains all bets by client and value
 
                         break;
                     }
@@ -178,15 +161,33 @@ public class Race implements Runnable {
         }
     }
 
+    public void runModifiers(Horse horse) {
+
+        // Applying track effect to horse's speed
+        horse.setSpeed(horse.getSpeed() * track.getMultiplier());
+
+        horse.setSpeed(horse.getSpeed() * horse.getTrackModifier(track));
+
+        horse.setSpeed(horse.getSpeed() * horse.getWeatherModifier(weather));
+
+        // Applying strategy effect to horse's speed
+        horse.setSpeed(horse.getSpeed() * strategy.getType().getMultiplier());
+
+        // Applying total distance effect to horse's speed ( tiredness )
+        horse.setSpeed(horse.getSpeed() * horse.getTotalDistanceMultiplier());
+    }
 
     private void PaybackWinnings(Horse winner) {
+
         Map<Client, Integer> winnerHorseBets = broker.getHorseBets(winnerHorse);
-        if(winnerHorseBets==null){
+
+        if(winnerHorseBets == null){
             System.out.println("winnerHorse is null");
             return;
         }
+
         for (Map.Entry<Client, Integer> entry : winnerHorseBets.entrySet()){
-            entry.getKey().getWallet().deposit(entry.getValue()*winner.getOdds());
+            entry.getKey().getWallet().deposit(entry.getValue() * winner.getOdds());
         }
     }
 

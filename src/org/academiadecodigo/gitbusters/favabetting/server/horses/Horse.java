@@ -32,9 +32,8 @@ public class Horse {
 
     private String bigDescription;
 
-
-
     Horse(int id, String name, String description, double speed, int maxSpeed, double odds, int wins, int races){
+
         this.id = id;
         this.description = description;
         this.name = name;
@@ -61,8 +60,6 @@ public class Horse {
         this.nightModifier = 0.90;
 
         this.bigDescription = "";
-
-
     }
 
     public void setTrackModifiers(double grass, double dirt, double sand){
@@ -175,7 +172,6 @@ public class Horse {
         this.speed += speedChange;
         this.baseSpeed += speedChange;
     }
-
 
     public void setSpeed(double value) {
         if(value <= maxSpeed) {
