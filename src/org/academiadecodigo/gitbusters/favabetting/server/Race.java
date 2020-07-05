@@ -5,6 +5,7 @@ import org.academiadecodigo.gitbusters.favabetting.server.horses.HorseFactory;
 import org.academiadecodigo.gitbusters.favabetting.server.strategy.Strategy;
 import org.academiadecodigo.gitbusters.favabetting.server.horses.Horse;
 import org.academiadecodigo.gitbusters.favabetting.server.tracks.Track;
+import org.academiadecodigo.gitbusters.favabetting.server.weather.WeatherType;
 
 import java.util.*;
 
@@ -21,6 +22,8 @@ public class Race implements Runnable {
 
     // Track type that will have our race
     private Track track;
+
+    private WeatherType weather;
 
     // Horse strategy for race
     private Strategy strategy;
@@ -50,6 +53,8 @@ public class Race implements Runnable {
         // Get track type randomly
         this.track = Track.getTrack();
 
+        this.weather = WeatherType.random();
+
         // Get strategy type randomly
         this.strategy = Strategy.getStrategy();
 
@@ -69,8 +74,9 @@ public class Race implements Runnable {
 
             boolean sopLoop = true;
 
+
             while (sopLoop){
-               sopLoop = interval.getInInterval();
+               	sopLoop = interval.getInInterval();
                 System.out.print("");
             }
 
@@ -99,10 +105,14 @@ public class Race implements Runnable {
                 for(Horse horse : enrolledHorses) {
 
                     // Apply speed change at race start only
-                    if(!raceStart) {
+                    if (!raceStart) {
 
                         // Applying track effect to horse's speed
                         horse.setSpeed(horse.getSpeed() * track.getType().getMultiplier());
+
+                        horse.setSpeed(horse.getSpeed() * horse.getTrackModifier(track.getType()));
+
+                        horse.setSpeed(horse.getSpeed() * horse.getWeatherModifier(weather));
 
                         // Applying strategy effect to horse's speed
                         horse.setSpeed(horse.getSpeed() * strategy.getType().getMultiplier());
@@ -121,7 +131,7 @@ public class Race implements Runnable {
                     }
 
                     // Get track distance and compare with horse run distance
-                    if(horse.getDistance() >= track.getType().getDistance()) {
+                    if (horse.getDistance() >= track.getType().getDistance()) {
 
                         // MESSAGE HORSE WON
                         System.out.println("We have a winner!");
@@ -131,7 +141,7 @@ public class Race implements Runnable {
                         won = true;
 
                         // Reset horse race distance
-                        for(Horse horseFinish : enrolledHorses) {
+                        for (Horse horseFinish : enrolledHorses) {
                             horseFinish.resetDistance();
                         }
 
@@ -164,10 +174,11 @@ public class Race implements Runnable {
 
             restartRace();
 
-        } catch ( Exception error) {
+        } catch (Exception error) {
             error.printStackTrace();
         }
     }
+
 
     private void PaybackWinnings(Horse winner) {
 
@@ -186,14 +197,16 @@ public class Race implements Runnable {
         // Get track type randomly
         this.track = Track.getTrack();
 
+        this.weather = WeatherType.random();
+
         // Get strategy type randomly
         this.strategy = Strategy.getStrategy();
 
         run();
     }
 
-    public void placeBet(Client client, int horse, int amount){
-        broker.registerBet(client,enrolledHorses.get(horse),amount);
+    public void placeBet(Client client, int horse, int amount) {
+        broker.registerBet(client, enrolledHorses.get(horse), amount);
     }
 
     public List<Horse> getEnrolledHorses() {

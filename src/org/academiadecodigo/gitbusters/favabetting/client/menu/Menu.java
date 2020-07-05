@@ -127,6 +127,11 @@ public class Menu {
 
     }
 
+    public void makeInfluenceRaceMenu(String[] cheatList){
+
+        executor.submit(new InfluenceRaceMenu(cheatList));
+    }
+
     private int getIntInput(String message, String errorMessage){
 
         IntegerInputScanner insertInt = new IntegerInputScanner();
@@ -212,6 +217,61 @@ public class Menu {
             int amount = getIntInput("How much do you wanna bet? ","Invalid amount");
 
             client.sendMessage("bet " + horse + " " + amount);
+        }
+    }
+
+    public class InfluenceRaceMenu implements Runnable{
+
+        private String[] cheatsAndHorses;
+
+        public InfluenceRaceMenu(String[] cheatsAndHorses){
+
+            this.cheatsAndHorses = cheatsAndHorses;
+        }
+
+        @Override
+        public void run() {
+
+
+            String[] cheats = cheatsAndHorses[0].split("%");
+            String[] horses = cheatsAndHorses[1].split("%");
+
+            String[] cheatList = new String[6];
+            String[] horseList = new String[7];
+
+
+            for (int i = 0; i < cheats.length; i++){
+                String[] splittedCheat = cheats[i].split("#");
+                cheatList[i] = "Name: " + splittedCheat[0] + " | Description: " + splittedCheat[1] + " | Price: " + splittedCheat[2] + "$";
+            }
+
+            cheatList[5] = "Back";
+
+            int cheat = buildMenu(cheatList,"Choose your cheat: ","Invalid option");
+
+            if (cheat == 6){
+                mainMenu();
+                return;
+            }
+
+            for (int i = 0; i < horses.length; i++) {
+                String[] splittedHorse = horses[i].split("#");
+                horseList[i] = "Name: " + splittedHorse[0] + " | Description: " + splittedHorse[1] + " | Odd: " + splittedHorse[2]
+                        + " | Wins: " + splittedHorse[3] + " | Races: " + splittedHorse[4];
+            }
+
+            horseList[6] = "Back";
+
+
+            int horse = buildMenu(horseList,"On which horse do you want to apply your cheat? ","Invalid option");
+
+            if (horse == 7){
+                makeInfluenceRaceMenu(cheatsAndHorses);
+            }
+
+            client.sendMessage("cheat " + cheat + " " + horse);
+
+
         }
     }
 }
