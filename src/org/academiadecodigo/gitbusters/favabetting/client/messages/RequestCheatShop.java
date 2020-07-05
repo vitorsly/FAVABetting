@@ -2,7 +2,6 @@ package org.academiadecodigo.gitbusters.favabetting.client.messages;
 
 import org.academiadecodigo.gitbusters.favabetting.client.Client;
 import org.academiadecodigo.gitbusters.favabetting.client.Print;
-import org.academiadecodigo.gitbusters.favabetting.client.messages.Messages;
 
 public class RequestCheatShop implements Messages {
     @Override

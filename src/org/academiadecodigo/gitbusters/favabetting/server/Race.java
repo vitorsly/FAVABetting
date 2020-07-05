@@ -147,8 +147,8 @@ public class Race implements Runnable {
                 server.broadcastMsg("Leading "+leadingHorse.getName());
             }
 
-            // TODO: Check bets and apply wins to players base on winner horse object
             server.broadcastMsg("raceOver "+winnerHorse.getName());
+            PaybackWinnings(winnerHorse);
             inRace=false;
             System.out.println("Winning horse: " + winnerHorse.getName());
 
@@ -161,6 +161,10 @@ public class Race implements Runnable {
         } catch ( Exception error) {
             error.printStackTrace();
         }
+    }
+
+    private void PaybackWinnings(Horse winner) {
+
     }
 
     public void restartRace(){
