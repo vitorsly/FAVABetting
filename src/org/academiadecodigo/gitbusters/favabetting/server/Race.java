@@ -6,6 +6,8 @@ import org.academiadecodigo.gitbusters.favabetting.server.horses.Horse;
 import org.academiadecodigo.gitbusters.favabetting.server.tracks.Track;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Race implements Runnable {
@@ -111,7 +113,8 @@ public class Race implements Runnable {
                     horse.race();
 
                     // DEBUG ONLY
-                    System.out.println(horse.getName() + " is running.");
+                    //System.out.println(horse.getName() + " is running.");
+                    System.out.println(getRaceLeader().getName());
 
                     if(horse.getDistance()>leadingHorse.getDistance()){
                         leadingHorse=horse;
@@ -189,5 +192,14 @@ public class Race implements Runnable {
 
     public Boolean getInRace() {
         return inRace;
+    }
+
+    public Horse getRaceLeader() {
+        Collections.sort(enrolledHorses, new Comparator<Horse>() {
+            public int compare(Horse h1, Horse h2) {
+                return Double.compare(h1.getDistance(), h2.getDistance());
+            }
+        });
+        return enrolledHorses.get(0);
     }
 }
