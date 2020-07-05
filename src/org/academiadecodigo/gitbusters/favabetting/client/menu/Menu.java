@@ -6,6 +6,7 @@ import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
 import org.academiadecodigo.bootcamp.scanners.string.StringInputScanner;
 import org.academiadecodigo.gitbusters.favabetting.client.Client;
 import org.academiadecodigo.gitbusters.favabetting.client.Print;
+import org.academiadecodigo.gitbusters.favabetting.client.colors.Colors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +31,9 @@ public class Menu {
     }
 
     public void insertNameMenu() {
-
         String name = getStringInput("Insert your name: ", "Invalid name...");
 
         client.sendMessage("name " + name);
-
     }
 
     public void presentStartImage() {
@@ -89,11 +88,9 @@ public class Menu {
     }
 
     private void printPlayers() {
-
         for (String player : playerList) {
             System.out.println(player);
         }
-
     }
 
     private void changeName() {
@@ -161,7 +158,6 @@ public class Menu {
         client.sendMessage("CheatShop");
     }
 
-
     private void chatMessage() {
         inChat=true;
         executor.submit(new Chat());
@@ -174,7 +170,12 @@ public class Menu {
         @Override
         public void run() {
             while (inChat) {
-                String message = getStringInput("Write your message or menu to return to the main menu: ", "Invalid message");
+                String message = getStringInput(Colors.ANSI_GREEN.getColorCode() + "Write " +
+                                Colors.ANTI_RESET.getColorCode() + Colors.ANSI_RED.getColorCode() + "\"menu\"" +
+                        Colors.ANTI_RESET.getColorCode() + Colors.ANSI_GREEN.getColorCode() + " to exit chat room" +
+                                Colors.ANTI_RESET.getColorCode() + "\n" +
+                        Colors.ANSI_BLUE.getColorCode() + "Message: " + Colors.ANTI_RESET.getColorCode(),
+                        "Invalid message");
                 if (message.equals("menu")) {
                     mainMenu();
                 } else {
