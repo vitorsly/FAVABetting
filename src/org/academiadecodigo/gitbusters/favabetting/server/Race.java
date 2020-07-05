@@ -23,6 +23,7 @@ public class Race implements Runnable {
     // Track type that will have our race
     private TrackType track;
 
+    // Weather type that influences race conditions
     private WeatherType weather;
 
     // Horse strategy for race
@@ -137,8 +138,8 @@ public class Race implements Runnable {
                         System.out.println("We have a winner!");
 
                         // Sets winner with horse object
-                        winnerHorse = horse;
                         won = true;
+                        winnerHorse = horse;
                         winnerHorse.addWin();
 
                         // Reset horse race distance
@@ -206,8 +207,6 @@ public class Race implements Runnable {
         this.track = TrackType.random();
 
         this.weather = WeatherType.random();
-
-
 
         // Get strategy type randomly
         this.strategy = Strategy.getStrategy();

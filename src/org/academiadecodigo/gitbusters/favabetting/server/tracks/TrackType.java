@@ -4,12 +4,13 @@ import org.academiadecodigo.gitbusters.Utils;
 
 public enum TrackType {
 
-    DIRT("Dirt","Description for DIRT track.",300,1.2),
-    GRASS("Grass","Description for GRASS track.",200,1),
-    SAND("Sand","Description for SAND track.",200,0.8);
+    DIRT("Dirt","Description for DIRT track.",400,1.2),
+    GRASS("Grass","Description for GRASS track.",500,1),
+    SAND("Sand","Description for SAND track.",45000,0.8);
 
     private String name;
     private String description;
+    
     private int distance;
     private double multiplier;
 
