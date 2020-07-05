@@ -34,10 +34,12 @@ public class BetMessage implements Message {
         try {
             horseNumber = Integer.parseInt(msgSplit[1]);
             betAmount= Integer.parseInt(msgSplit[2]);
+            System.out.println(client.getWallet().Withdraw(betAmount));
             if(client.getWallet().Withdraw(betAmount)){
 
                 server.getRace().placeBet(client,horseNumber-1,betAmount);
-                System.out.println("saiu deste if");
+                System.out.println("saiu deste if!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                send(client,server);
             }
             else{
                 client.sendMessage("noFunds");
@@ -47,6 +49,6 @@ public class BetMessage implements Message {
             e.getMessage();
         }
 
-        send(client,server);
+
     }
 }
