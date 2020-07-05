@@ -2,23 +2,31 @@ package org.academiadecodigo.gitbusters.favabetting.server.strategy;
 
 import org.academiadecodigo.gitbusters.Utils;
 
-public class Strategy {
+public enum Strategy {
 
-    // TODO: Strategy that influences each horse differently at the beginning of each race
+    // Strategy influences how the horse will ace during the race
 
-    private StrategyType type;
+    EARLYSPRINT(1.2),
+    SLOWSTART(1),
+    STEADYRUN(0.8);
 
-    public Strategy( StrategyType type ) {
-        this.type = type;
+    private double multiplier;
+
+    Strategy( double multiplier) {
+        this.multiplier = multiplier;
     }
 
-    public StrategyType getType() {
-        return type;
-    }
-
+    // Returns a strategy randomly
     public static Strategy getStrategy() {
-        int random = Utils.getRandom(StrategyType.values().length);
-        StrategyType strategyType = StrategyType.values()[random];
-        return new Strategy(strategyType);
+        int random = Utils.getRandom(Strategy.values().length);
+        return Strategy.values()[random];
+    }
+
+    public static Strategy getStrategy(int value) {
+        return Strategy.values()[value];
+    }
+
+    public double getMultiplier() {
+        return multiplier;
     }
 }

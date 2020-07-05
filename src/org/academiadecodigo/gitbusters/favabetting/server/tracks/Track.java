@@ -4,6 +4,8 @@ import org.academiadecodigo.gitbusters.Utils;
 
 public enum Track {
 
+    // Track sets which type of surface race will hav influencing horse's speed
+
     DIRT("Dirt","Description for DIRT track.",400,1.2),
     GRASS("Grass","Description for GRASS track.",500,1),
     SAND("Sand","Description for SAND track.",45000,0.8);
@@ -19,6 +21,12 @@ public enum Track {
         this.description = description;
         this.distance = distance;
         this.multiplier = multiplier;
+    }
+
+    // Returns a track type randomly
+    public static Track random() {
+        int random = Utils.getRandom(Track.values().length);
+        return Track.values()[random];
     }
 
     public static Track getTrackType(int value) {
@@ -47,11 +55,5 @@ public enum Track {
 
     public void setDistance(int distance) {
         this.distance = distance;
-    }
-
-    public static Track random() {
-        int random = Utils.getRandom(Track.values().length);
-        Track track = Track.values()[random];
-        return track;
     }
 }

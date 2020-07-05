@@ -33,9 +33,8 @@ public class Horse {
 
     private String bigDescription;
 
-
-
     Horse(int id, String name, String description, double speed, int maxSpeed, double odds, int wins, int races){
+
         this.id = id;
         this.description = description;
         this.name = name;
@@ -62,8 +61,6 @@ public class Horse {
         this.nightModifier = 0.90;
 
         this.bigDescription = "";
-
-
     }
 
     public void setTrackModifiers(double grass, double dirt, double sand){
@@ -140,8 +137,8 @@ public class Horse {
     }
 
     public void race() {
-        this.distance += Utils.getRandom(1,2) * speed / 2;
-        this.totalDistance += Utils.getRandom(1,2) * speed / 2;
+        this.distance += Utils.getRandom(1, 2) * speed / 2;
+        this.totalDistance += Utils.getRandom(1, 2) * speed / 2;
     }
 
     public double getDistance() {
@@ -149,7 +146,7 @@ public class Horse {
     }
 
     public double getTotalDistanceMultiplier() {
-        return this.distance * 0.9 / this.distance;
+        return this.distance * 0.8 / this.totalDistance;
     }
 
     public void resetDistance() {
@@ -176,7 +173,6 @@ public class Horse {
         this.speed += speedChange;
         this.baseSpeed += speedChange;
     }
-
 
     public void setSpeed(double value) {
         if(value <= maxSpeed) {

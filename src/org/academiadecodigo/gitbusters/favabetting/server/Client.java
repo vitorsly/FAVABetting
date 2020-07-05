@@ -3,7 +3,6 @@ package org.academiadecodigo.gitbusters.favabetting.server;
 import org.academiadecodigo.gitbusters.favabetting.server.messages.MessageHandler;
 
 import java.io.*;
-import java.lang.invoke.LambdaMetafactory;
 import java.net.Socket;
 
 public class Client implements Runnable {
@@ -16,9 +15,11 @@ public class Client implements Runnable {
     private Wallet wallet = new Wallet();
 
     Client(Socket socket, String name, Server server) {
+
         this.socket = socket;
         this.server = server;
         this.name = name;
+
         try {
             socket.setKeepAlive(true);
             inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -30,9 +31,10 @@ public class Client implements Runnable {
 
     @Override
     public void run() {
-
         while (!socket.isClosed()) {
+
             System.out.println("Connected");
+
             try {
                 readInput(inputStream);
             } catch (Exception e) {
@@ -43,7 +45,6 @@ public class Client implements Runnable {
     }
 
     private void readInput(BufferedReader input) throws IOException {
-
         String line;
         while ((line = input.readLine()) != null) {
             MessageHandler.getActionFromString(line).getMessage().receive(this, server, line);
@@ -52,28 +53,32 @@ public class Client implements Runnable {
 
     public void sendMessage(String msg) {
         try {
+
             msg += "\n";
-            if(outPut==null)return;
+
+            if(outPut == null) {
+                return;
+            }
+
             outPut.write(msg);
             outPut.flush();
+
         } catch (IOException e) {
             System.out.println(e);
             //e.printStackTrace();
         }
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void closeSocket() {
+        try {
+            sendMessage("quit");
+            socket.close();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public Wallet getWallet() {
-        return wallet;
-    }
-
+    // Handles client money balance
     public class Wallet {
 
         private double amount = 100.0;
@@ -96,14 +101,15 @@ public class Client implements Runnable {
         }
     }
 
-    public void closeSocket() {
+    public void setName(String name) {
+        this.name = name;
+    }
 
-        try {
-            sendMessage("quit");
-            socket.close();
-        } catch (IOException e) {
-            System.out.println(e);
-        }
+    public String getName() {
+        return name;
+    }
 
+    public Wallet getWallet() {
+        return wallet;
     }
 }

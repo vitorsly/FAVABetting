@@ -7,6 +7,8 @@ import java.util.List;
 
 public class HorseFactory {
 
+    // List of available horses for the race
+
     static int currentID = 0;
     private static ArrayList<Horse> stable;
 
@@ -107,6 +109,7 @@ public class HorseFactory {
         return stable;
     }
 
+    // Returns an array of X number of horse's selected randomly
     public static ArrayList<Horse> getHorses(int number) {
 
         ArrayList<Horse> onRace = new ArrayList<>();
