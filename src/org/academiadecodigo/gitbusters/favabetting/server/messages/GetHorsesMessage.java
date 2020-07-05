@@ -13,10 +13,10 @@ public class GetHorsesMessage implements Message {
        List<Horse> hl = server.getRace().getEnrolledHorses();
        StringBuilder message= new StringBuilder("HorseList ");
        for(Horse horse:hl){
-           message.append(horse.getName()).append(" ")
-                   .append(horse.getDescription()).append(" ")
-                   .append(horse.getOdds()).append(" ")
-                   .append(horse.getWins()).append(" ")
+           message.append(horse.getName()).append("#")
+                   .append(horse.getDescription()).append("#")
+                   .append(horse.getOdds()).append("#")
+                   .append(horse.getWins()).append("#")
                    .append(horse.getRaces()).append("%");
        }
        client.sendMessage(message.toString());

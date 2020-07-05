@@ -22,6 +22,10 @@ public class Broker {
         this.clientsBets.put(client, new HashMap<>());
     }
 
+    public void unregisterClient(Client client) {
+        clientsBets.remove(client);
+    }
+
     // Add new bet to client
     public void registerBet(Client client, Horse horse, Integer amount) {
         this.clientsBets.get(client).put(horse, amount);
@@ -47,4 +51,8 @@ public class Broker {
     public Map<Client, Integer> getHorseBets(Horse horse) {
         return this.horsesBets.get(horse);
     }
+
+    //todo : method that receives the wining horse and returns list of clients that bet on that horse in this race
+    //todo : reset all Lists after race is over so you don't have bets from previous races
+    // TODO: Check bets and apply wins to players base on winner horse object
 }

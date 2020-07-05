@@ -13,16 +13,16 @@ public class Client implements Runnable {
     private BufferedReader inputStream;
     private BufferedWriter outPut;
     private Server server;
-    private Wallet wallet=new Wallet();
+    private Wallet wallet = new Wallet();
 
-    Client(Socket socket,String name,Server server){
-        this.socket=socket;
-        this.server=server;
-        this.name=name;
+    Client(Socket socket, String name, Server server) {
+        this.socket = socket;
+        this.server = server;
+        this.name = name;
         try {
             socket.setKeepAlive(true);
-            inputStream=new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            outPut=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            outPut = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -31,11 +31,11 @@ public class Client implements Runnable {
     @Override
     public void run() {
 
-        while (!socket.isClosed()){
+        while (!socket.isClosed()) {
             System.out.println("Connected");
             try {
                 readInput(inputStream);
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println(e);
             }
         }
@@ -44,14 +44,14 @@ public class Client implements Runnable {
     private void readInput(BufferedReader input) throws IOException {
 
         String line;
-        while((line = input.readLine()) != null) {
-            MessageHandler.getActionFromString(line).getMessage().receive(this,server,line);
+        while ((line = input.readLine()) != null) {
+            MessageHandler.getActionFromString(line).getMessage().receive(this, server, line);
         }
     }
 
-    public void sendMessage(String msg){
+    public void sendMessage(String msg) {
         try {
-            msg+="\n";
+            msg += "\n";
             outPut.write(msg);
             outPut.flush();
         } catch (IOException e) {
@@ -71,21 +71,35 @@ public class Client implements Runnable {
         return wallet;
     }
 
-    public class Wallet{
-        double amount=100.0;
-        double getBalance(){return amount;}
+    public class Wallet {
+        private double amount = 100.0;
 
-        public void deposit(double amount){
-            this.amount+=amount;
+        public double getBalance() {
+            return amount;
         }
 
-        public boolean Withdraw(double amount){
-            if(this.amount<amount){
+        public void deposit(double amount) {
+            this.amount += amount;
+        }
+
+        public boolean Withdraw(double amount) {
+            if (this.amount < amount) {
                 return false;
-            }else{
-                this.amount-=amount;
+            } else {
+                this.amount -= amount;
                 return true;
             }
         }
+    }
+
+    public void closeSocket() {
+
+        try {
+            sendMessage("quit");
+            socket.close();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+
     }
 }

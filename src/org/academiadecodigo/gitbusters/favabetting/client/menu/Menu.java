@@ -5,19 +5,28 @@ import org.academiadecodigo.bootcamp.scanners.integer.IntegerInputScanner;
 import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
 import org.academiadecodigo.bootcamp.scanners.string.StringInputScanner;
 import org.academiadecodigo.gitbusters.favabetting.client.Client;
+import org.academiadecodigo.gitbusters.favabetting.client.Print;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Menu {
 
     private Prompt prompt;
     private Client client;
+    private List<String> transactions = new ArrayList<String>();
+    private List<String> playerList = new ArrayList<String>();
+    private ExecutorService executor= Executors.newCachedThreadPool();
 
     public Menu(Client client) {
 
         this.client = client;
         this.prompt = new Prompt(System.in,System.out);
+        presentStartImage();
 
     }
-
 
     public void insertNameMenu(){
 
@@ -27,73 +36,92 @@ public class Menu {
 
     }
 
+    public void presentStartImage(){
 
-    public void makeBetMenu(){
-
-        int horse = getIntInput("Choose your horse: ","Invalid horse number");
-        int amount = getIntInput("How much do you wanna bet: ","Invalid amount");
-
-        client.sendMessage("bet " + horse + " " + amount);
-
+        System.out.println("                                -.\n" +
+                "                               |  \\\n" +
+                "                               |   \\\n" +
+                "                               F    L\n" +
+                "                 |\"-._         F    L\n" +
+                "                 |  `.`--.     L    |\n" +
+                "                 J    `.  `.   |    |   __\n" +
+                "                  \\     `.  `. J    |.-'_.-\n" +
+                "                   \\      `.  \\ \\.-     `-. \n" +
+                "      J\".           `.      \\  >'          `.\n" +
+                "      |  \\            `-.    L/       `---.._\\\n" +
+                "      J   L              `\"-/               |\n" +
+                "       \\  |                J        / .-.   4\n" +
+                "        J F                |       | / d8   |\n" +
+                "         L\\                F         | 8P   J\n" +
+                "         J L               |         `-'     `-.\n" +
+                "         | |                L  .          .-    )\n" +
+                "         | J                |   \\        . dP  / \n" +
+                "         J  \\               |    `.       `-.-\"\n" +
+                "          \\  >-\"\"\"\"-.      .F      >\"--.---._) \n" +
+                "           >\"        \"\"--\"\"        |\n" +
+                "          J                        F\n" +
+                "          |                        L\n" +
+                "          J                        |\n" +
+                "           \\        L         `.   J\n" +
+                "            )       | % |      | eJ\" u+L\n" +
+                "           d\"      d\"  '|     :Fd\"     4\n" +
+                "          P      u$\"b.  $r    $*L u@\".  F\n" +
+                "          $  ?F\"\" 4L ^F\"\"$   F      zP $\n" +
+                "          4F  N    *. %. ^  4     $#  zF\n" +
+                "           #r \".    $  $ $  $   $$F :\"\n" +
+                "           -F  $    ^k Jr@F $   $$$\"\n" +
+                "            #. F     9$$$9  4\n" +
+                "            '$$$          $  *\n" +
+                "              ^\"          3ed$.\n" +
+                "                           $$$#\n");
+        mainMenu();
     }
 
+    public void makeBetMenu(String[] horseList){
+        executor.submit(new BetMenu(horseList));
+    }
 
     public void mainMenu(){
-
-
-        String[] options = {"View balance", "Make a bet","Influence Race","Transactions","Change name","Check online players"};
-
-        switch (buildMenu(options)){
-
-            case 1:
-                client.sendMessage("balance");
-                break;
-            case 2:
-                makeBetMenu();
-                break;
-            case 3:
-                influenceRace();
-                break;
-            case 4:
-                transactionsMenu();
-                break;
-            case 5:
-                changeName();
-                break;
-            case 6:
-                getPlayers();
-                break;
-        }
-
+        executor.submit(new MainMenu());
     }
 
-    private void getPlayers() {
+    private void printPlayers() {
 
+        for (String player : playerList){
+            System.out.println(player);
+        }
 
     }
 
     private void changeName() {
 
-        StringInputScanner insertName = new StringInputScanner();
-        insertName.setMessage("Insert new name: ");
-
-        String newName = prompt.getUserInput(insertName);
+        String newName = getStringInput("Insert new name: ","Invalid name..");
 
         client.sendMessage("name " + newName);
 
     }
 
-    private void transactionsMenu() {
+    public void saveTransaction(String msg) {
 
+        String transaction = msg.substring(5);
+
+        transactions.add(transaction);
 
     }
 
+    public void printTransactions(){
 
-    private int buildMenu(String[] options) {
+        for (String transaction : transactions){
+            new Print(transaction);
+        }
+
+    }
+
+    private int buildMenu(String[] options, String message, String error) {
 
         MenuInputScanner mainMenu = new MenuInputScanner(options);
-        mainMenu.setError("Invalid option");
-        mainMenu.setMessage("Select an option:");
+        mainMenu.setError(error);
+        mainMenu.setMessage(message);
 
         return prompt.getUserInput(mainMenu);
 
@@ -120,8 +148,70 @@ public class Menu {
     }
 
     public void influenceRace(){
-
-
+        client.sendMessage("CheatShop");
     }
 
+    public class MainMenu implements Runnable{
+
+        @Override
+        public void run() {
+            String[] options = {"View balance", "Make a bet","Influence Race","Transactions","Change name","Quit"};
+
+            switch (buildMenu(options,"Main Menu","Invalid option")){
+
+                case 1:
+                    client.sendMessage("balance");
+                    break;
+                case 2:
+                    client.sendMessage("getHorses");
+                    break;
+                case 3:
+                    influenceRace();
+                    break;
+                case 4:
+                    printTransactions();
+                    break;
+                case 5:
+                    changeName();
+                    break;
+                case 6:
+                    client.sendMessage("quit");
+                    break;
+                default:
+                    System.out.println("Something went terribly wrong...");
+            }
+        }
+    }
+
+    public class BetMenu implements Runnable{
+        private String[] horseList;
+
+        BetMenu(String[] horseList){
+            this.horseList=horseList;
+        }
+
+        @Override
+        public void run() {
+            String[] horses = new String[7];
+
+            for ( int i = 0; i < horseList.length; i++){
+                String[] splittedHorse = horseList[i].split("#");
+                horses[i] = "Name: " + splittedHorse[0] + " | Description: " + splittedHorse[1] + " | Odd: " + splittedHorse[2]
+                        + " | Wins: " + splittedHorse[3] + " | Races: " + splittedHorse[4];
+            }
+
+            horses[6] = "Back";
+
+            int horse = buildMenu(horses,"Choose your horse:","Invalid option");
+
+            if (horse == 7){
+                mainMenu();
+                return;
+            }
+
+            int amount = getIntInput("How much do you wanna bet? ","Invalid amount");
+
+            client.sendMessage("bet " + horse + " " + amount);
+        }
+    }
 }
