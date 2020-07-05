@@ -9,6 +9,7 @@ public enum MessageHandler {
     SENDCHEATLIST("CheatShop",new CheatsMessage()),
     QUIT("quit", new QuitMessage()),
     REGISTERCHEAT("cheat", new RegisterCheatMessage()),
+    CHATMESSAGE("chat", new ChatMessage()),
     INVALID("",new InvalidMessage());
 
     private String actionMessage;
