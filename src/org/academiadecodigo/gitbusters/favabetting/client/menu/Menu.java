@@ -30,11 +30,9 @@ public class Menu {
     }
 
     public void insertNameMenu() {
-
         String name = getStringInput("Insert your name: ", "Invalid name...");
 
         client.sendMessage("name " + name);
-
     }
 
     public void presentStartImage() {
@@ -89,11 +87,9 @@ public class Menu {
     }
 
     private void printPlayers() {
-
         for (String player : playerList) {
             System.out.println(player);
         }
-
     }
 
     private void changeName() {
@@ -160,7 +156,6 @@ public class Menu {
     public void influenceRace() {
         client.sendMessage("CheatShop");
     }
-
 
     private void chatMessage() {
         inChat=true;
