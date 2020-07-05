@@ -272,7 +272,6 @@ public class Menu {
             client.sendMessage("cheat " + cheat + " " + horse);
 
 
-
         }
     }
 }

@@ -105,7 +105,7 @@ public class Horse {
             case COLD -> Math.pow(coldModifier, type.getPower());
             case MISTY -> Math.pow(mistyModifier, type.getPower());
             case NIGHT -> Math.pow(nightModifier, type.getPower());
-        }
+        };
     }
 
     public int getId() {

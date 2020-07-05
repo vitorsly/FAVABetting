@@ -16,6 +16,7 @@ public enum MessageHandler {
     LEADINGHORSE("Leading",new LeadingHorse()),
     RECEVECHEATS("CheatShop",new RequestCheatShop()),
     CHEATSUCCESS("successCheat",new CheatSuccessMsg()),
+    NAMECHANGED("namechange", new NameChangedMsg()),
     INVALID("",new InvalidMsg());
 
 
