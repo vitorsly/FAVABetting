@@ -7,6 +7,9 @@ public class MessageMsg implements Messages{
     @Override
 
     public void run(Client client, String msg) {
-        new Print(msg);
+        String message = msg.substring(8);
+        new Print(message);
+
+        client.getMenu().mainMenu();
     }
 }

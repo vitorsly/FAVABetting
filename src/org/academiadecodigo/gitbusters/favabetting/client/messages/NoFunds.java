@@ -7,7 +7,6 @@ public class NoFunds implements Messages {
     @Override
     public void run(Client client, String msg) {
         new Print("You don't have funds to complete the operation");
-        //System.out.println("You don't have funds to complete the operation");
         client.getMenu().mainMenu();
     }
 }

@@ -77,8 +77,8 @@ public class Menu {
         mainMenu();
     }
 
-    public void makeBetMenu(String[] horseList) {
-        executor.submit(new BetMenu(horseList));
+    public void makeBetMenu(String[] horseList,String weather,String track) {
+        executor.submit(new BetMenu(horseList,weather,track));
     }
 
     public void mainMenu() {
@@ -202,10 +202,15 @@ public class Menu {
     }
 
     public class BetMenu implements Runnable {
-        private String[] horseList;
 
-        BetMenu(String[] horseList) {
+        private String[] horseList;
+        private String weather;
+        private String track;
+
+        BetMenu(String[] horseList, String weather, String track) {
             this.horseList = horseList;
+            this.weather = weather;
+            this.track = track;
         }
 
         @Override
@@ -220,7 +225,8 @@ public class Menu {
 
             horses[6] = "Back";
 
-            int horse = buildMenu(horses, "Choose your horse:", "Invalid option");
+            int horse = buildMenu(horses, "Track: " + track + " | Weather: " + weather +
+                    "\n" + "Choose your horse:", "Invalid option");
 
             if (horse == 7) {
                 mainMenu();

@@ -1,8 +1,6 @@
 package org.academiadecodigo.gitbusters.favabetting.server.weather;
 
 import org.academiadecodigo.gitbusters.Utils;
-import org.academiadecodigo.gitbusters.favabetting.server.tracks.Track;
-import org.academiadecodigo.gitbusters.favabetting.server.tracks.TrackType;
 
 public enum WeatherType {
     BASIC("Basic","Weather is perfect. It's a perfect day for racing! ",WeatherClass.NONE, 1),
