@@ -178,7 +178,6 @@ public class Race implements Runnable {
         }
     }
 
-
     private void PaybackWinnings(Horse winner) {
         Map<Client, Integer> winnerHorseBets = broker.getHorseBets(winnerHorse);
         if(winnerHorseBets==null){
