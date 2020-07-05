@@ -6,7 +6,6 @@ import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
 import org.academiadecodigo.bootcamp.scanners.string.StringInputScanner;
 import org.academiadecodigo.gitbusters.favabetting.client.Client;
 import org.academiadecodigo.gitbusters.favabetting.client.Print;
-import org.academiadecodigo.gitbusters.favabetting.client.colors.Colors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +20,7 @@ public class Menu {
     private List<String> playerList = new ArrayList<String>();
     private ExecutorService executor = Executors.newCachedThreadPool();
     private boolean inChat=false;
+
 
     public Menu(Client client) {
 
@@ -175,12 +175,8 @@ public class Menu {
         @Override
         public void run() {
             while (inChat) {
-                String message = getStringInput(Colors.ANSI_GREEN.getColorCode() + "Write " +
-                                Colors.ANTI_RESET.getColorCode() + Colors.ANSI_RED.getColorCode() + "\"menu\"" +
-                        Colors.ANTI_RESET.getColorCode() + Colors.ANSI_GREEN.getColorCode() + " to exit chat room" +
-                                Colors.ANTI_RESET.getColorCode() + "\n" +
-                        Colors.ANSI_BLUE.getColorCode() + "Message: " + Colors.ANTI_RESET.getColorCode(),
-                        "Invalid message");
+                String message = getStringInput("Write \"menu\" to exit chat room" + "\n" +
+                        "Message: ", "Invalid message");
                 if (message.equals("menu")) {
                     mainMenu();
                 } else {
