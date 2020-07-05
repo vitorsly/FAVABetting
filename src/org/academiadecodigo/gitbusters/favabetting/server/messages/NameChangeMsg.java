@@ -6,7 +6,7 @@ import org.academiadecodigo.gitbusters.favabetting.server.Server;
 public class NameChangeMsg implements Message {
     @Override
     public void send(Client client, Server server) {
-        client.sendMessage("namechange");
+        client.sendMessage("message Your name was changed successfully!");
     }
 
     @Override
