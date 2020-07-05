@@ -13,6 +13,7 @@ public enum MessageHandler {
     RACERUNNING("racerunning", new RaceRunningMsg()),
     RACEOVER("raceOver",new RaceOverWinsMsg()),
     TEXT("time",new TimeMessage()),
+    LEADINGHORSE("Leading",new LeadingHorse()),
     INVALID("",new InvalidMsg());
 
 

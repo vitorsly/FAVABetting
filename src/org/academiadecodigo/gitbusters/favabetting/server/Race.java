@@ -78,7 +78,7 @@ public class Race implements Runnable {
             server.broadcastMsg("betStop");
             int timmer=5;
             while (timmer>0){
-                Thread.currentThread().sleep(1000);
+                Thread.sleep(1000);
                 timmer--;
                 server.broadcastMsg("time :"+timmer);
             }
@@ -89,7 +89,7 @@ public class Race implements Runnable {
 
             // While we don't have a winner race continues
             while(!won) {
-
+                Horse leadingHorse=enrolledHorses.get(0);
                 for(Horse horse : enrolledHorses) {
 
                     // Apply speed change at race start only
@@ -113,6 +113,10 @@ public class Race implements Runnable {
                     // DEBUG ONLY
                     System.out.println(horse.getName() + " is running.");
 
+                    if(horse.getDistance()>leadingHorse.getDistance()){
+                        leadingHorse=horse;
+                    }
+
                     // Get track distance and compare with horse run distance
                     if(horse.getDistance() >= track.getType().getDistance()) {
 
@@ -133,6 +137,10 @@ public class Race implements Runnable {
                         break;
                     }
                 }
+                System.out.println("leading horse is "+leadingHorse.getName());
+
+                Thread.sleep(1000);
+                server.broadcastMsg("Leading "+leadingHorse.getName());
             }
 
             // TODO: Check bets and apply wins to players base on winner horse object
