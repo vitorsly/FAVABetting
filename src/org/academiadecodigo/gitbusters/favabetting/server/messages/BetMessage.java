@@ -36,11 +36,7 @@ public class BetMessage implements Message {
             betAmount= Integer.parseInt(msgSplit[2]);
             if(client.getWallet().Withdraw(betAmount)){
 
-                //Não está a entrar neste IF! (Talvez nunca seja possível dar withdraw.. Ou haja algum stress com as threads
-                System.out.println("entrou neste if");
                 server.getRace().placeBet(client,horseNumber-1,betAmount);
-//                client.sendMessage("betOK Horse: " + horseNumber+" | Amount: " + betAmount +
-//                        " | Balance: " + client.getWallet().getBalance());
                 System.out.println("saiu deste if");
             }
             else{

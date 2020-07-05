@@ -114,7 +114,6 @@ public class Race implements Runnable {
 
                     // DEBUG ONLY
                     //System.out.println(horse.getName() + " is running.");
-                    System.out.println(getRaceLeader().getName());
 
                     if(horse.getDistance()>leadingHorse.getDistance()){
                         leadingHorse=horse;
