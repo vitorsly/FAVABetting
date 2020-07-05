@@ -1,5 +1,8 @@
 package org.academiadecodigo.gitbusters.favabetting.server.horses;
 
+import org.academiadecodigo.gitbusters.favabetting.server.tracks.TrackType;
+import org.academiadecodigo.gitbusters.favabetting.server.weather.WeatherType;
+
 public class Horse {
 
     private int id;
@@ -15,6 +18,30 @@ public class Horse {
     private int races;
     private boolean alive;
 
+    private double grassModifier;
+    private double dirtModifier;
+    private double sandModifier;
+
+    /*
+        NONE,
+    WIND,
+    RAIN,
+    WARM,
+    SUNNY,
+    COLD,
+    MISTY,
+    NIGHT
+         */
+    private double windModifier;
+    private double rainModifier;
+    private double warmModifier;
+    private double sunnyModifier;
+    private double coldModifier;
+    private double mistyModifier;
+    private double nightModifier;
+
+
+
     Horse(int id, String name, String description, double speed, int maxSpeed, double odds, int wins, int races){
         this.id = id;
         this.description = description;
@@ -28,6 +55,57 @@ public class Horse {
         this.wins = wins;
         this.races = races;
         this.alive = true;
+
+        this.grassModifier = 1;
+        this.dirtModifier = 1.2;
+        this.sandModifier = 0.8;
+
+        this.windModifier = 0.95;
+        this.rainModifier = 0.90;
+        this.warmModifier = 0.90;
+        this.sunnyModifier = 0.95;
+        this.coldModifier = 0.90;
+        this.mistyModifier = 0.90;
+        this.nightModifier = 0.90;
+
+
+    }
+
+    public void setTrackModifiers(double grass, double dirt, double sand){
+        this.grassModifier = grass;
+        this.dirtModifier = dirt;
+        this.sandModifier = sand;
+    }
+
+    public double getTrackModifier(TrackType type){
+        return switch (type) {
+            case DIRT -> dirtModifier;
+            case GRASS -> grassModifier;
+            case SAND -> sandModifier;
+        };
+    }
+
+    public void setWeatherModifiers(double wind, double rain, double warm, double sunny, double cold, double mist, double night){
+        this.windModifier = wind;
+        this.rainModifier = rain;
+        this.warmModifier = warm;
+        this.sunnyModifier = sunny;
+        this.coldModifier = cold;
+        this.mistyModifier = mist;
+        this.nightModifier = night;
+    }
+
+    public double getWeatherModifier(WeatherType type){
+        return  switch (type.getWeatherClass()){
+            case NONE -> 1;
+            case WIND -> Math.pow(windModifier, type.getPower());
+            case RAIN -> Math.pow(rainModifier, type.getPower());
+            case WARM -> Math.pow(warmModifier, type.getPower());
+            case SUNNY -> Math.pow(sunnyModifier, type.getPower());
+            case COLD -> Math.pow(coldModifier, type.getPower());
+            case MISTY -> Math.pow(mistyModifier, type.getPower());
+            case NIGHT -> Math.pow(nightModifier, type.getPower());
+        }
     }
 
     public int getId() {
@@ -56,6 +134,10 @@ public class Horse {
 
     public void kill(){
         alive = false;
+    }
+
+    public boolean isAlive() {
+        return alive;
     }
 
     public void race() {
