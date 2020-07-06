@@ -7,7 +7,7 @@ public class HorsesMsg implements Messages {
     @Override
     public void run(Client client, String msg) {
 
-        String str=msg.substring(10);
+        String str = msg.substring(10);
         String[] horseWeatherAndTrack = str.split("\\$");
         String weather = horseWeatherAndTrack[1];
         String track = horseWeatherAndTrack[2];

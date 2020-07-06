@@ -2,9 +2,9 @@ package org.academiadecodigo.gitbusters.favabetting.server.cheats;
 
 import org.academiadecodigo.gitbusters.favabetting.server.horses.Horse;
 
-public class BaseballBat extends AbstractCheat{
+public class BaseballBat extends AbstractCheat {
 
-    public void init(){
+    public void init() {
         price = 80;
         fine = 200;
         policeChance = 15;

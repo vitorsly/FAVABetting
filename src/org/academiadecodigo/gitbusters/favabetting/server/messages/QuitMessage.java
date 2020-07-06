@@ -5,7 +5,6 @@ import org.academiadecodigo.gitbusters.favabetting.server.Server;
 
 public class QuitMessage implements Message{
 
-
     @Override
     public void send(Client client, Server server) {
 

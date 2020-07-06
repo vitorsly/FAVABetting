@@ -4,10 +4,11 @@ import org.academiadecodigo.gitbusters.favabetting.client.Client;
 import org.academiadecodigo.gitbusters.favabetting.client.Print;
 
 public class RequestCheatShop implements Messages {
+
     @Override
     public void run(Client client, String msg) {
 
-        String shopItems=msg.substring(10);
+        String shopItems = msg.substring(10);
         String[] cheatsAndHorses = shopItems.split("\\$");
 
         client.getMenu().makeInfluenceRaceMenu(cheatsAndHorses);

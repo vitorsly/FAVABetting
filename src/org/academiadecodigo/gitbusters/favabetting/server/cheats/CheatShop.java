@@ -13,7 +13,9 @@ public class CheatShop {
     }
 
     public static void init() {
+
         cheats = new Cheats[5];
+
         cheats[0] = new SteroidBoost();
         cheats[1] = new MegaBoost();
         cheats[2] = new HorseshoeTamper();
@@ -27,7 +29,6 @@ public class CheatShop {
         cheats[4].init();
     }
 
-
     public static boolean buyCheat(int cheatID, Client buyer, Horse target) {
 
         if (cheats[cheatID].getPrice() > buyer.getWallet().getBalance()) {
@@ -35,12 +36,15 @@ public class CheatShop {
         }
 
         if (Utils.getRandom(1, 100) <= cheats[cheatID].getPoliceChance()) {
+
             System.out.println("Client " + buyer.getName() + " has been caught using cheats!");
+
             if (buyer.getWallet().getBalance() < cheats[cheatID].getFine()) {
                 buyer.getWallet().Withdraw(buyer.getWallet().getBalance());
             } else {
                 buyer.getWallet().Withdraw(cheats[cheatID].getFine());
             }
+
             return false;
 
         } else {
@@ -49,7 +53,6 @@ public class CheatShop {
             return true;
         }
     }
-
 
     public static void activate(int id, Horse target) {
         cheats[id].activate(target);

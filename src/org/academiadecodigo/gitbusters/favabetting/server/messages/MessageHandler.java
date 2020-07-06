@@ -1,36 +1,40 @@
 package org.academiadecodigo.gitbusters.favabetting.server.messages;
 
 public enum MessageHandler {
-    BET("bet",new BetMessage()),
-    NAME("name",new NameChangeMsg()),
-    ENROLLEDHORSES("getHorses",new GetHorsesMessage()),
-    BALANCE("balance",new GetBalanceMessage()),
-    REQUESTMM("mainmenu",new ForceMainMenu()),
-    SENDCHEATLIST("CheatShop",new CheatsMessage()),
+
+    BET("bet", new BetMessage()),
+    NAME("name", new NameChangeMsg()),
+    ENROLLEDHORSES("getHorses", new GetHorsesMessage()),
+    BALANCE("balance", new GetBalanceMessage()),
+    REQUESTMM("mainmenu", new ForceMainMenu()),
+    SENDCHEATLIST("CheatShop", new CheatsMessage()),
     QUIT("quit", new QuitMessage()),
     REGISTERCHEAT("cheat", new RegisterCheatMessage()),
     CHATMESSAGE("chat", new ChatMessage()),
-    INVALID("",new InvalidMessage());
+    INVALID("", new InvalidMessage());
 
     private String actionMessage;
     private Message message;
 
-    MessageHandler(String actionMessage,Message message)
-    {
-        this.actionMessage=actionMessage;
-        this.message=message;
+    MessageHandler(String actionMessage,Message message) {
+        this.actionMessage = actionMessage;
+        this.message = message;
     }
 
     public static MessageHandler getActionFromString(String actionMessage){
+
         if (actionMessage == null || actionMessage .equals("")) {
             return INVALID;
         }
-        String action= actionMessage.split(" ")[0];
-        for (MessageHandler messageHandler:values()){
+
+        String action = actionMessage.split(" ")[0];
+
+        for (MessageHandler messageHandler : values()){
             if(messageHandler.actionMessage.equals(action)){
                 return messageHandler;
             }
         }
+
         return INVALID;
     }
 

@@ -23,6 +23,7 @@ public class Race implements Runnable {
     // Track type that will have our race
     private Track track;
 
+    // Wehater conditions for the race
     private Weather weather;
 
     // Horse strategy for race
@@ -61,6 +62,7 @@ public class Race implements Runnable {
         // Initiate broker
         this.broker = new Broker();
 
+        // Start cheap shop
         CheatShop.init();
     }
 
@@ -70,10 +72,9 @@ public class Race implements Runnable {
 
             server.broadcastMsg("betTime");
             System.out.print("");
-            Interval interval = server.interval(30);
+            Interval interval = server.interval(60);
 
             boolean sopLoop = true;
-
 
             while (sopLoop){
                	sopLoop = interval.getInInterval();
@@ -84,10 +85,12 @@ public class Race implements Runnable {
 
             System.out.print("");
 
+            // Send to all clients end of betting time message
             server.broadcastMsg("betStop");
 
             int timmer = 5;
 
+            // Countdown
             while (timmer > 0){
                 Thread.sleep(1000);
                 timmer--;
@@ -108,14 +111,13 @@ public class Race implements Runnable {
                     if (!raceStart) {
 
                         // Applying track effect to horse's speed
-                        horse.setSpeed(horse.getSpeed() * track.getMultiplier());
-
                         horse.setSpeed(horse.getSpeed() * horse.getTrackModifier(track));
 
+                        // Applying weather effect to horse's speed
                         horse.setSpeed(horse.getSpeed() * horse.getWeatherModifier(weather));
 
                         // Applying strategy effect to horse's speed
-                        horse.setSpeed(horse.getSpeed() * strategy.getType().getMultiplier());
+                        horse.setSpeed(horse.getSpeed() * strategy.getMultiplier());
 
                         // Applying total distance effect to horse's speed ( tiredness )
                         horse.setSpeed(horse.getSpeed() * horse.getTotalDistanceMultiplier());
@@ -126,6 +128,7 @@ public class Race implements Runnable {
                     // Increments distance run by horse
                     horse.race();
 
+                    // To check which horse is leading
                     if(horse.getDistance() > leadingHorse.getDistance()){
                         leadingHorse = horse;
                     }
@@ -137,19 +140,16 @@ public class Race implements Runnable {
                         System.out.println("We have a winner!");
 
                         // Sets winner with horse object
-                        winnerHorse = horse;
                         won = true;
+                        winnerHorse = horse;
                         winnerHorse.addWin();
 
-                        // Reset horse race distance
+                        // Reset horse race data and add race for hods
                         for (Horse horseFinish : enrolledHorses) {
                             horseFinish.resetDistance();
                             horseFinish.resetSpeed();
                             horseFinish.addRace();
                         }
-
-                        // TODO: give Rewards to players
-                        // This variable contains all bets by client and value
 
                         break;
                     }
@@ -157,13 +157,16 @@ public class Race implements Runnable {
 
                 System.out.println("leading horse is " + leadingHorse.getName());
 
-                Thread.sleep(5000);
+                Thread.sleep(1000);
 
+                // Sends to all clients the leading horse during race
                 server.broadcastMsg("Leading " + leadingHorse.getName());
             }
 
+            // Sends to all clients the winner hoser
             server.broadcastMsg("raceOver " + winnerHorse.getName());
 
+            // Pay to winners
             PaybackWinnings(winnerHorse);
 
             inRace = false;
@@ -174,6 +177,7 @@ public class Race implements Runnable {
             System.out.println("Here have your money cheater!");
             System.out.println("You're a fucking looser!");
 
+            // Restart and prepare for new race
             restartRace();
 
         } catch (Exception error) {
@@ -181,20 +185,29 @@ public class Race implements Runnable {
         }
     }
 
+    // Pay clients what they won.
     private void PaybackWinnings(Horse winner) {
+
         Map<Client, Integer> winnerHorseBets = broker.getHorseBets(winnerHorse);
-        if(winnerHorseBets==null){
+
+        if(winnerHorseBets == null) {
             System.out.println("winnerHorse is null");
             return;
         }
+
+        // Makes payment to user by depositing in his wallet
         for (Map.Entry<Client, Integer> entry : winnerHorseBets.entrySet()){
-            entry.getKey().getWallet().deposit(entry.getValue()*winner.getOdds());
+            entry.getKey().getWallet().deposit(entry.getValue() * winner.getOdds());
         }
     }
 
-    public void restartRace(){
+    // Restart client by cleaning and loading new variables
+    public void restartRace() {
 
         won = false;
+
+        // Clears all bets registered with broker
+        broker.clearAllBets();
 
         // Initiate horses for race line
         this.enrolledHorses = new ArrayList<>();
@@ -205,9 +218,8 @@ public class Race implements Runnable {
         // Get track type randomly
         this.track = Track.random();
 
+        // Get weather conditions randomly
         this.weather = Weather.random();
-
-
 
         // Get strategy type randomly
         this.strategy = Strategy.getStrategy();
@@ -215,26 +227,32 @@ public class Race implements Runnable {
         run();
     }
 
+    // Register client bet with broker
     public void placeBet(Client client, int horse, int amount) {
         broker.registerBet(client, enrolledHorses.get(horse), amount);
     }
 
+    // Returns horses set for race
     public List<Horse> getEnrolledHorses() {
         return enrolledHorses;
     }
 
+    // Returns broker
     public Broker getBroker() {
         return broker;
     }
 
+    // Checks if is in race
     public Boolean getInRace() {
         return inRace;
     }
 
+    // Returns race track
     public Track getTrack() {
         return track;
     }
 
+    // Returns race weather conditions
     public Weather getWeather() {
         return weather;
     }
