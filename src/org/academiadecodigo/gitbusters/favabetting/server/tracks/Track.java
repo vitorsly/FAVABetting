@@ -10,6 +10,7 @@ public enum Track {
     GRASS("Grass","Description for GRASS track.",500,1),
     SAND("Sand","Description for SAND track.",450,0.8);
 
+
     private String name;
     private String description;
     
