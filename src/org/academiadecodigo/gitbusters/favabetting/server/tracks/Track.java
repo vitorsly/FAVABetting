@@ -6,10 +6,10 @@ public enum Track {
 
     // Track sets which type of surface race will hav influencing horse's speed
 
-    DIRT("Dirt","Description for DIRT track.",400),
-    GRASS("Grass","Description for GRASS track.",500),
-    SAND("Sand","Description for SAND track.",450);
-    //SNOW("Snow", "Description for SNOW rrack", 425);
+    DIRT("Dirt", "Description for DIRT track.", 400),
+    GRASS("Grass", "Description for GRASS track.", 500),
+    SAND("Sand", "Description for SAND track.", 450);
+    SNOW("Snow", "Description for SNOW rrack", 425)
 
     private String name;
     private String description;
