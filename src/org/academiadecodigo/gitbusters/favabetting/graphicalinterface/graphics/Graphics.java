@@ -214,7 +214,6 @@ public class Graphics implements ActionListener {
             races.setForeground(color);
         }
 
-
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getActionCommand().equals("Bet")){
@@ -259,13 +258,12 @@ public class Graphics implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getActionCommand().equals("Change Name")){
-                System.out.println(nameInput.getText());
+                client.sendMessage("name "+nameInput);
             }else {
                 client.sendMessage("chat #"+chatInput.getText());
                 System.out.println("chat #"+chatInput.getText());
                 chatWindow.append("\n"+chatInput.getText());
                 chatInput.setText("");
-                //send chat to the Client
             }
         }
 
