@@ -7,11 +7,13 @@ public class BalanceMsg implements Messages {
 
     @Override
     public void run(Client client, String msg) {
+
         String balance = msg.split(" ")[1];
 
         new Print("Wallet balance: " + balance + "$");
-        client.getMenu().mainMenu();
-        //System.out.println("Wallet balance: " + balance + "$");
 
+        client.getMenu().mainMenu();
+
+        //System.out.println("Wallet balance: " + balance + "$");
     }
 }

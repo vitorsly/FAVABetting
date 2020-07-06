@@ -1,8 +1,7 @@
 package org.academiadecodigo.gitbusters.favabetting.server.cheats;
 
-import org.academiadecodigo.gitbusters.favabetting.server.horses.Horse;
+public abstract class AbstractCheat implements Cheats {
 
-public abstract class AbstractCheat implements Cheats{
     protected double price;
     protected double fine;
     protected int policeChance;

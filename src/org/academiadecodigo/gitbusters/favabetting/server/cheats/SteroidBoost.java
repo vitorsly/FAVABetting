@@ -2,9 +2,9 @@ package org.academiadecodigo.gitbusters.favabetting.server.cheats;
 
 import org.academiadecodigo.gitbusters.favabetting.server.horses.Horse;
 
-public class SteroidBoost extends AbstractCheat{
+public class SteroidBoost extends AbstractCheat {
 
-    public void init(){
+    public void init() {
         price = 50;
         fine = 100;
         policeChance = 5;

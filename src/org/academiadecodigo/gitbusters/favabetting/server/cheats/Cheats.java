@@ -17,6 +17,4 @@ public interface Cheats {
     String getName();
 
     String getDescription();
-
-
 }

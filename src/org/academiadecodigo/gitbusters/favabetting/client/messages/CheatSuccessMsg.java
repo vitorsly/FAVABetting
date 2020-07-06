@@ -7,7 +7,9 @@ public class CheatSuccessMsg implements Messages{
 
     @Override
     public void run(Client client, String msg) {
+
         new Print("Your cheat was registered!");
+
         client.getMenu().mainMenu();
     }
 }

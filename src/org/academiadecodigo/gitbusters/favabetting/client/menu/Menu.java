@@ -19,20 +19,18 @@ public class Menu {
     private List<String> transactions = new ArrayList<String>();
     private List<String> playerList = new ArrayList<String>();
     private ExecutorService executor = Executors.newCachedThreadPool();
-    private boolean inChat=false;
-
+    private boolean inChat = false;
 
     public Menu(Client client) {
 
         this.client = client;
         this.prompt = new Prompt(System.in, System.out);
-        presentStartImage();
 
+        presentStartImage();
     }
 
     public void insertNameMenu() {
         String name = getStringInput("Insert your name: ", "Invalid name...");
-
         client.sendMessage("name " + name);
     }
 
@@ -77,13 +75,13 @@ public class Menu {
         mainMenu();
     }
 
-    public void makeBetMenu(String[] horseList,String weather,String track) {
-        inChat=false;
-        executor.submit(new BetMenu(horseList,weather,track));
+    public void makeBetMenu(String[] horseList, String weather, String track) {
+        inChat = false;
+        executor.submit(new BetMenu(horseList, weather, track));
     }
 
     public void mainMenu() {
-        inChat=false;
+        inChat = false;
         executor.submit(new MainMenu());
     }
 
@@ -94,29 +92,26 @@ public class Menu {
     }
 
     private void changeName() {
-
         String newName = getStringInput("Insert new name: ", "Invalid name..");
-
         client.sendMessage("name " + newName);
-
     }
 
     public void saveTransaction(String msg) {
-
         String transaction = msg.substring(5);
-
         transactions.add(transaction);
-
     }
 
     public void printTransactions() {
 
-        for (String transaction : transactions) {
-            new Print(transaction);
+        if(!transactions.isEmpty()) {
+            for (String transaction : transactions) {
+                new Print(transaction);
+            }
+        } else {
+            new Print("No existing transactions.");
         }
 
         mainMenu();
-
     }
 
     private int buildMenu(String[] options, String message, String error) {
@@ -126,32 +121,30 @@ public class Menu {
         mainMenu.setMessage(message);
 
         return prompt.getUserInput(mainMenu);
-
     }
 
     public void makeInfluenceRaceMenu(String[] cheatList) {
-
         executor.submit(new InfluenceRaceMenu(cheatList));
     }
 
     private int getIntInput(String message, String errorMessage) {
 
         IntegerInputScanner insertInt = new IntegerInputScanner();
+
         insertInt.setMessage(message);
         insertInt.setError(errorMessage);
 
         return prompt.getUserInput(insertInt);
-
     }
 
     private String getStringInput(String message, String errorMessage) {
 
         StringInputScanner insertString = new StringInputScanner();
+
         insertString.setMessage(message);
         insertString.setError(errorMessage);
 
         return prompt.getUserInput(insertString);
-
     }
 
     public void influenceRace() {
@@ -159,14 +152,16 @@ public class Menu {
     }
 
     private void chatMessage() {
-        inChat=true;
+        inChat = true;
         executor.submit(new Chat());
     }
 
-    public class Chat implements Runnable{
-        Chat(){
-            inChat=true;
+    public class Chat implements Runnable {
+
+        public Chat(){
+            inChat = true;
         }
+
         @Override
         public void run() {
             while (inChat) {
@@ -185,10 +180,10 @@ public class Menu {
 
         @Override
         public void run() {
+
             String[] options = {"View balance", "Make a bet", "Influence Race", "Transactions", "Change name", "Chat Lounge", "Quit"};
 
             switch (buildMenu(options, "Main Menu", "Invalid option")) {
-
                 case 1:
                     client.sendMessage("balance");
                     break;
@@ -230,6 +225,7 @@ public class Menu {
 
         @Override
         public void run() {
+
             String[] horses = new String[7];
 
             for (int i = 0; i < horseList.length; i++) {
@@ -259,20 +255,17 @@ public class Menu {
         private String[] cheatsAndHorses;
 
         public InfluenceRaceMenu(String[] cheatsAndHorses) {
-
             this.cheatsAndHorses = cheatsAndHorses;
         }
 
         @Override
         public void run() {
 
-
             String[] cheats = cheatsAndHorses[0].split("%");
             String[] horses = cheatsAndHorses[1].split("%");
 
             String[] cheatList = new String[6];
             String[] horseList = new String[7];
-
 
             for (int i = 0; i < cheats.length; i++) {
                 String[] splittedCheat = cheats[i].split("#");
@@ -296,16 +289,14 @@ public class Menu {
 
             horseList[6] = "Back";
 
-
             int horse = buildMenu(horseList, "On which horse do you want to apply your cheat? ", "Invalid option");
 
             if (horse == 7) {
                 makeInfluenceRaceMenu(cheatsAndHorses);
+                return;
             }
 
             client.sendMessage("cheat " + cheat + " " + horse);
-
-
         }
     }
 

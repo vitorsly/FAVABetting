@@ -72,7 +72,7 @@ public class Race implements Runnable {
 
             server.broadcastMsg("betTime");
             System.out.print("");
-            Interval interval = server.interval(30);
+            Interval interval = server.interval(60);
 
             boolean sopLoop = true;
 
@@ -157,7 +157,7 @@ public class Race implements Runnable {
 
                 System.out.println("leading horse is " + leadingHorse.getName());
 
-                Thread.sleep(5000);
+                Thread.sleep(1000);
 
                 // Sends to all clients the leading horse during race
                 server.broadcastMsg("Leading " + leadingHorse.getName());
