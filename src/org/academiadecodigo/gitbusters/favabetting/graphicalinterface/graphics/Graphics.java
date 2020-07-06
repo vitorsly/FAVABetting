@@ -258,7 +258,7 @@ public class Graphics implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getActionCommand().equals("Change Name")){
-                client.sendMessage("name "+nameInput);
+                client.sendMessage("name "+nameInput.getText());
             }else {
                 client.sendMessage("chat #"+chatInput.getText());
                 System.out.println("chat #"+chatInput.getText());

@@ -39,9 +39,9 @@ public class Broker {
     // Add new bet to client
     public void registerBet(Client client, Horse horse, Integer amount) {
 
-        //System.out.println("DEBUG> BET CLIENT: " + client.getName());
-        //System.out.println("DEBUG> BET horse: " + horse.getName());
-        //System.out.println("DEBUG> BET amount: " + amount);
+        System.out.println("DEBUG> BET CLIENT: " + client.getName());
+        System.out.println("DEBUG> BET horse: " + horse.getName());
+        System.out.println("DEBUG> BET amount: " + amount);
 
         this.horseAmount.put(horse, amount);
         this.clientsBets.put(client, horseAmount);
