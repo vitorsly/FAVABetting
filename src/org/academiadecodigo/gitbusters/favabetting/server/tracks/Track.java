@@ -2,26 +2,35 @@ package org.academiadecodigo.gitbusters.favabetting.server.tracks;
 
 import org.academiadecodigo.gitbusters.Utils;
 
-public enum TrackType {
+public enum Track {
 
-    DIRT("Dirt","Description for DIRT track.",300,1.2),
-    GRASS("Grass","Description for GRASS track.",200,1),
-    SAND("Sand","Description for SAND track.",200,0.8);
+    // Track sets which type of surface race will hav influencing horse's speed
+
+    DIRT("Dirt","Description for DIRT track.",400,1.2),
+    GRASS("Grass","Description for GRASS track.",500,1),
+    SAND("Sand","Description for SAND track.",45000,0.8);
 
     private String name;
     private String description;
+    
     private int distance;
     private double multiplier;
 
-    TrackType(String name, String description, int distance, double multiplier) {
+    Track(String name, String description, int distance, double multiplier) {
         this.name = name;
         this.description = description;
         this.distance = distance;
         this.multiplier = multiplier;
     }
 
-    public static TrackType getTrackType(int value) {
-        return TrackType.values()[value];
+    // Returns a track type randomly
+    public static Track random() {
+        int random = Utils.getRandom(Track.values().length);
+        return Track.values()[random];
+    }
+
+    public static Track getTrackType(int value) {
+        return Track.values()[value];
     }
 
     public String getName() {
@@ -46,11 +55,5 @@ public enum TrackType {
 
     public void setDistance(int distance) {
         this.distance = distance;
-    }
-
-    public static TrackType random() {
-        int random = Utils.getRandom(TrackType.values().length);
-        TrackType trackType = TrackType.values()[random];
-        return trackType;
     }
 }

@@ -2,7 +2,10 @@ package org.academiadecodigo.gitbusters.favabetting.server.weather;
 
 import org.academiadecodigo.gitbusters.Utils;
 
-public enum WeatherType {
+public enum Weather {
+
+    // Weather conditions that influences the race and horse's speed
+
     BASIC("Basic","Weather is perfect. It's a perfect day for racing! ",WeatherClass.NONE, 1),
     BREEZY("Breezy","Wind is blowing a little. Nothing too serious.",WeatherClass.WIND, 1),
     WINDY("Windy","Wind is really pushing the smaller horses around!",WeatherClass.WIND, 2),
@@ -31,15 +34,21 @@ public enum WeatherType {
     private WeatherClass weatherClass;
     private int power;
 
-    WeatherType(String name, String description, WeatherClass weatherClass, int power) {
+    Weather(String name, String description, WeatherClass weatherClass, int power) {
         this.name = name;
         this.description = description;
         this.weatherClass = weatherClass;
         this.power = power;
     }
 
-    public static WeatherType getTrackType(int value) {
-        return WeatherType.values()[value];
+    // Returns weather conditions randomly
+    public static Weather random(){
+        int random = Utils.getRandom(Weather.values().length);
+        return Weather.values()[random];
+    }
+
+    public static Weather getWeatherType(int value) {
+        return Weather.values()[value];
     }
 
     public String getName() {
@@ -56,11 +65,5 @@ public enum WeatherType {
 
     public int getPower() {
         return power;
-    }
-
-    public static WeatherType random(){
-        int random = Utils.getRandom(WeatherType.values().length);
-        WeatherType weatherType = WeatherType.values()[random];
-        return weatherType;
     }
 }

@@ -16,9 +16,7 @@ public class ChatMessage implements Message{
     public static final String ANSI_WHITE = "\u001B[37m";
 
     @Override
-    public void send(Client client, Server server) {
-
-    }
+    public void send(Client client, Server server) {  }
 
     @Override
     public void receive(Client client, Server server, String msg) {

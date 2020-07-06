@@ -5,10 +5,13 @@ import org.academiadecodigo.gitbusters.favabetting.client.Print;
 
 import java.util.Scanner;
 
-public class BetStart implements Messages{
+public class BetStart implements Messages {
+
     @Override
     public void run(Client client, String msg) {
+
         new Print("betting Has Started");
+
         client.getMenu().mainMenu();
     }
 }

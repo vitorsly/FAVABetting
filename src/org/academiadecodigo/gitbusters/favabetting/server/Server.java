@@ -10,20 +10,27 @@ import java.util.concurrent.Executors;
 
 public class Server {
 
-    ServerSocket server;
+    private ServerSocket server;
+    private ExecutorService ex = Executors.newCachedThreadPool();
+    private Race race;
     //private CopyOnWriteArrayList<Client> sockets=new CopyOnWriteArrayList<>();
 
     private List<Client> sockets = new ArrayList<>();
-    int clientIterator;
-    ExecutorService ex = Executors.newCachedThreadPool();
-    Race race;
-    Server(int port) {
+
+    private int clientIterator;
+
+    public Server(int port) {
         race = new Race(this);
         ex.submit(race);
         initialyzeServer(port);
     }
 
-    private void initialyzeServer(int port){
+    public static void main(String[] args) {
+        Server s = new Server(8080);
+    }
+
+    // Initiate server and register client to broker
+    private void initialyzeServer(int port) {
 
         try {
             server = new ServerSocket(port);
@@ -32,59 +39,64 @@ public class Server {
         }
 
         while (true) {
-                try {
-                    Client c = new Client(server.accept(),"client " + clientIterator,this);
-                    sockets.add(c);
-                    ex.submit(c);
-                    System.out.println(race);
-                    race.getBroker().registerClient(c);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                clientIterator++;
-                System.out.println("Client" + clientIterator + " has connected the server");
+            try {
+
+                Client c = new Client(server.accept(), "client " + clientIterator, this);
+
+                sockets.add(c);
+                ex.submit(c);
+
+                System.out.println(race);
+
+                race.getBroker().registerClient(c);
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
+            clientIterator++;
 
+            System.out.println("Client" + clientIterator + " has connected the server");
+        }
     }
 
-    public void broadcastMsg(String msg){
-        for (Client c :sockets){
+    // Send messages to clients
+    public void broadcastMsg(String msg) {
+        for (Client c : sockets) {
             c.sendMessage(msg);
         }
     }
 
-    public void broadcastExceptMe(Client client,String msg){
-        for (Client c :sockets){
-            if (c == client){
+    // Send messages to all clients except to the sender
+    public void broadcastExceptMe(Client client, String msg) {
+        for (Client c : sockets) {
+            if (c == client) {
                 continue;
             }
             c.sendMessage(msg);
         }
     }
 
-    public void removeClient(Client client){
-
+    // Remove client from server
+    public void removeClient(Client client) {
         race.getBroker().unregisterClient(client);
         sockets.remove(client);
         client.closeSocket();
     }
 
-    public static void main(String[] args) {
-        Server s = new Server(8080);
+    // Define interval
+    public Interval interval(int time) {
+        Interval in = new Interval(time);
+        ex.submit(in);
+        return in;
     }
 
     public List<Client> getSockets() {
         return sockets;
     }
 
+    // Return race object
     public Race getRace() {
         return race;
-    }
-
-    public Interval interval(int time){
-        Interval in=new Interval(time);
-        ex.submit(in);
-        return in;
     }
 }

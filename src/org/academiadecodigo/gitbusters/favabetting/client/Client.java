@@ -14,24 +14,33 @@ public class Client {
     private Socket socket;
     private BufferedReader inputStream;
     private BufferedWriter outPut;
-    private ExecutorService executor= Executors.newCachedThreadPool();
+    private ExecutorService executor = Executors.newCachedThreadPool();
     private Menu menu;
 
-    Client(){
+    public Client() {
         try {
-            socket=new Socket("localhost",8080);
-            inputStream=new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            outPut=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+
+            socket = new Socket("localhost",8080);
+
+            inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            outPut = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+
             executor.submit(new listening());
-            menu=new Menu(this);
+
+            menu = new Menu(this);
+
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
 
+    public static void main(String[] args) {
+        Client c = new Client();
+    }
+
     public void sendMessage(String msg){
         try {
-            msg+="\n";
+            msg += "\n";
             outPut.write(msg);
             outPut.flush();
         } catch (IOException e) {
@@ -50,7 +59,7 @@ public class Client {
 
         @Override
         public void run() {
-            while (!socket.isClosed()){
+            while (!socket.isClosed()) {
                 try {
                     receiveMsg();
                 } catch (IOException e) {
@@ -58,10 +67,6 @@ public class Client {
                 }
             }
         }
-    }
-
-    public static void main(String[] args) {
-        Client c=new Client();
     }
 
     public Menu getMenu() {

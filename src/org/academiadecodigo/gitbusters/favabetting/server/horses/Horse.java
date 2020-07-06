@@ -1,8 +1,8 @@
 package org.academiadecodigo.gitbusters.favabetting.server.horses;
 
 import org.academiadecodigo.gitbusters.Utils;
-import org.academiadecodigo.gitbusters.favabetting.server.tracks.TrackType;
-import org.academiadecodigo.gitbusters.favabetting.server.weather.WeatherType;
+import org.academiadecodigo.gitbusters.favabetting.server.tracks.Track;
+import org.academiadecodigo.gitbusters.favabetting.server.weather.Weather;
 
 public class Horse {
 
@@ -33,9 +33,8 @@ public class Horse {
 
     private String bigDescription;
 
-
-
     Horse(int id, String name, String description, double speed, int maxSpeed, double odds, int wins, int races){
+
         this.id = id;
         this.description = description;
         this.name = name;
@@ -62,8 +61,6 @@ public class Horse {
         this.nightModifier = 0.90;
 
         this.bigDescription = "";
-
-
     }
 
     public void setTrackModifiers(double grass, double dirt, double sand){
@@ -72,7 +69,7 @@ public class Horse {
         this.sandModifier = sand;
     }
 
-    public double getTrackModifier(TrackType type){
+    public double getTrackModifier(Track type){
         return switch (type) {
             case DIRT -> dirtModifier;
             case GRASS -> grassModifier;
@@ -90,7 +87,7 @@ public class Horse {
         this.nightModifier = night;
     }
 
-    public double getWeatherModifier(WeatherType type){
+    public double getWeatherModifier(Weather type){
         return  switch (type.getWeatherClass()){
             case NONE -> 1;
             case WIND -> Math.pow(windModifier, type.getPower());
@@ -140,8 +137,11 @@ public class Horse {
     }
 
     public void race() {
-        this.distance += Utils.getRandom(1,2)*speed/2;
-        this.totalDistance += Utils.getRandom(1,2)*speed/2;
+
+        double randomSpeed = Utils.getRandom(1, 3) * speed / 3;
+
+        this.distance += randomSpeed;
+        this.totalDistance += randomSpeed;
     }
 
     public double getDistance() {
@@ -149,7 +149,7 @@ public class Horse {
     }
 
     public double getTotalDistanceMultiplier() {
-        return this.distance * 0.9 / this.distance;
+        return this.distance * 0.8 / this.totalDistance;
     }
 
     public void resetDistance() {
@@ -176,7 +176,6 @@ public class Horse {
         this.speed += speedChange;
         this.baseSpeed += speedChange;
     }
-
 
     public void setSpeed(double value) {
         if(value <= maxSpeed) {
