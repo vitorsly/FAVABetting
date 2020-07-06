@@ -97,7 +97,12 @@ public class Menu {
     }
 
     public void saveTransaction(String msg) {
-        String transaction = msg.substring(5);
+        String transaction = msg.substring(6);
+        transactions.add(transaction);
+    }
+
+    public void saveCheatTransaction(String msg) {
+        String transaction = msg.substring(13);
         transactions.add(transaction);
     }
 
