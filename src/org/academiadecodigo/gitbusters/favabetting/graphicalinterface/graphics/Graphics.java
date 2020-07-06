@@ -133,6 +133,17 @@ public class Graphics implements ActionListener {
         raceStatus.setCaretPosition(raceStatus.getDocument().getLength());
     }
 
+    public void paintLeadingHorse(String horse){
+        for (HorseMenu h:horseList){
+            if (h.getHorseName().equals(horse)){
+                h.setHorseColor(new Color(0,140,0));
+            }
+            else{
+                h.setHorseColor(Color.BLACK);
+            }
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -152,8 +163,6 @@ public class Graphics implements ActionListener {
             westPanel.setVisible(true);
         }
     }
-
-    //private void
 
     public class HorseMenu implements ActionListener{
         private int horseN=0;
@@ -191,6 +200,18 @@ public class Graphics implements ActionListener {
             odds.setText(Odd);
             this.wins.setText(wins);
             this.races.setText(races);
+        }
+
+        public String getHorseName(){
+            return horseName.getText();
+        }
+
+        public void setHorseColor(Color color){
+            horseName.setForeground(color);
+            horseDescription.setForeground(color);
+            odds.setForeground(color);
+            wins.setForeground(color);
+            races.setForeground(color);
         }
 
 

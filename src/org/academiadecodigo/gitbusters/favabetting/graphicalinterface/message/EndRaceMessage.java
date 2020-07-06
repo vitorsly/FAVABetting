@@ -12,5 +12,6 @@ public class EndRaceMessage implements Message {
         client.getGraphics().getRaceLabel().setBorder(BorderFactory.createEtchedBorder(Color.GREEN,Color.black));
         client.sendMessage("getHorses");
         client.sendMessage("balance");
+        client.getGraphics().paintLeadingHorse("noHorse");
     }
 }

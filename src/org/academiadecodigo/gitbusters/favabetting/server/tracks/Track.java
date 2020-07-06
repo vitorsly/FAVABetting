@@ -8,7 +8,8 @@ public enum Track {
 
     DIRT("Dirt","Description for DIRT track.",400,1.2),
     GRASS("Grass","Description for GRASS track.",500,1),
-    SAND("Sand","Description for SAND track.",450,0.8);
+    SAND("Sand","Description for SAND track.",450,0.8),
+    SNOW("Sand","Description for SNOW track.",450,0.8);
 
 
     private String name;

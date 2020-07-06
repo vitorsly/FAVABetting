@@ -31,7 +31,7 @@ public class LeadingHorseMessage implements Message {
             };
 
             String fun = funPhrases[Utils.getRandom(funPhrases.length)];
-
+            client.getGraphics().paintLeadingHorse(msgSplit[1]);
             client.getGraphics().writeStatus("The horse :" + msgSplit[1] + " is in the lead\n" + fun);
 
         }
