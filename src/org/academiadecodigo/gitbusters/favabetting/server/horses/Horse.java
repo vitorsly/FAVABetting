@@ -22,6 +22,7 @@ public class Horse {
     private double grassModifier;
     private double dirtModifier;
     private double sandModifier;
+    private double snowModifier;
 
     private double windModifier;
     private double rainModifier;
@@ -48,25 +49,14 @@ public class Horse {
         this.races = races;
         this.alive = true;
 
-        this.grassModifier = 1;
-        this.dirtModifier = 1.2;
-        this.sandModifier = 0.8;
-
-        this.windModifier = 0.95;
-        this.rainModifier = 0.90;
-        this.warmModifier = 0.90;
-        this.sunnyModifier = 0.95;
-        this.coldModifier = 0.90;
-        this.mistyModifier = 0.90;
-        this.nightModifier = 0.90;
-
         this.bigDescription = "";
     }
 
-    public void setTrackModifiers(double grass, double dirt, double sand){
+    public void setTrackModifiers(double grass, double dirt, double sand, double snow){
         this.grassModifier = grass;
         this.dirtModifier = dirt;
         this.sandModifier = sand;
+        this.snowModifier = snow;
     }
 
     public double getTrackModifier(Track type){
@@ -74,6 +64,7 @@ public class Horse {
             case DIRT -> dirtModifier;
             case GRASS -> grassModifier;
             case SAND -> sandModifier;
+            case SNOW -> snowModifier;
         };
     }
 
