@@ -6,23 +6,22 @@ public enum Track {
 
     // Track sets which type of surface race will hav influencing horse's speed
 
-    DIRT("Dirt","Description for DIRT track.",400,1.2),
-    GRASS("Grass","Description for GRASS track.",500,1),
-    SAND("Sand","Description for SAND track.",450,0.8),
-    SNOW("Sand","Description for SNOW track.",450,0.8);
+
+    DIRT("Dirt", "Description for DIRT track.", 400),
+    GRASS("Grass", "Description for GRASS track.", 500),
+    SAND("Sand", "Description for SAND track.", 450),
+    SNOW("Snow", "Description for SNOW track", 425);
 
 
     private String name;
     private String description;
     
     private int distance;
-    private double multiplier;
 
-    Track(String name, String description, int distance, double multiplier) {
+    Track(String name, String description, int distance) {
         this.name = name;
         this.description = description;
         this.distance = distance;
-        this.multiplier = multiplier;
     }
 
     // Returns a track type randomly
@@ -31,30 +30,27 @@ public enum Track {
         return Track.values()[random];
     }
 
-    public static Track getTrackType(int value) {
+    // Returns track type
+    public static Track getType(int value) {
         return Track.values()[value];
     }
 
+    // Returns track name
     public String getName() {
         return name;
     }
 
+    // Returns track description
     public String getDescription() {
         return description;
     }
 
+    // Returns track distance
     public int getDistance() {
         return distance;
     }
 
-    public double getMultiplier() {
-        return multiplier;
-    }
-
-    public void setMultiplier(double multiplier) {
-        this.multiplier = multiplier;
-    }
-
+    // Sets track new distance
     public void setDistance(int distance) {
         this.distance = distance;
     }

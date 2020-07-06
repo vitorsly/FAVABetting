@@ -7,8 +7,8 @@ public enum Strategy {
     // Strategy influences how the horse will ace during the race
 
     EARLYSPRINT(1.2),
-    SLOWSTART(1),
-    STEADYRUN(0.8);
+    SLOWSTART(0.8),
+    STEADYRUN(1);
 
     private double multiplier;
 
