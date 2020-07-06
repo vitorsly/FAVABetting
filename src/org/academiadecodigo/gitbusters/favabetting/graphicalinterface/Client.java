@@ -68,7 +68,7 @@ public class Client {
 
     public static void main(String[] args) {
         if(args.length<1){
-            Client c=new Client("localhost",8080);
+            Client c=new Client("localhost",56000);
         }
         else{
             Client c=new Client(args[0],Integer.parseInt(args[1]));

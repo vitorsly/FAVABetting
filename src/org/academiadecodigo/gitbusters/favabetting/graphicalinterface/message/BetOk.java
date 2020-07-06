@@ -7,6 +7,6 @@ import java.awt.*;
 public class BetOk implements Message{
     @Override
     public void run(Client client, String msg) {
-        client.getGraphics().writeStatus("Bet OK", Color.green);
+        client.getGraphics().writeStatus("Bet OK",new Color(0,140,0));
     }
 }
