@@ -17,7 +17,7 @@ public class Client {
     private ExecutorService executor= Executors.newCachedThreadPool();
     private Graphics graphics=new Graphics(this);
 
-    Client(){
+    Client(String ip,int port){
         try {
             socket=new Socket("localhost",8080);
             inputStream=new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -66,6 +66,15 @@ public class Client {
     }
 
     public static void main(String[] args) {
-       Client c=new Client();
+
+        if(args.length<1){
+            Client c=new Client("localhost",8080);
+        }else {
+            String ip=args[0];
+            int port=Integer.parseInt(args[1]);
+            Client c=new Client(ip,port);
+
+        }
+
     }
 }
