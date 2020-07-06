@@ -10,6 +10,7 @@ public class CheatSuccessMsg implements Messages{
 
         new Print("Your cheat was registered!");
 
+        client.getMenu().saveTransaction(msg);
         client.getMenu().mainMenu();
     }
 }

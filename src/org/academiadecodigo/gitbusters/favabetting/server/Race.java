@@ -33,7 +33,7 @@ public class Race implements Runnable {
     private Broker broker;
 
     // Who wis the winner horse
-    private Horse winnerHorse = null;
+    private Horse winnerHorse;
 
     private boolean won = false;
     private boolean raceStart = false;
@@ -54,6 +54,7 @@ public class Race implements Runnable {
         // Get track type randomly
         this.track = Track.random();
 
+        // Get weather type randomly
         this.weather = Weather.random();
 
         // Get strategy type randomly
@@ -100,8 +101,12 @@ public class Race implements Runnable {
             // Message for race start
             System.out.println("Starting the race!");
 
+            //System.out.println("DEBUG: Total horses on race: " + enrolledHorses.size());
+
             // While we don't have a winner race continues
             while(!won) {
+
+                Thread.sleep(500);
 
                 Horse leadingHorse = enrolledHorses.get(0);
 
@@ -124,6 +129,8 @@ public class Race implements Runnable {
 
                         raceStart = true;
                     }
+
+                   // System.out.println("DEBUG: " + horse);
 
                     // Increments distance run by horse
                     horse.race();
@@ -155,23 +162,21 @@ public class Race implements Runnable {
                     }
                 }
 
-                System.out.println("leading horse is " + leadingHorse.getName());
-
-                Thread.sleep(1000);
+                //System.out.println("leading horse is " + leadingHorse.getName());
 
                 // Sends to all clients the leading horse during race
                 server.broadcastMsg("Leading " + leadingHorse.getName());
             }
 
-            // Sends to all clients the winner hoser
+            // Pay to winners
+            broker.PaybackWinnings(winnerHorse);
+
+            // Sends to all clients the winner horse
             server.broadcastMsg("raceOver " + winnerHorse.getName());
 
-            // Pay to winners
-            PaybackWinnings(winnerHorse);
+            System.out.println("Winning horse: " + winnerHorse.getName());
 
             inRace = false;
-
-            System.out.println("Winning horse: " + winnerHorse.getName());
 
             // Message to players about money
             System.out.println("Here have your money cheater!");
@@ -185,22 +190,6 @@ public class Race implements Runnable {
         }
     }
 
-    // Pay clients what they won.
-    private void PaybackWinnings(Horse winner) {
-
-        Map<Client, Integer> winnerHorseBets = broker.getHorseBets(winnerHorse);
-
-        if(winnerHorseBets == null) {
-            System.out.println("winnerHorse is null");
-            return;
-        }
-
-        // Makes payment to user by depositing in his wallet
-        for (Map.Entry<Client, Integer> entry : winnerHorseBets.entrySet()){
-            entry.getKey().getWallet().deposit(entry.getValue() * winner.getOdds());
-        }
-    }
-
     // Restart client by cleaning and loading new variables
     public void restartRace() {
 
@@ -211,6 +200,8 @@ public class Race implements Runnable {
 
         // Initiate horses for race line
         this.enrolledHorses = new ArrayList<>();
+
+        this.broker = new Broker();
 
         // Add X number of horses to our race line
         enrolledHorses.addAll(HorseFactory.getHorses(6));
@@ -228,7 +219,7 @@ public class Race implements Runnable {
     }
 
     // Register client bet with broker
-    public void placeBet(Client client, int horse, int amount) {
+    public void placeBet(Client client, int horse, int amount){
         broker.registerBet(client, enrolledHorses.get(horse), amount);
     }
 
