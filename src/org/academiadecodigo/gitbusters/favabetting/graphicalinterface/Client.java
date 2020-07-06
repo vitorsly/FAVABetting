@@ -3,6 +3,7 @@ package org.academiadecodigo.gitbusters.favabetting.graphicalinterface;
 
 
 import org.academiadecodigo.gitbusters.favabetting.graphicalinterface.graphics.Graphics;
+import org.academiadecodigo.gitbusters.favabetting.graphicalinterface.message.MessageHandler;
 
 import java.io.*;
 import java.net.Socket;
@@ -14,6 +15,7 @@ public class Client {
     private BufferedReader inputStream;
     private BufferedWriter outPut;
     private ExecutorService executor= Executors.newCachedThreadPool();
+    private Graphics graphics=new Graphics(this);
 
     Client(){
         try {
@@ -39,7 +41,7 @@ public class Client {
     private void receiveMsg() throws IOException {
         String line;
         while((line = inputStream.readLine()) != null) {
-            //MessageHandler.getActionFromString(line).getAction().run(this,line);
+            MessageHandler.getActionFromString(line).getAction().run(this,line);
         }
     }
 
@@ -47,6 +49,7 @@ public class Client {
 
         @Override
         public void run() {
+            sendMessage("getHorses");
             while (!socket.isClosed()){
                 try {
                     receiveMsg();
@@ -57,8 +60,11 @@ public class Client {
         }
     }
 
+    public Graphics getGraphics() {
+        return graphics;
+    }
+
     public static void main(String[] args) {
-       //Client c=new Client();
-        Graphics g=new Graphics();
+       Client c=new Client();
     }
 }
