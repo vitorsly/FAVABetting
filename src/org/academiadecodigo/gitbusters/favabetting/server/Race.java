@@ -155,7 +155,7 @@ public class Race implements Runnable {
                     }
                 }
 
-                System.out.println("leading horse is " + leadingHorse.getName());
+                //System.out.println("leading horse is " + leadingHorse.getName());
 
                 Thread.sleep(1000);
 
@@ -198,6 +198,7 @@ public class Race implements Runnable {
         // Makes payment to user by depositing in his wallet
         for (Map.Entry<Client, Integer> entry : winnerHorseBets.entrySet()){
             entry.getKey().getWallet().deposit(entry.getValue() * winner.getOdds());
+            System.out.println(entry.getKey().getWallet().getBalance()+" "+entry.getKey().getName());
         }
     }
 

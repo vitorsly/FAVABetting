@@ -185,15 +185,12 @@ public class Graphics implements ActionListener {
                 int amount=0;
                 try {
                     amount=Integer.parseInt(betAmount.getText());
-                    client.sendMessage("bet " + this.horseN + " " + amount);
-                    System.out.println("bet " + this.horseN + " " + amount);
+                    int nint=this.horseN+1;
+                    client.sendMessage("bet " + nint + " " + amount);
                     client.sendMessage("balance");
                 }catch (Exception exception){
                     writeStatus("invalid Bet Amount",Color.RED);
                 }
-
-
-
 
                 System.out.println(betAmount.getText());
             }

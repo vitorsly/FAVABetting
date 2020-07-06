@@ -6,5 +6,6 @@ public class BettingPhaseStartMessage implements Message{
     @Override
     public void run(Client client, String msg) {
         client.sendMessage("getHorses");
+        client.sendMessage("balance");
     }
 }
