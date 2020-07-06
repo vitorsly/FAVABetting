@@ -2,6 +2,9 @@ package org.academiadecodigo.gitbusters.favabetting.graphicalinterface.message;
 
 public enum MessageHandler {
     GETBALANCE("balance",new BalanceMsg()),
+    RACESTART("betStop",new RaceStartMessage()),
+    RACEEND("betTime",new EndRaceMessage()),
+    CHAT("chat",new ChatMessage()),
     BETINGSTART("betTime",new BettingPhaseStartMessage()),
     HORSES("HorseList",new HorsesMessage()),
     BETOK("betOK",new BetOk()),

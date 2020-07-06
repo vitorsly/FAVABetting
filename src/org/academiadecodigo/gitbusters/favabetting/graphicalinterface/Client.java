@@ -50,6 +50,7 @@ public class Client {
         @Override
         public void run() {
             sendMessage("getHorses");
+            sendMessage("balance");
             while (!socket.isClosed()){
                 try {
                     receiveMsg();

@@ -12,6 +12,8 @@ public class HorsesMessage implements Message {
         String weather = horseWeatherAndTrack[1];
         String track = horseWeatherAndTrack[2];
         String[] horsesByLine = horseWeatherAndTrack[0].split("%");
+        client.getGraphics().getArena().setText(track);
+        client.getGraphics().getWeather().setText(weather);
         int iterator=0;
         for (Graphics.HorseMenu horseMenu:client.getGraphics().getHorseList()){
             String[]horseStr=horsesByLine[iterator].split("#");

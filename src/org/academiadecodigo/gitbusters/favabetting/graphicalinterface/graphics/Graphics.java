@@ -7,6 +7,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.chrono.JapaneseChronology;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,12 +15,17 @@ public class Graphics implements ActionListener {
     private Client client;
     JFrame frame=new JFrame("FAVA");
     Container mainContainer;
-    JPanel topPanel=new JPanel();
-    public JPanel westPanel =new JPanel();
+    private JPanel topPanel=new JPanel();
+    private JPanel westPanel =new JPanel();
+    private JPanel chatPanel =new JPanel();
     private JTextArea raceStatus=new JTextArea("",10,10);
     private List<String> textLog =new ArrayList<>();
     private List<HorseMenu>horseList=new ArrayList<>();
+    private JTextField arena;
+    private JTextField weather;
     private JTextField balance;
+    private ChatMenu chatMenu;
+    private JLabel raceLabel=new JLabel("racing");
 
     JTextField textfield;
     public Graphics(Client client){
@@ -43,35 +49,49 @@ public class Graphics implements ActionListener {
         westPanel.setLayout(new GridLayout(10,1,10,10));
         westPanel.setBorder(new LineBorder(Color.BLACK,2));
 
+        chatPanel.setLayout(new BoxLayout(chatPanel,BoxLayout.PAGE_AXIS));
+        chatPanel.setBorder(new LineBorder(Color.BLACK,2));
+        chatPanel.setVisible(false);
+
         mainContainer.add(topPanel,BorderLayout.NORTH);
         mainContainer.add(westPanel,BorderLayout.CENTER);
 
         topButtons();
         createHorseMenu();
+        CreateChatMenu();
         //textfield = new JTextField("chat",60);
         //frame.getContentPane().add(textfield);
-
-
         frame.setVisible(true);
-
     }
 
-
+    private void CreateChatMenu() {
+        chatMenu=new ChatMenu();
+    }
 
     private void topButtons(){
-        JButton topBnt1=new JButton("chat");
+        JButton topBnt1=new JButton("Chat");
         JButton topBnt2=new JButton("Bet");
-        JButton topBnt3=new JButton("Quit");
+        arena=new JTextField("Arena: ");
+        arena.setEnabled(false);
+        arena.setDisabledTextColor(Color.BLACK);
+        weather=new JTextField("Weather: ");
+        weather.setEnabled(false);
+        weather.setDisabledTextColor(Color.BLACK);
         balance=new JTextField(20);
         balance.setEnabled(false);
         balance.setDisabledTextColor(Color.black);
         topPanel.add(topBnt1);
         topPanel.add(topBnt2);
-        topPanel.add(topBnt3);
+        topPanel.add(new JLabel("Arena: "));
+        topPanel.add(arena);
+        topPanel.add(new JLabel("Weather: "));
+        topPanel.add(weather);
+        topPanel.add(new JLabel("Balance: "));
         topPanel.add(balance);
+        topPanel.add(raceLabel);
+        raceLabel.setBorder(BorderFactory.createEtchedBorder(Color.black,Color.black));
         topBnt1.addActionListener(this);
         topBnt2.addActionListener(this);
-        topBnt3.addActionListener(this);
     }
 
     private void createHorseMenu(){
@@ -127,14 +147,24 @@ public class Graphics implements ActionListener {
         raceStatus.setText(builder.toString());
     }
 
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(e.getID());
-        System.out.println(e.paramString());
-        if(e.getActionCommand().equals("Quit")){
-            topPanel.setVisible(false);
+
+        if(e.getActionCommand().equals("Chat")){
+            mainContainer.remove(westPanel);
+            westPanel.setVisible(false);
+            mainContainer.add(chatPanel,BorderLayout.CENTER);
+            chatPanel.setVisible(true);
+
+            System.out.println("chat cliked");
+
+        }
+        if(e.getActionCommand().equals("Bet")){
+            mainContainer.remove(chatPanel);
+            chatPanel.setVisible(false);
+            mainContainer.add(westPanel,BorderLayout.CENTER);
+            westPanel.setVisible(true);
+            System.out.println("bet cliked");
         }
     }
 
@@ -199,11 +229,66 @@ public class Graphics implements ActionListener {
 
     }
 
+    public class ChatMenu implements ActionListener{
+        JPanel userPanel=new JPanel();
+        JPanel botPanel=new JPanel();
+        TextArea chatWindow=new TextArea(10,10);
+        JTextField chatInput=new JTextField(30);
+        JTextField nameInput=new JTextField(10);
+        JButton changeNameButton=new JButton("Change Name");
+
+        ChatMenu(){
+            botPanel.setLayout(new FlowLayout());
+            userPanel.setLayout(new FlowLayout());
+            userPanel.add(nameInput);
+            userPanel.add(changeNameButton);
+            chatPanel.add(userPanel);
+            chatPanel.add(chatWindow);
+            botPanel.add(chatInput);
+            chatPanel.add(botPanel,BorderLayout.AFTER_LAST_LINE);
+            chatInput.addActionListener(this);
+            changeNameButton.addActionListener(this);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(e.getActionCommand().equals("Change Name")){
+                System.out.println(nameInput.getText());
+            }else {
+                client.sendMessage("chat #"+chatInput.getText());
+                System.out.println("chat #"+chatInput.getText());
+                chatWindow.append("\n"+chatInput.getText());
+                chatInput.setText("");
+                //send chat to the Client
+            }
+        }
+
+        public TextArea getChatWindow() {
+            return chatWindow;
+        }
+    }
+
     public List<HorseMenu> getHorseList() {
         return horseList;
     }
 
     public JTextField getBalance() {
         return balance;
+    }
+
+    public JTextField getArena() {
+        return arena;
+    }
+
+    public JTextField getWeather() {
+        return weather;
+    }
+
+    public ChatMenu getChatMenu() {
+        return chatMenu;
+    }
+
+    public JLabel getRaceLabel() {
+        return raceLabel;
     }
 }
