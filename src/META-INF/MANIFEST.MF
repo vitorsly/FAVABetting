@@ -1,3 +1,4 @@
 Manifest-Version: 1.0
-Main-Class: org.academiadecodigo.gitbusters.favabetting.client.Client
+Main-Class: org.academiadecodigo.gitbusters.favabetting.graphicalinterfa
+ ce.Client
 

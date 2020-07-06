@@ -2,7 +2,6 @@ package org.academiadecodigo.gitbusters.favabetting.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -26,7 +25,7 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        Server s = new Server(8080);
+        Server s = new Server(56000);
     }
 
     // Initiate server and register client to broker

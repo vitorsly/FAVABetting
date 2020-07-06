@@ -19,7 +19,8 @@ public class Client {
 
     Client(String ip,int port){
         try {
-            socket=new Socket("localhost",8080);
+            System.out.println("connecting: "+ip+" "+port);
+            socket=new Socket(ip,port);
             inputStream=new BufferedReader(new InputStreamReader(socket.getInputStream()));
             outPut=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             executor.submit(new listening());
@@ -66,14 +67,11 @@ public class Client {
     }
 
     public static void main(String[] args) {
-
         if(args.length<1){
             Client c=new Client("localhost",8080);
-        }else {
-            String ip=args[0];
-            int port=Integer.parseInt(args[1]);
-            Client c=new Client(ip,port);
-
+        }
+        else{
+            Client c=new Client(args[0],Integer.parseInt(args[1]));
         }
 
     }
