@@ -18,7 +18,7 @@ public class Graphics implements ActionListener {
     private JPanel topPanel=new JPanel();
     private JPanel westPanel =new JPanel();
     private JPanel chatPanel =new JPanel();
-    private JTextArea raceStatus=new JTextArea("",10,10);
+    private JTextArea raceStatus=new JTextArea("hello",0,0);
     private List<String> textLog =new ArrayList<>();
     private List<HorseMenu>horseList=new ArrayList<>();
     private JTextField arena;
@@ -46,7 +46,7 @@ public class Graphics implements ActionListener {
         topPanel.setLayout(new FlowLayout(5));
         topPanel.setBorder(new LineBorder(Color.BLACK,2));
 
-        westPanel.setLayout(new GridLayout(10,1,10,10));
+        westPanel.setLayout(new GridLayout(8,1,10,10));
         westPanel.setBorder(new LineBorder(Color.BLACK,2));
 
         chatPanel.setLayout(new BoxLayout(chatPanel,BoxLayout.PAGE_AXIS));
@@ -115,36 +115,22 @@ public class Graphics implements ActionListener {
             horseList.add(h);
         }
         raceStatus.setEnabled(false);
+        raceStatus.append("hello");
+        JScrollPane scrollPane=new JScrollPane(raceStatus);
         raceStatus.setDisabledTextColor(Color.BLACK);
-        westPanel.add(raceStatus);
+        westPanel.add(scrollPane);
     }
 
     public void writeStatus(String text){
-        textLog.add(0,text);
-        if (textLog.size()==10){
-            textLog.remove(textLog.size()-1);
-        }
-        StringBuilder builder=new StringBuilder();
-
-        for(String entr:textLog){
-            builder.append(entr).append("\n");
-        }
+        raceStatus.append("\n"+text);
         raceStatus.setDisabledTextColor(Color.BLACK);
-        raceStatus.setText(builder.toString());
+        raceStatus.setCaretPosition(raceStatus.getDocument().getLength());
     }
 
     public void writeStatus(String text,Color color){
-        textLog.add(0,text);
-        if (textLog.size()==10){
-            textLog.remove(textLog.size()-1);
-        }
-        StringBuilder builder=new StringBuilder();
-
-        for(String entr:textLog){
-            builder.append(entr).append("\n");
-        }
+        raceStatus.append("\n"+text);
         raceStatus.setDisabledTextColor(color);
-        raceStatus.setText(builder.toString());
+        raceStatus.setCaretPosition(raceStatus.getDocument().getLength());
     }
 
     @Override
@@ -164,7 +150,6 @@ public class Graphics implements ActionListener {
             chatPanel.setVisible(false);
             mainContainer.add(westPanel,BorderLayout.CENTER);
             westPanel.setVisible(true);
-            System.out.println("bet cliked");
         }
     }
 

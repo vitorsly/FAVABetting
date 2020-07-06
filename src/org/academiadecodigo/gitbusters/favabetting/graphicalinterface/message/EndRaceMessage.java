@@ -10,5 +10,7 @@ public class EndRaceMessage implements Message {
     public void run(Client client, String msg) {
         client.getGraphics().getRaceLabel().setText("Place your bets");
         client.getGraphics().getRaceLabel().setBorder(BorderFactory.createEtchedBorder(Color.GREEN,Color.black));
+        client.sendMessage("getHorses");
+        client.sendMessage("balance");
     }
 }

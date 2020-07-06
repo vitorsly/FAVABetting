@@ -4,8 +4,9 @@ public enum MessageHandler {
     GETBALANCE("balance",new BalanceMsg()),
     RACESTART("betStop",new RaceStartMessage()),
     RACEEND("betTime",new EndRaceMessage()),
+    LEADINGHORCE("Leading",new LeadingHorseMessage()),
+    TIME("time",new TimeMessage()),
     CHAT("chat",new ChatMessage()),
-    BETINGSTART("betTime",new BettingPhaseStartMessage()),
     HORSES("HorseList",new HorsesMessage()),
     BETOK("betOK",new BetOk()),
     INVALID("",new InvalidMessage());
