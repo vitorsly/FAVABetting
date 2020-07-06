@@ -38,7 +38,7 @@ public class BetMessage implements Message {
             horseName = horse.getName();
 
             if(client.getWallet().Withdraw(betAmount)){
-                server.getRace().placeBet(client,horseNumber - 1,betAmount);
+                server.getRace().placeBet(client,horseNumber - 1, betAmount);
                 send(client,server);
             } else{
                 client.sendMessage("noFunds");

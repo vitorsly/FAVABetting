@@ -1,7 +1,9 @@
-package org.academiadecodigo.gitbusters.favabetting.client;
+package org.academiadecodigo.gitbusters.favabetting.graphicalinterface;
 
-import org.academiadecodigo.gitbusters.favabetting.client.menu.Menu;
-import org.academiadecodigo.gitbusters.favabetting.client.messages.MessageHandler;
+
+
+import org.academiadecodigo.gitbusters.favabetting.graphicalinterface.graphics.Graphics;
+import org.academiadecodigo.gitbusters.favabetting.graphicalinterface.message.MessageHandler;
 
 import java.io.*;
 import java.net.Socket;
@@ -9,37 +11,26 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Client {
-
     private Socket socket;
     private BufferedReader inputStream;
     private BufferedWriter outPut;
-    private ExecutorService executor = Executors.newCachedThreadPool();
-    private Menu menu;
+    private ExecutorService executor= Executors.newCachedThreadPool();
+    private Graphics graphics=new Graphics(this);
 
-    public Client() {
+    Client(String ip,int port){
         try {
-
-            socket = new Socket("localhost",8080);
-
-            inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            outPut = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-
+            socket=new Socket("localhost",8080);
+            inputStream=new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            outPut=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             executor.submit(new listening());
-
-            menu = new Menu(this);
-
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public static void main(String[] args) {
-        Client c = new Client();
-    }
-
     public void sendMessage(String msg){
         try {
-            msg += "\n";
+            msg+="\n";
             outPut.write(msg);
             outPut.flush();
         } catch (IOException e) {
@@ -58,7 +49,9 @@ public class Client {
 
         @Override
         public void run() {
-            while (!socket.isClosed()) {
+            sendMessage("getHorses");
+            sendMessage("balance");
+            while (!socket.isClosed()){
                 try {
                     receiveMsg();
                 } catch (IOException e) {
@@ -68,7 +61,20 @@ public class Client {
         }
     }
 
-    public Menu getMenu() {
-        return menu;
+    public Graphics getGraphics() {
+        return graphics;
+    }
+
+    public static void main(String[] args) {
+
+        if(args.length<1){
+            Client c=new Client("localhost",8080);
+        }else {
+            String ip=args[0];
+            int port=Integer.parseInt(args[1]);
+            Client c=new Client(ip,port);
+
+        }
+
     }
 }
