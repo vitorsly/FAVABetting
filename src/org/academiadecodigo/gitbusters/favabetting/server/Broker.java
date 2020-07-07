@@ -36,23 +36,17 @@ public class Broker {
 
     // Remove client from broker list
     public void unregisterClient(Client client) {
-        clientsBets.remove(client);
+        this.clientsBets.remove(client);
     }
 
     // Add new bet to client
     public void registerBet(Client client, Horse horse, Integer amount) {
 
-        System.out.println("DEBUG> BET CLIENT: " + client.getName());
-        System.out.println("DEBUG> BET horse: " + horse.getName());
-        System.out.println("DEBUG> BET amount: " + amount);
+//        System.out.println("DEBUG> BET CLIENT: " + client.getName());
+//        System.out.println("DEBUG> BET horse: " + horse.getName());
+//        System.out.println("DEBUG> BET amount: " + amount);
 
         betlist.add(new BrokerBet(client,horse,amount));
-
-//        this.horseAmount.put(horse, amount);
-//        this.clientsBets.put(client, horseAmount);
-//
-//        this.clientAmount.put(client, amount);
-//        this.horsesBets.put(horse, clientAmount);
     }
 
     // Returns all clients bets
@@ -71,8 +65,6 @@ public class Broker {
     }
 
     // Returns horse bets
-    // When we need all bets mad on a horse just get by horse object
-    // broker.getHorseBets(horse);
     public Map<Client, Integer> getHorseBets(Horse horse) {
         return this.horsesBets.get(horse);
     }
@@ -88,43 +80,27 @@ public class Broker {
 
     // Pay clients what they won.
     public void PaybackWinnings(Horse winner) {
-
-        for (BrokerBet bet:betlist){
-            if(bet.isClientWinner(winner)){
-                bet.getClient().getWallet().deposit(bet.getAmount()*bet.getHorse().getOdds());
+        for (BrokerBet bet : betlist) {
+            if(bet.isClientWinner(winner)) {
+                bet.getClient().getWallet().deposit(bet.getAmount() * bet.getHorse().getOdds());
             }
         }
-
-        //System.out.println("DEBUG: Winner hourse: " + winner.getName());
-
-//        Map<Client, Integer> winnerHorseBets = horsesBets.get(winner);
-//
-//        //System.out.println("DEBUG: All Horse Bets: " + winnerHorseBets);
-//
-//        if(winnerHorseBets == null) {
-//            System.out.println("winnerHorse is null");
-//            return;
-//        }
-//
-//        // Makes payment to user by depositing in his wallet
-//        for (Map.Entry<Client, Integer> entry : winnerHorseBets.entrySet()){
-//            System.out.println(entry.getKey().getName()+" "+entry.getValue());
-//            entry.getKey().getWallet().deposit(entry.getValue() * winner.getOdds());
-//        }
     }
 
-    public class BrokerBet{
+    public class BrokerBet {
+
         private Client client;
         private Horse horse;
         private int amount;
-        public BrokerBet(Client client,Horse horse,int amount){
-            this.client=client;
-            this.horse=horse;
-            this.amount=amount;
+
+        public BrokerBet(Client client,Horse horse,int amount) {
+            this.client = client;
+            this.horse = horse;
+            this.amount = amount;
         }
 
-        public Boolean isClientWinner(Horse h){
-            if(h==this.horse){
+        public Boolean isClientWinner(Horse h) {
+            if(h == this.horse) {
                 return true;
             }else{
                 return false;

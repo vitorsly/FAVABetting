@@ -1,22 +1,23 @@
 package org.academiadecodigo.gitbusters.favabetting.graphicalinterface.message;
 
 public enum MessageHandler {
-    GETBALANCE("balance",new BalanceMsg()),
-    RACESTART("betStop",new RaceStartMessage()),
-    RACEEND("betTime",new EndRaceMessage()),
-    LEADINGHORCE("Leading",new LeadingHorseMessage()),
-    TIME("time",new TimeMessage()),
-    CHAT("chat",new ChatMessage()),
-    HORSES("HorseList",new HorsesMessage()),
-    BETOK("betOK",new BetOk()),
-    INVALID("",new InvalidMessage());
+
+    GETBALANCE("balance", new BalanceMsg()),
+    RACESTART("betStop", new RaceStartMessage()),
+    RACEEND("betTime", new EndRaceMessage()),
+    LEADINGHORCE("Leading", new LeadingHorseMessage()),
+    TIME("time", new TimeMessage()),
+    CHAT("chat", new ChatMessage()),
+    HORSES("HorseList", new HorsesMessage()),
+    BETOK("betOK", new BetOk()),
+    INVALID("", new InvalidMessage());
 
     private String cmd;
     private Message action;
 
-    MessageHandler(String cmd,Message action){
-        this.cmd=cmd;
-        this.action=action;
+    MessageHandler(String cmd,Message action) {
+        this.cmd = cmd;
+        this.action = action;
     }
 
     public static MessageHandler getActionFromString(String msg) {
@@ -27,8 +28,8 @@ public enum MessageHandler {
 
         String actionStr = msg.split(" ")[0];
 
-        for (MessageHandler actions : values()){
-            if(actions.cmd.equals(actionStr)){
+        for (MessageHandler actions : values()) {
+            if(actions.cmd.equals(actionStr)) {
                 return actions;
             }
         }
@@ -36,6 +37,5 @@ public enum MessageHandler {
         return INVALID;
     }
 
-    public  Message getAction(){return action;}
-
+    public  Message getAction() { return action; }
 }

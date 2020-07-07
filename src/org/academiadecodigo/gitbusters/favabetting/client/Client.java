@@ -19,7 +19,7 @@ public class Client {
     public Client() {
         try {
 
-            socket = new Socket("localhost",8080);
+            socket = new Socket("localhost",56000);
 
             inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             outPut = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));

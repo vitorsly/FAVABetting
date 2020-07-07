@@ -11,27 +11,28 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Client {
+
     private Socket socket;
     private BufferedReader inputStream;
     private BufferedWriter outPut;
-    private ExecutorService executor= Executors.newCachedThreadPool();
-    private Graphics graphics=new Graphics(this);
+    private ExecutorService executor = Executors.newCachedThreadPool();
+    private Graphics graphics = new Graphics(this);
 
-    Client(String ip,int port){
+    Client(String ip, int port) {
         try {
-            System.out.println("connecting: "+ip+" "+port);
-            socket=new Socket(ip,port);
-            inputStream=new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            outPut=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            System.out.println("connecting: " + ip + " " + port);
+            socket = new Socket(ip, port);
+            inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            outPut = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             executor.submit(new listening());
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void sendMessage(String msg){
+    public void sendMessage(String msg) {
         try {
-            msg+="\n";
+            msg += "\n";
             outPut.write(msg);
             outPut.flush();
         } catch (IOException e) {
@@ -67,11 +68,10 @@ public class Client {
     }
 
     public static void main(String[] args) {
-        if(args.length<1){
-            Client c=new Client("localhost",56000);
-        }
-        else{
-            Client c=new Client(args[0],Integer.parseInt(args[1]));
+        if(args.length < 1) {
+            Client c = new Client("localhost",56000);
+        } else{
+            Client c = new Client(args[0],Integer.parseInt(args[1]));
         }
 
     }

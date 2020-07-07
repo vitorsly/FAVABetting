@@ -11,24 +11,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Graphics implements ActionListener {
+
     private Client client;
-    JFrame frame=new JFrame("FAVA");
+
+    JFrame frame = new JFrame("FAVA");
+
     Container mainContainer;
-    private JPanel topPanel=new JPanel();
-    private JPanel westPanel =new JPanel();
-    private JPanel chatPanel =new JPanel();
-    private JTextArea raceStatus=new JTextArea("hello",0,0);
-    private List<String> textLog =new ArrayList<>();
-    private List<HorseMenu>horseList=new ArrayList<>();
+
+    private JPanel topPanel = new JPanel();
+    private JPanel westPanel   =new JPanel();
+    private JPanel chatPanel = new JPanel();
+    private JTextArea raceStatus = new JTextArea("hello",0,0);
+    private List<String> textLog = new ArrayList<>();
+    private List<HorseMenu>horseList = new ArrayList<>();
     private JTextField arena;
     private JTextField weather;
     private JTextField balance;
     private ChatMenu chatMenu;
-    private JLabel raceLabel=new JLabel("racing");
+    private JLabel raceLabel = new JLabel("racing");
 
     JTextField textfield;
     public Graphics(Client client){
-        this.client=client;
+        this.client = client;
         setLayout();
     }
 
@@ -39,7 +43,7 @@ public class Graphics implements ActionListener {
         frame.setSize(800,600);
         frame.getRootPane().setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.BLACK));
 
-        mainContainer=frame.getContentPane();
+        mainContainer = frame.getContentPane();
         mainContainer.setLayout(new BorderLayout());
 
         topPanel.setLayout(new FlowLayout(5));
@@ -64,42 +68,53 @@ public class Graphics implements ActionListener {
     }
 
     private void CreateChatMenu() {
-        chatMenu=new ChatMenu();
+        chatMenu = new ChatMenu();
     }
 
-    private void topButtons(){
-        JButton topBnt1=new JButton("Chat");
-        JButton topBnt2=new JButton("Bet");
-        arena=new JTextField("Arena: ");
+    private void topButtons() {
+
+        JButton topBnt1 = new JButton("Chat");
+        JButton topBnt2 = new JButton("Bet");
+
+        arena = new JTextField("Arena: ");
         arena.setEnabled(false);
         arena.setDisabledTextColor(Color.BLACK);
-        weather=new JTextField("Weather: ");
+
+        weather = new JTextField("Weather: ");
         weather.setEnabled(false);
         weather.setDisabledTextColor(Color.BLACK);
-        balance=new JTextField(20);
+
+        balance = new JTextField(20);
         balance.setEnabled(false);
         balance.setDisabledTextColor(Color.black);
         topPanel.add(topBnt1);
         topPanel.add(topBnt2);
+
         topPanel.add(new JLabel("Arena: "));
         topPanel.add(arena);
+
         topPanel.add(new JLabel("Weather: "));
         topPanel.add(weather);
+
         topPanel.add(new JLabel("Balance: "));
         topPanel.add(balance);
         topPanel.add(raceLabel);
+
         raceLabel.setBorder(BorderFactory.createEtchedBorder(Color.black,Color.black));
+
         topBnt1.addActionListener(this);
         topBnt2.addActionListener(this);
     }
 
-    private void createHorseMenu(){
-        JPanel horseGrid=new JPanel();
-        JLabel horseName=new JLabel("Horse Name");
-        JLabel horseDescription=new JLabel("Description");
-        JLabel odds=new JLabel("Odd");
-        JLabel wins=new JLabel("Wins");
-        JLabel races=new JLabel("Races");
+    private void createHorseMenu() {
+
+        JPanel horseGrid = new JPanel();
+        JLabel horseName = new JLabel("Horse Name");
+        JLabel horseDescription = new JLabel("Description");
+        JLabel odds = new JLabel("Odd");
+        JLabel wins = new JLabel("Wins");
+        JLabel races = new JLabel("Races");
+
         horseGrid.setLayout(new GridLayout(1,7,10,10));
         horseGrid.add(horseName);
         horseGrid.add(horseDescription);
@@ -109,31 +124,35 @@ public class Graphics implements ActionListener {
         horseGrid.add(new JLabel("Bet Amount"));
         horseGrid.add(new JLabel());
         westPanel.add(horseGrid);
-        for (int i = 0; i <6 ; i++) {
-            HorseMenu h=new HorseMenu(i);
+
+        for (int i = 0; i < 6 ; i++) {
+            HorseMenu h = new HorseMenu(i);
             horseList.add(h);
         }
+
         raceStatus.setEnabled(false);
         raceStatus.append("hello");
+
         JScrollPane scrollPane=new JScrollPane(raceStatus);
+
         raceStatus.setDisabledTextColor(Color.BLACK);
         westPanel.add(scrollPane);
     }
 
     public void writeStatus(String text){
-        raceStatus.append("\n"+text);
+        raceStatus.append("\n" + text);
         raceStatus.setDisabledTextColor(Color.BLACK);
         raceStatus.setCaretPosition(raceStatus.getDocument().getLength());
     }
 
     public void writeStatus(String text,Color color){
-        raceStatus.append("\n"+text);
+        raceStatus.append("\n" + text);
         raceStatus.setDisabledTextColor(color);
         raceStatus.setCaretPosition(raceStatus.getDocument().getLength());
     }
 
     public void paintLeadingHorse(String horse){
-        for (HorseMenu h:horseList){
+        for (HorseMenu h : horseList){
             if (h.getHorseName().equals(horse)){
                 h.setHorseColor(new Color(0,140,0));
             }
@@ -146,16 +165,17 @@ public class Graphics implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if(e.getActionCommand().equals("Chat")){
+        if(e.getActionCommand().equals("Chat")) {
+
             mainContainer.remove(westPanel);
             westPanel.setVisible(false);
             mainContainer.add(chatPanel,BorderLayout.CENTER);
             chatPanel.setVisible(true);
 
             System.out.println("chat cliked");
-
         }
-        if(e.getActionCommand().equals("Bet")){
+
+        if(e.getActionCommand().equals("Bet")) {
             mainContainer.remove(chatPanel);
             chatPanel.setVisible(false);
             mainContainer.add(westPanel,BorderLayout.CENTER);
@@ -164,19 +184,22 @@ public class Graphics implements ActionListener {
     }
 
     public class HorseMenu implements ActionListener{
-        private int horseN=0;
-        private JPanel horseGrid=new JPanel();
 
-        private JLabel horseName=new JLabel("horseName");
-        private JLabel horseDescription=new JLabel("description");
-        private JLabel odds=new JLabel("odd");
-        private JLabel wins=new JLabel("wins");
-        private JLabel races=new JLabel("races");
-        private JTextField betAmount=new JTextField(5);
-        private JButton betBnt=new JButton("Bet");
+        private int horseN = 0;
+        private JPanel horseGrid = new JPanel();
 
-        HorseMenu(int horseN){
-            this.horseN=horseN;
+        private JLabel horseName = new JLabel("horseName");
+        private JLabel horseDescription = new JLabel("description");
+        private JLabel odds = new JLabel("odd");
+        private JLabel wins = new JLabel("wins");
+        private JLabel races = new JLabel("races");
+        private JTextField betAmount = new JTextField(5);
+        private JButton betBnt = new JButton("Bet");
+
+        HorseMenu(int horseN) {
+
+            this.horseN = horseN;
+
             horseGrid.setLayout(new GridLayout(1,7,10,10));
             horseGrid.add(horseName);
             horseGrid.add(horseDescription);
@@ -189,14 +212,16 @@ public class Graphics implements ActionListener {
             betBnt.addActionListener(this);
         }
 
-        public void insertHorse(String name,String description,String Odd, String wins,String races, int horseN){
-            if(this.horseN!=horseN){
+        public void insertHorse(String name,String description,String Odd, String wins,String races, int horseN) {
+
+            if(this.horseN != horseN){
                 return;
             }
 
             horseName.setText(name);
             horseDescription.setText(description);
             odds.setText(Odd);
+
             this.wins.setText(wins);
             this.races.setText(races);
         }
@@ -205,7 +230,7 @@ public class Graphics implements ActionListener {
             return horseName.getText();
         }
 
-        public void setHorseColor(Color color){
+        public void setHorseColor(Color color) {
             horseName.setForeground(color);
             horseDescription.setForeground(color);
             odds.setForeground(color);
@@ -215,11 +240,16 @@ public class Graphics implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getActionCommand().equals("Bet")){
-                int amount=0;
+            if (e.getActionCommand().equals("Bet")) {
+
+                int amount = 0;
+
                 try {
-                    amount=Integer.parseInt(betAmount.getText());
-                    int nint=this.horseN+1;
+
+                    amount = Integer.parseInt(betAmount.getText());
+
+                    int nint = this.horseN + 1;
+
                     client.sendMessage("bet " + nint + " " + amount);
                     client.sendMessage("balance");
                 }catch (Exception exception){
@@ -233,13 +263,14 @@ public class Graphics implements ActionListener {
 
     }
 
-    public class ChatMenu implements ActionListener{
-        JPanel userPanel=new JPanel();
-        JPanel botPanel=new JPanel();
-        TextArea chatWindow=new TextArea(10,10);
-        JTextField chatInput=new JTextField(30);
-        JTextField nameInput=new JTextField(10);
-        JButton changeNameButton=new JButton("Change Name");
+    public class ChatMenu implements ActionListener {
+
+        JPanel userPanel = new JPanel();
+        JPanel botPanel = new JPanel();
+        TextArea chatWindow = new TextArea(10,10);
+        JTextField chatInput = new JTextField(30);
+        JTextField nameInput = new JTextField(10);
+        JButton changeNameButton = new JButton("Change Name");
 
         ChatMenu(){
             botPanel.setLayout(new FlowLayout());
@@ -257,11 +288,11 @@ public class Graphics implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getActionCommand().equals("Change Name")){
-                client.sendMessage("name "+nameInput.getText());
+                client.sendMessage("name " + nameInput.getText());
             }else {
-                client.sendMessage("chat #"+chatInput.getText());
-                System.out.println("chat #"+chatInput.getText());
-                chatWindow.append("\n"+chatInput.getText());
+                client.sendMessage("chat #" + chatInput.getText());
+                System.out.println("chat #" + chatInput.getText());
+                chatWindow.append("\n" + chatInput.getText());
                 chatInput.setText("");
             }
         }

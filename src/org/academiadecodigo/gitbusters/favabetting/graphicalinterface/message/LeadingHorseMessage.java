@@ -4,8 +4,10 @@ import org.academiadecodigo.gitbusters.Utils;
 import org.academiadecodigo.gitbusters.favabetting.graphicalinterface.Client;
 
 public class LeadingHorseMessage implements Message {
+
     @Override
     public void run(Client client, String msg) {
+
         String[] msgSplit = msg.split(" ");
 
         if(msgSplit.length > 1) {
@@ -31,9 +33,9 @@ public class LeadingHorseMessage implements Message {
             };
 
             String fun = funPhrases[Utils.getRandom(funPhrases.length)];
+
             client.getGraphics().paintLeadingHorse(msgSplit[1]);
             client.getGraphics().writeStatus("The horse: " + msgSplit[1] + " is in the lead\n" + fun);
-
         }
     }
 }
